@@ -1,0 +1,2 @@
+class ChoreWheelsController < ApplicationController
+end

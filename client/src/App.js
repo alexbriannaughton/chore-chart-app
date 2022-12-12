@@ -1,23 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from "react-router-dom"
+import { useState } from 'react';
+import NavBar from './NavBar';
+import Homepage from './Homepage';
+import CreatePage from './CreatePage'
+import ChartPage from './ChartPage';
 
 function App() {
+
+  const [user, setUser] = useState({})
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NavBar></NavBar>
+      <Routes>
+
+        <Route
+          path="/"
+          element={<Homepage
+            setUser={setUser}
+          />}
+        />
+
+        <Route
+          path="/create-new-chart"
+          element={<CreatePage />}
+        />
+
+        <Route
+          path="/your-chart"
+          element={<ChartPage />}
+        />
+
+      </Routes>
     </div>
   );
 }
