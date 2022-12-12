@@ -26,8 +26,6 @@ My app is a tool for sharing chores--it will make it easier to divvy up and keep
 ### Users
 - name and/or username
 - email?
-- chore_chart_id
-- has_one ? has_many ? user_tasks
 
 ### Persons
 - name
