@@ -11,7 +11,7 @@ My app is a tool for sharing chores--it will make it easier to divvy up and keep
 - Users can login and observe the current state of the chore chart
 - Users can observe their chore chart rotate at a set interval
 - Users can rotate the chore chart with a click
-### Stretch Goals
+#### Stretch Goals
 - Users can set the interval by which the chore chart will rotate
 - Users will receive an email when the chore chart rotates
 
