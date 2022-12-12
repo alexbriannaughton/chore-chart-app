@@ -29,6 +29,11 @@ My app is a tool for sharing chores--it will make it easier to divvy up and keep
 - chore_chart_id
 - has_one ? has_many ? user_tasks
 
+### Persons
+- name
+- chore_chart_id
+- has_one ? has_many ? user_tasks
+
 ### Tasks
 - name
 - chore_chart_id
