@@ -36,3 +36,5 @@ My app is a tool for sharing chores--it will make it easier to divvy up and keep
 - task_id (belongs_to)
 - user_id (belongs_to)
 - chore_chart_id (belongs_to) ?
+
+![IMG_5637](https://user-images.githubusercontent.com/109716310/207115276-43138a59-b2c7-482a-bc2b-aba0b52369fe.jpg)
