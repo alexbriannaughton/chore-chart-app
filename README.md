@@ -16,6 +16,7 @@ My app is a tool for sharing chores--it will make it easier to divvy up and keep
 - Users will receive an email when the chore chart rotates
 - Animated wheel for chart
 - messageboard on a family's wheel page
+- click to describe particular chore in more detail. will need a description attribute for tasks.
 
 ## DB Schema
 ### ChoreChart
