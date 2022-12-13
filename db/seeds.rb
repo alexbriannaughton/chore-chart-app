@@ -9,8 +9,6 @@
 puts 'seedin...'
 
 cw = ChoreWheel.create(name: 'first chorewheel')
-alex = User.create(name: 'Alex Naughton', username: 'alex', chore_wheel: cw, password: 'alex')
-tummy = User.create(name: 'Tummy Rooters', username: 'tummy', chore_wheel: cw, password: 'tummy')
-jeans = User.create(name: 'Jeans Hammond', username: 'jeans', chore_wheel: cw, password: 'jeans')
+alex = User.create(username: 'alex', password: 'alex')
 
 puts 'done seedin.'

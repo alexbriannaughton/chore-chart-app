@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   
-
-
+  resources :tasks
+  resources :members
+  resources :people
   resources :users
   resources :chore_wheels
   post "/login", to: "sessions#create"
