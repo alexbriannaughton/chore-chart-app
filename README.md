@@ -17,6 +17,7 @@ My app is a tool for sharing chores--it will make it easier to divvy up and keep
 - Animated wheel for chart
 - messageboard on a family's wheel page
 - click to describe particular chore in more detail. will need a description attribute for tasks.
+- view chart history--who had certain tasks in the past
 
 ## DB Schema
 ### ChoreChart
