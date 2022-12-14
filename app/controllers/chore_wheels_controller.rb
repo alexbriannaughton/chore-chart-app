@@ -4,6 +4,11 @@ class ChoreWheelsController < ApplicationController
         render json: ChoreWheel.all
     end
 
+    def show
+        cw = ChoreWheel.find(params[:id])
+        render json: cw.member_tasks
+    end
+
     def create
         cw = ChoreWheel.create!(chore_wheel_params)
         render json: cw, status: :created
@@ -12,6 +17,6 @@ class ChoreWheelsController < ApplicationController
     private
 
     def chore_wheel_params
-        params.permit(:name)
+        params.permit(:name, :user_id)
     end
 end

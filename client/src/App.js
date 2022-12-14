@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import Homepage from './Homepage';
 import CreatePage from './CreatePage'
-import ChartPage from './ChartPage';
+import AllChartsPage from './AllChartsPage';
+import ChartPage from "./ChartPage";
 
 function App() {
 
@@ -39,12 +40,17 @@ function App() {
 
         <Route
           path="/create-new-chart"
-          element={<CreatePage />}
+          element={<CreatePage user={user}/>}
         />
 
         <Route
-          path="/your-chart"
-          element={<ChartPage />}
+          path="/your-charts"
+          element={<AllChartsPage user={user}/>}
+        />
+
+        <Route
+          path={`/your-charts/:chartId`}
+          element={<ChartPage/>}
         />
 
       </Routes>

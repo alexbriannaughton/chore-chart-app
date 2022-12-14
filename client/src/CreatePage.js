@@ -1,6 +1,10 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
-function CreatePage() {
+
+function CreatePage({ user }) {
+
+    const navigate = useNavigate()
 
     const [errors, setErrors] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
@@ -85,9 +89,8 @@ function CreatePage() {
         e.preventDefault()
         setIsLoading(true)
 
-
-
         try {
+            //no blank fields catcher
             membersArr.map((member) => {
                 if (member.value === "") {
                     throw ['no blank fields may be submitted']
@@ -107,7 +110,8 @@ function CreatePage() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        name: chartName
+                        name: chartName,
+                        user_id: user.id
                     })
                 })
             const newChart = await chartResp.json()
@@ -115,7 +119,7 @@ function CreatePage() {
                 throw newChart.errors
             }
 
-
+            //create members
             const memberResps =
                 await Promise.all(
                     membersArr.map((member) => {
@@ -137,8 +141,9 @@ function CreatePage() {
                         return member.json()
                     })
                 )
-            console.log(newMembers)
+            // console.log(newMembers)
 
+            //create tasks
             const taskResps =
                 await Promise.all(
                     tasksArr.map((task) => {
@@ -160,84 +165,112 @@ function CreatePage() {
                         return task.json()
                     })
                 )
-            console.log(newTasks)
-        }
-        catch (error) {
-            setErrors(error)
+            // console.log(newTasks)
+
+            //create membertask for every member
+            const mtResps =
+                await Promise.all(
+                    newMembers.map((member, index) => {
+                        return fetch("/member_tasks", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                member_id: member.id,
+                                task_id: newTasks[index].id,
+                                chore_wheel_id: newChart.id
+                            })
+                        })
+                    })
+                )
+            const newMTs =
+                await Promise.all(
+                    mtResps.map((mt) => {
+                        return mt.json()
+                    })
+                )
+            console.log(newMTs)
+            navigate(`/your-charts/${newChart.id}`)
+        } catch (error) {
+            console.log(error)
         }
         setIsLoading(false)
     }
 
     return (
-        <div>
+        <div id="form-div">
             <h1>create new chart</h1>
-            <div>
+            <div id="chart-name">
                 <form onSubmit={handleSubmit}>
-                    <label>
-                        Chart name:
-                    </label>
-                    <input
-                        type="text"
-                        value={chartName}
-                        onChange={(e) => setChartName(e.target.value)}
-                    /><br />
+                    <div>
+                        <label>
+                            Chart name:
+                        </label>
+                        <input
+                            type="text"
+                            value={chartName}
+                            onChange={(e) => setChartName(e.target.value)}
+                        /><br />
+                    </div>
+                    <div>
 
-                    {/* members form */}
+                        {/* members form */}
 
-                    {membersArr.map((item, i) => {
-                        return (
-                            <div>
-                                <label>
-                                    Member name:
-                                </label>
-                                <input
-                                    onChange={handleMembersChange}
-                                    value={item.value}
-                                    id={i}
-                                    type={item.type}
-                                    size="40"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={(e) => removeMemberInput(i)}
-                                >
-                                    x
-                                </button>
-                            </div>
-                        );
-                    })}
-                    <button type="button" onClick={addMembersInput}>Add another member</button>
+                        {membersArr.map((item, i) => {
+                            return (
+                                <div id="members-div">
+                                    <label>
+                                        Member name:
+                                    </label>
+                                    <input
+                                        onChange={handleMembersChange}
+                                        value={item.value}
+                                        id={i}
+                                        type={item.type}
+                                        size="40"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={(e) => removeMemberInput(i)}
+                                    >
+                                        x
+                                    </button>
+                                </div>
+                            );
+                        })}
+                        <button type="button" onClick={addMembersInput}>Add another member</button>
 
-                    <br />
+                        <br />
 
-                    {/* tasks form */}
-                    {tasksArr.map((item, i) => {
-                        return (
-                            <div>
-                                <label>
-                                    Task name:
-                                </label>
-                                <input
-                                    onChange={handleTasksChange}
-                                    value={item.value}
-                                    id={i}
-                                    type={item.type}
-                                    size="40"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={(e) => removeTaskInput(i)}
-                                >
-                                    x
-                                </button>
-                            </div>
-                        );
-                    })}
-                    <button type="button" onClick={addTasksInput}>Add another task</button>
+                        {/* tasks form */}
+                        {tasksArr.map((item, i) => {
+                            return (
+                                <div id="tasks-div">
+                                    <label>
+                                        Task name:
+                                    </label>
+                                    <input
+                                        onChange={handleTasksChange}
+                                        value={item.value}
+                                        id={i}
+                                        type={item.type}
+                                        size="40"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={(e) => removeTaskInput(i)}
+                                    >
+                                        x
+                                    </button>
+                                </div>
+                            );
+                        })}
+                        <button type="button" onClick={addTasksInput}>Add another task</button>
 
-                    <br /><br />
+                        <br /><br />
 
-
+                    </div>
 
 
                     <button type="submit">
@@ -251,7 +284,7 @@ function CreatePage() {
             </div>
 
 
-        </div>
+        </div >
     )
 }
 

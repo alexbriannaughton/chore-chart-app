@@ -38,9 +38,9 @@ function NavBar({ user, setUser }) {
 
                 <NavLink
                     className="nav-buttons"
-                    to="your-chart"
+                    to="your-charts"
                 >
-                    <span>Your Fam's Chart</span>
+                    <span>Your Charts</span>
                 </NavLink>
 
                 <NavLink

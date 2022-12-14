@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :member_tasks
   resources :tasks
   resources :members
   resources :people

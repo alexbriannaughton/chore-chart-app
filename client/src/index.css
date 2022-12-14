@@ -45,3 +45,21 @@ code {
   top: 2px;
   left: 1px;
 }
+
+#form-div {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+#form-div h1 {
+  width: 100%;
+}
+
+/* #members-div {
+  width: 49%;
+}
+
+#tasks-div {
+  width: 49%;
+} */
