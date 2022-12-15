@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :people
   resources :users
   resources :chore_wheels
+
+  get "/rotate/:id", to: "member_tasks#rotate"
+
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   get "/me", to: "users#show"
