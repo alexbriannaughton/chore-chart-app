@@ -6,7 +6,8 @@ class ChoreWheelsController < ApplicationController
 
     def show
         cw = ChoreWheel.find(params[:id])
-        render json: cw.member_tasks
+        num = cw.members.length
+        render json: cw.member_tasks.last(num)
     end
 
     def create

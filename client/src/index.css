@@ -63,3 +63,40 @@ code {
 #tasks-div {
   width: 49%;
 } */
+
+#circle-div {
+  position: relative;
+  left: 10vw;
+  top: 5vh;
+}
+
+#bottom-circle {
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  left: 0px;
+  bottom: 44px;
+}
+
+#top-circle {
+  height: 80%;
+  width: 80%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+}
+
+.spin {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}

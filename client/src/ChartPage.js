@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import Circle from './components/Circle'
 
 function ChartPage() {
 
@@ -9,12 +10,12 @@ function ChartPage() {
 
     useEffect(() => {
         fetch(`/chore_wheels/${params.chartId}`)
-        .then((res) => res.json())
-        .then((data) => setMemberTasks(data))
-    },[])
+            .then((res) => res.json())
+            .then((data) => setMemberTasks(data))
+    }, [])
 
     function renderMemberTasks() {
-        return(
+        return (
             memberTasks && memberTasks.map((mt) => {
                 return (
                     <div>
@@ -27,10 +28,14 @@ function ChartPage() {
         )
     }
 
-
     return (
         <div>
             {renderMemberTasks()}
+            <Circle
+                memberTasks={memberTasks}
+                setMemberTasks={setMemberTasks}
+            />
+            
         </div>
     )
 }
