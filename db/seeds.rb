@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# puts 'seedin...'
+puts 'seedin...'
 
 # cw = ChoreWheel.create(name: 'first chorewheel')
 alex = User.create(username: 'alex', password: 'alex', email: 'alexbriannaughton@gmail.com')
 
-# puts 'done seedin.'
+puts 'done seedin.'
