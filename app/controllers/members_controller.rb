@@ -12,6 +12,6 @@ class MembersController < ApplicationController
     private
 
     def member_params
-        params.permit(:name, :chore_wheel_id)
+        params.permit(:name, :chore_wheel_id, :email)
     end
 end

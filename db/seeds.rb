@@ -9,6 +9,6 @@
 # puts 'seedin...'
 
 # cw = ChoreWheel.create(name: 'first chorewheel')
-# alex = User.create(username: 'alex', password: 'alex')
+alex = User.create(username: 'alex', password: 'alex', email: 'alexbriannaughton@gmail.com')
 
 # puts 'done seedin.'

@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2022_12_13_174224) do
   create_table "members", force: :cascade do |t|
     t.string "name"
     t.bigint "chore_wheel_id", null: false
+    t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["chore_wheel_id"], name: "index_members_on_chore_wheel_id"
@@ -53,6 +54,7 @@ ActiveRecord::Schema.define(version: 2022_12_13_174224) do
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
+    t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

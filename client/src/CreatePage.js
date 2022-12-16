@@ -13,8 +13,8 @@ function CreatePage({ user }) {
 
     const memberInputArr = [
         {
-            type: "text",
-            value: ""
+            nameValue: "",
+            emailValue: ""
         }
     ]
 
@@ -32,7 +32,8 @@ function CreatePage({ user }) {
             return [
                 ...s,
                 {
-                    value: ""
+                    nameValue: "",
+                    emailValue: ""
                 }
             ]
         })
@@ -67,7 +68,19 @@ function CreatePage({ user }) {
         const index = e.target.id
         setMembersArr(s => {
             const newArr = s.slice()
-            newArr[index].value = e.target.value
+            newArr[index].nameValue = e.target.value
+
+            return newArr
+        })
+    }
+
+    function handleEmailsChange(e) {
+        e.preventDefault()
+
+        const index = e.target.id
+        setMembersArr(s => {
+            const newArr = s.slice()
+            newArr[index].emailValue = e.target.value
 
             return newArr
         })
@@ -129,7 +142,8 @@ function CreatePage({ user }) {
                                 "Content-Type": "application/json",
                             },
                             body: JSON.stringify({
-                                name: member.value,
+                                name: member.nameValue,
+                                email: member.emailValue,
                                 chore_wheel_id: newChart.id
                             })
                         })
@@ -225,7 +239,17 @@ function CreatePage({ user }) {
                                     </label>
                                     <input
                                         onChange={handleMembersChange}
-                                        value={item.value}
+                                        value={item.nameValue}
+                                        id={i}
+                                        type={item.type}
+                                        size="40"
+                                    />
+                                    <label>
+                                        & Member email:
+                                    </label>
+                                    <input
+                                        onChange={handleEmailsChange}
+                                        value={item.emailValue}
                                         id={i}
                                         type={item.type}
                                         size="40"
