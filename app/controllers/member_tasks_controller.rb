@@ -19,9 +19,11 @@ class MemberTasksController < ApplicationController
             arr << i.task.id
         end
 
-        cw.members.each_with_index do |i, index|
-            MemberTask.create!(chore_wheel: cw, member_id: i.id, task_id: arr.rotate(-1)[index])
+        new_tasks = cw.members.each_with_index do |i, index|
+            @member_task = MemberTask.create!(chore_wheel: cw, member_id: i.id, task_id: arr.rotate(-1)[index])
+
         end
+        render json: new_tasks, status: :created
     end
 
     private
