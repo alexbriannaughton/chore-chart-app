@@ -198,13 +198,13 @@ function CreatePage({ user }) {
                         })
                     })
                 )
-            const newMTs =
-                await Promise.all(
-                    mtResps.map((mt) => {
-                        return mt.json()
-                    })
-                )
-            console.log(newMTs)
+            // const newMTs =
+            //     await Promise.all(
+            //         mtResps.map((mt) => {
+            //             return mt.json()
+            //         })
+            //     )
+            // console.log(newMTs)
             navigate(`/your-charts/${newChart.id}`)
         } catch (error) {
             console.log(error)
