@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,20 +10,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */
 
-#navbar {
+/* #navbar {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin: 10px 40px;
+} */
+
+.nav-logo {
+  text-decoration: none;
 }
 
-.nav-buttons {
+/* .nav-buttons {
   text-align: center;
-  padding: 5px 10px;
-  width: auto;
+  padding: 5px 10px; 
+  width: auto; 
   border: 9px groove rgb(250, 194, 255);
   border-radius: 10px;
   color: rgb(0, 0, 0);
@@ -31,9 +35,9 @@ code {
   font-weight: bold;
   transition: all .25s ease-out;
   text-decoration: none;
-}
+} */
 
-.nav-buttons:active {
+/* .nav-buttons:active {
   border-style: ridge;
 }
 
@@ -44,8 +48,8 @@ code {
 .nav-buttons span:active {
   top: 2px;
   left: 1px;
-}
-
+} */
+/* 
 #form-div {
   display: flex;
   flex-flow: row wrap;
@@ -54,7 +58,7 @@ code {
 
 #form-div h1 {
   width: 100%;
-}
+} */
 
 /* #members-div {
   width: 49%;
