@@ -31,8 +31,7 @@ const ButtonBase = styled.button`
   border-radius: 10px;
   padding: 4px 10px;
   text-decoration: none;
-  transition: all .3s;
-  opacity: .9;
+
 `;
 
 const FillButton = styled(ButtonBase)`
@@ -40,9 +39,6 @@ const FillButton = styled(ButtonBase)`
   color: var(--accent);
   border: 7px groove var(--accent2);
 
-  &:hover {
-    opacity: 1;
-  }
   &:active {
   border-style: ridge;
   

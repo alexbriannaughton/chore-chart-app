@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Circle from './components/Circle'
 
+
 function ChartPage() {
 
     const [memberTasks, setMemberTasks] = useState([])
@@ -30,7 +31,7 @@ function ChartPage() {
 
     return (
         <div>
-            {renderMemberTasks()}
+            {/* {renderMemberTasks()} */}
             <Circle
                 memberTasks={memberTasks}
                 setMemberTasks={setMemberTasks}
@@ -39,5 +40,7 @@ function ChartPage() {
         </div>
     )
 }
+
+
 
 export default ChartPage

@@ -8,8 +8,6 @@ function Homepage({ setUser, user }) {
 
     const [showLogin, setShowLogin] = useState(true)
 
-    const [flyout, setFlyout] = useState(false)
-
     function loginStuff() {
         return (
             <Wrapper>
@@ -70,8 +68,6 @@ const Wrapper = styled.section`
   border: 3px solid rgb(250, 194, 255);
   border-radius: 5px;
   box-shadow: 0px 0px 20px black;
-
-  
 `;
 const Logo = styled.h1`
   font-family: "Londrina Outline", cursive;

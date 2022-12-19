@@ -15,6 +15,19 @@ class ChoreWheelsController < ApplicationController
         render json: cw, status: :created
     end
 
+    def create_empty_tasks
+        cw = ChoreWheel.find(params[:id])
+
+        if cw.tasks.length > cw.members.length
+            num = cw.tasks.length - cw.members.length
+            cw.tasks.last(num).each do |i|
+                nobody = Member.create!(chore_wheel: cw, name: "nobody")
+                MemberTask.create!(chore_wheel: cw, member: nobody, task: i)
+            end
+        else return null
+        end
+    end
+
     private
 
     def chore_wheel_params
