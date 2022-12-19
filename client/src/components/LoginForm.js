@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import styled from "styled-components";
+import Button from "./Button"
+import Error from "./Error";
 
-function LoginForm( {setUser} ) {
+function LoginForm({ setUser }) {
     const navigate = useNavigate()
 
     const [username, setUsername] = useState("")
@@ -27,40 +30,70 @@ function LoginForm( {setUser} ) {
                 r.json().then((err) => setErrors(err.errors))
             }
         })
-    } 
+    }
 
     return (
         <div>
             <form onSubmit={handleLoginSubmit}>
-                <div>
-                    <label>
+                <FormField>
+                    <Label>
                         Username:
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                </div>
-                <div>
-                    <label>
+                </FormField>
+                <FormField>
+                    <Label>
                         Password:
-                    </label>
-                    <input
+                    </Label>
+                    <Input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                </div>
-                <button type="submit">
-                    {isLoading ? "Loading..." : "Login"}
-                </button>
-                {errors.map((err) => (
-                    <p key={err}>{err}</p>
-                ))}
+                </FormField>
+                <FormField>
+                    <Button type="submit">
+                        {isLoading ? "Loading..." : <span>Login</span>}
+                    </Button>
+                </FormField>
+                <FormField>
+                    {errors.map((err) => (
+                        <Error key={err}>{err}</Error>
+                    ))}
+                </FormField>
             </form>
         </div>
     )
 }
+
+const Label = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+`;
+
+const FormField = styled.div`
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+`;
+
+const Input = styled.input`
+  border-radius: 5px;
+  border: 1px solid transparent;
+  border-color: dimgray;
+  -webkit-appearance: none;
+  max-width: 100%;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 4px;
+`;
 
 export default LoginForm

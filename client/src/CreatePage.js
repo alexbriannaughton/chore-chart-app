@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-
+import styled from "styled-components";
+import Button from "./components/Button";
 
 function CreatePage({ user }) {
 
@@ -213,103 +214,170 @@ function CreatePage({ user }) {
     }
 
     return (
-        <div id="form-div">
-            <h1>create new chart</h1>
-            <div id="chart-name">
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>
-                            Chart name:
-                        </label>
-                        <input
-                            type="text"
-                            value={chartName}
-                            onChange={(e) => setChartName(e.target.value)}
-                        /><br />
-                    </div>
-                    <div>
+        <WrapperGrandpa>
+            <Wrapper>
+                <div id="chart-name">
+                    <form onSubmit={handleSubmit}>
+                        <WrapperChild1>
+                            <Label>
+                                Your new chore wheel's name:
+                            </Label><br />
+                            <NameInput
+                                type="text"
+                                value={chartName}
+                                onChange={(e) => setChartName(e.target.value)}
+                            /><br />
+                        </WrapperChild1>
+                        <Wrapper>
 
-                        {/* members form */}
+                            {/* members form */}
+                            <WrapperChild>
+                                {membersArr.map((item, i) => {
+                                    return (
+                                        <div>
+                                            <FormField>
+                                                <Label>
+                                                    Member name:
+                                                </Label>
+                                                <Input
+                                                    onChange={handleMembersChange}
+                                                    value={item.nameValue}
+                                                    id={i}
+                                                    type={item.type}
+                                                    size="40"
+                                                />
+                                            </FormField>
+                                            <FormField>
+                                                <Label>
+                                                    & Member email:
+                                                </Label>
+                                                <Input
+                                                    onChange={handleEmailsChange}
+                                                    value={item.emailValue}
+                                                    id={i}
+                                                    type={item.type}
+                                                    size="40"
 
-                        {membersArr.map((item, i) => {
-                            return (
-                                <div id="members-div">
-                                    <label>
-                                        Member name:
-                                    </label>
-                                    <input
-                                        onChange={handleMembersChange}
-                                        value={item.nameValue}
-                                        id={i}
-                                        type={item.type}
-                                        size="40"
-                                    />
-                                    <label>
-                                        & Member email:
-                                    </label>
-                                    <input
-                                        onChange={handleEmailsChange}
-                                        value={item.emailValue}
-                                        id={i}
-                                        type={item.type}
-                                        size="40"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={(e) => removeMemberInput(i)}
-                                    >
-                                        x
-                                    </button>
-                                </div>
-                            );
-                        })}
-                        <button type="button" onClick={addMembersInput}>Add another member</button>
+                                                />&nbsp;
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => removeMemberInput(i)}
+                                                >
+                                                    x
+                                                </button>
+                                            </FormField>
+                                        </div>
+                                    );
+                                })}
+                                <Button color="secondary" type="button" onClick={addMembersInput}><span>Add another member</span></Button>
+                            </WrapperChild>
+                            <br />
 
+                            {/* tasks form */}
+                            <WrapperChild>
+                                {tasksArr.map((item, i) => {
+                                    return (
+                                        <div>
+                                            <FormField>
+                                                <Label>
+                                                    Task name:
+                                                </Label>
+                                                <Input
+                                                    onChange={handleTasksChange}
+                                                    value={item.value}
+                                                    id={i}
+                                                    type={item.type}
+                                                    size="40"
+                                                />&nbsp;
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => removeTaskInput(i)}
+                                                >
+                                                    x
+                                                </button>
+                                            </FormField>
+                                        </div>
+                                    );
+                                })}
+                                <Button color="secondary" type="button" onClick={addTasksInput}><span>Add another task</span></Button>
+                            </WrapperChild>
+                            <br /><br />
+
+                        </Wrapper>
+
+                        <WrapperChild1>
+                            <Button type="submit">
+                                {isLoading ? "Loading..." : <span>Submit</span>}
+                            </Button>
+                        </WrapperChild1>
                         <br />
-
-                        {/* tasks form */}
-                        {tasksArr.map((item, i) => {
-                            return (
-                                <div id="tasks-div">
-                                    <label>
-                                        Task name:
-                                    </label>
-                                    <input
-                                        onChange={handleTasksChange}
-                                        value={item.value}
-                                        id={i}
-                                        type={item.type}
-                                        size="40"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={(e) => removeTaskInput(i)}
-                                    >
-                                        x
-                                    </button>
-                                </div>
-                            );
-                        })}
-                        <button type="button" onClick={addTasksInput}>Add another task</button>
-
-                        <br /><br />
-
-                    </div>
+                        {errors.map((err) => (
+                            <p key={err}>{err}</p>
+                        ))}
+                    </form>
+                </div>
 
 
-                    <button type="submit">
-                        {isLoading ? "Loading..." : "Submit"}
-                    </button>
-                    <br />
-                    {errors.map((err) => (
-                        <p key={err}>{err}</p>
-                    ))}
-                </form>
-            </div>
-
-
-        </div >
+            </Wrapper>
+        </WrapperGrandpa>
     )
 }
+
+const Label = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+`;
+
+const FormField = styled.div`
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+`;
+
+
+
+const Input = styled.input`
+  border-radius: 5px;
+  border: 1px solid transparent;
+  border-color: dimgray;
+  -webkit-appearance: none;
+  max-width: 100%;
+  width: 90%;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 4px;
+`;
+const NameInput = styled(Input)`
+    width: 50%;
+`;
+
+const WrapperGrandpa = styled.div`
+  border: 3px solid chartreuse;  
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px black;
+  margin: 2% 7%;
+`;
+
+const Wrapper = styled.section`
+  max-width: 1000px;
+  margin: 30px auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const WrapperChild = styled.div`
+  flex: 1;
+  border: 2px dotted rgb(250, 194, 255);
+  
+`;
+const WrapperChild1 = styled.div`
+    text-align: center;
+`;
+
 
 export default CreatePage

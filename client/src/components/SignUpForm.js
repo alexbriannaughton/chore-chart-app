@@ -1,5 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
+import Button from "./Button"
+import Error from "./Error";
 
 function SignUpForm({ setUser }) {
 
@@ -37,47 +40,69 @@ function SignUpForm({ setUser }) {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSignUpSubmit}>
-                <div>
-                    <label>
-                        Username:
-                    </label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>
-                        Password:
-                    </label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>
-                        Password confirmation:
-                    </label>
-                    <input
-                        type="password"
-                        value={passwordConfirmation}
-                        onChange={(e) => setPasswordConfirmation(e.target.value)}
-                    />
-                </div>
-                <button type="submit">
-                    {isLoading ? "Loading" : "Sign Up!"}
-                </button>
-                {errors.map((err) => (
-                    <p key={err}>{err}</p>
-                ))}
-            </form>
-        </div>
+        <form onSubmit={handleSignUpSubmit}>
+            <FormField>
+                <Label>
+                    Username:
+                </Label>
+                <Input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </FormField>
+            <FormField>
+                <Label>
+                    Password:
+                </Label>
+                <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </FormField>
+            <FormField>
+                <Label>
+                    Password confirmation:
+                </Label>
+                <Input
+                    type="password"
+                    value={passwordConfirmation}
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                />
+            </FormField>
+            <Button type="submit">
+                {isLoading ? "Loading" : <span>Sign Up!</span>}
+            </Button>
+            {errors.map((err) => (
+                <Error key={err}>{err}</Error>
+            ))}
+        </form>
     )
 }
+
+const FormField = styled.div`
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+`;
+const Label = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+`;
+const Input = styled.input`
+  border-radius: 5px;
+  border: 1px solid transparent;
+  border-color: dimgray;
+  -webkit-appearance: none;
+  max-width: 100%;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 4px;
+`;
 
 export default SignUpForm

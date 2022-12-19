@@ -1,4 +1,8 @@
 import { NavLink } from "react-router-dom"
+import styled from "styled-components";
+import Button from "./components/Button";
+import { Link } from "react-router-dom";
+
 
 function NavBar({ user, setUser }) {
 
@@ -15,12 +19,12 @@ function NavBar({ user, setUser }) {
     function noUser() {
         return (
             <>
-            <NavLink
+            {/* <NavLink
             className="nav-buttons"
             to="/"
             >
                 <span>Login</span>
-            </NavLink>
+            </NavLink> */}
 
             </>
         )
@@ -28,40 +32,61 @@ function NavBar({ user, setUser }) {
 
     function withUser() {
         return (
-            <>
-                <NavLink
-                    className="nav-buttons"
+            <Wrapper>
+                <Button
+                    as={Link}
                     to="create-new-chart"
                 >
-                    <span>Create New Chart</span>
-                </NavLink>
+                    <span>New Chart</span>
+                </Button>
 
-                <NavLink
-                    className="nav-buttons"
+                <NavLink         
                     to="your-charts"
+                    className="nav-logo"
                 >
-                    <span>Your Charts</span>
+                    <Logo>{"chore changr :~)"}</Logo>
                 </NavLink>
 
-                <NavLink
-                    className="nav-buttons"
+                <Button
+                    as={Link}
                     exact to="/"
                     onClick={handleLogout}
                 >
                     <span>Logout</span>
-                </NavLink>
+                </Button>
 
-            </>
+            </Wrapper>
         )
     }
     
     return (
-        <nav id="navbar">
+        <>
 
             {user ? withUser() : noUser()}
 
-        </nav>
+        </>
     )
 }
+
+const Wrapper = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+`;
+const Logo = styled.h1`
+  font-family: "Londrina Outline", cursive;
+  font-size: 3rem;
+  color: chartreuse;
+  background-color: dimgray;
+  border: double;
+  border-color: chartreuse;
+  border-radius: 10px;
+  margin: 0;
+  text-align: center;
+  text-decoration: none;
+  padding-left: 15px;
+  padding-right: 15px;
+`;
 
 export default NavBar
