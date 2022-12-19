@@ -5,4 +5,6 @@ class ChoreWheel < ApplicationRecord
     has_many :member_tasks
 
     validates :name, length: { minimum: 3 }
+
+    
 end

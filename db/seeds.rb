@@ -8,7 +8,9 @@
 
 puts 'seedin...'
 
-# cw = ChoreWheel.create(name: 'first chorewheel')
+
 alex = User.create(username: 'alex', password: 'alex', email: 'alexbriannaughton@gmail.com')
+cw = ChoreWheel.create(name: 'first chorewheel', user: alex)
+free_task = Task.create(name: "free space", chore_wheel: cw)
 
 puts 'done seedin.'

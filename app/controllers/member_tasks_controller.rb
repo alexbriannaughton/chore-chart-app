@@ -22,7 +22,6 @@ class MemberTasksController < ApplicationController
         cw.members.each_with_index do |i, index|
             MemberTask.create!(chore_wheel: cw, member_id: i.id, task_id: arr.rotate(-1)[index])
         end
-    
     end
 
     private

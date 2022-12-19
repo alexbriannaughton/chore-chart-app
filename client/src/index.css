@@ -69,38 +69,36 @@ code {
 } */
 
 #circle-div {
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
   position: relative;
-  left: 10vw;
-  top: 5vh;
 }
 
 #bottom-circle {
-  height: 80%;
-  width: 80%;
   position: absolute;
-  left: 0px;
-  bottom: 44px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 10%);
 }
 
 #top-circle {
-  height: 80%;
-  width: 80%;
   position: absolute;
-  left: 0px;
-  top: 0px;
-  z-index: 1;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, 20%);
+  
 }
 
 .spin {
-  animation: rotation 2s infinite linear;
+  animation: rotation 5s infinite ease-in-out;
 }
 
 @keyframes rotation {
   from {
     transform: rotate(0deg);
   }
-
   to {
-    transform: rotate(359deg);
+    transform: rotate(5000deg);
   }
 }

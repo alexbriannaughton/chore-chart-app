@@ -186,6 +186,13 @@ function CreatePage({ user }) {
             const mtResps =
                 await Promise.all(
                     newMembers.map((member, index) => {
+                        function assignTasks() {
+                            if (!newTasks[index]) {
+                                return 1
+                            }
+                            else return newTasks[index].id
+                        }
+
                         return fetch("/member_tasks", {
                             method: "POST",
                             headers: {
@@ -193,12 +200,16 @@ function CreatePage({ user }) {
                             },
                             body: JSON.stringify({
                                 member_id: member.id,
-                                task_id: newTasks[index].id,
+                                task_id: assignTasks(),
                                 chore_wheel_id: newChart.id
                             })
                         })
                     })
                 )
+
+
+            await fetch(`/empty_tasks/${newChart.id}`)
+
             // const newMTs =
             //     await Promise.all(
             //         mtResps.map((mt) => {
@@ -358,7 +369,7 @@ const WrapperGrandpa = styled.div`
   border: 3px solid chartreuse;  
   border-radius: 5px;
   box-shadow: 0px 0px 20px black;
-  margin: 2% 7%;
+  margin: 2% 18%;
 `;
 
 const Wrapper = styled.section`

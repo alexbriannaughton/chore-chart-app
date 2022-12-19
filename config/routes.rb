@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :chore_wheels
 
   get "/rotate/:id", to: "member_tasks#rotate"
+  get "/empty_tasks/:id", to: "chore_wheels#create_empty_tasks" 
 
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
