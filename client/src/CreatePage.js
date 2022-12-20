@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./components/Button";
+import Error from "./components/Error";
 
 function CreatePage({ user }) {
 
@@ -219,7 +220,7 @@ function CreatePage({ user }) {
             // console.log(newMTs)
             navigate(`/your-charts/${newChart.id}`)
         } catch (error) {
-            console.log(error)
+            setErrors(error)
         }
         setIsLoading(false)
     }
@@ -323,7 +324,7 @@ function CreatePage({ user }) {
                         </WrapperChild1>
                         <br />
                         {errors.map((err) => (
-                            <p key={err}>{err}</p>
+                            <Error key={err}>{err}</Error>
                         ))}
                     </form>
                 </div>

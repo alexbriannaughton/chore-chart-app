@@ -6,8 +6,12 @@ class ChoreWheelsController < ApplicationController
 
     def show
         cw = ChoreWheel.find(params[:id])
-        num = cw.members.length
-        render json: cw.member_tasks.last(num)
+        if cw.user.id != session[:user_id]
+            render json: { errors: ["Not authorized"] }, status: :unauthorized         
+        else
+            num = cw.members.length
+            render json: cw.member_tasks.last(num)
+        end
     end
 
     def create

@@ -7,12 +7,20 @@ function ChartPage() {
 
     const [memberTasks, setMemberTasks] = useState([])
 
+    const [errors, setErrors] = useState([])
+
     const params = useParams()
 
     useEffect(() => {
         fetch(`/chore_wheels/${params.chartId}`)
-            .then((res) => res.json())
-            .then((data) => setMemberTasks(data))
+            .then((res) => {
+                if (res.ok) {
+                    res.json().then((memberTasks) => setMemberTasks(memberTasks))
+                } else {
+                    res.json().then((err) => setErrors(err.errors))
+                }
+            })
+  
     }, [])
 
     function renderMemberTasks() {
@@ -32,10 +40,11 @@ function ChartPage() {
     return (
         <div>
             {/* {renderMemberTasks()} */}
-            <Circle
+            {errors.length > 0 ? <h1>not authorized</h1> : <Circle
                 memberTasks={memberTasks}
                 setMemberTasks={setMemberTasks}
-            />
+
+            />}
             
         </div>
     )
