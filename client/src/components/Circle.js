@@ -20,7 +20,7 @@ function Circle({ memberTasks, setMemberTasks }) {
             member: mt.member.name,
             task: mt.task.name,
             value: 1,
-            color: wheelColors[index],
+            color: wheelColors[index % wheelColors.length],
             details: `${mt.member.name} is on ${mt.task.name} duty. further details will go here.`
         }
     })
@@ -44,47 +44,55 @@ function Circle({ memberTasks, setMemberTasks }) {
         setTimeout(rotateFetch, 2000)
     }
 
-    return (
-        <div>
-            <Header>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header>
-            <div id="circle-div">
+    function renderWheel() {
+        return (
+            <div>
+                <Header>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header>
+                <div id="circle-div" className="fade-in">
 
-                <div id="bottom-circle">
-                    <PieChart
-                        data={datas}
-                        style={{ height: '500px' }}
-                        label={({ dataEntry }) => dataEntry.member}
-                        labelStyle={(index) => ({
-                            fill: 'black',
-                            fontSize: '5px',
-                            fontFamily: 'sans-serif',
-                        })}
-                        radius={42}
-                        labelPosition={112}
-                    />
-                </div>
-                <div id="top-circle">
-                    <PieChart
-                        className={rotate ? "spin" : null}
-                        data={datas}
-                        style={{ height: '430px' }}
-                        label={({ dataEntry }) => dataEntry.task}
-                        labelStyle={(index) => ({
-                            fill: 'black',
-                            fontSize: '5px',
-                            fontFamily: 'sans-serif',
-                        })}
-                        onClick={(e, segmentIndex) => renderDetails(datas[segmentIndex])}
+                    <div id="bottom-circle">
+                        <PieChart
+                            data={datas}
+                            style={{ height: '500px' }}
+                            label={({ dataEntry }) => dataEntry.member}
+                            labelStyle={(index) => ({
+                                fill: 'black',
+                                fontSize: '5px',
+                                fontFamily: 'sans-serif',
+                            })}
+                            radius={42}
+                            labelPosition={112}
+                        />
+                    </div>
+                    <div id="top-circle">
+                        <PieChart
+                            className={rotate ? "spin" : null}
+                            data={datas}
+                            style={{ height: '430px' }}
+                            label={({ dataEntry }) => dataEntry.task}
+                            labelStyle={(index) => ({
+                                fill: 'black',
+                                fontSize: '5px',
+                                fontFamily: 'sans-serif',
+                            })}
+                            onClick={(e, segmentIndex) => renderDetails(datas[segmentIndex])}
 
-                    />
-                    <CircleButton onClick={rotateTasks}>
-                        <span>rotate<br></br>tasks</span>
-                    </CircleButton>
+                        />
+                        <CircleButton onClick={rotateTasks}>
+                            <span>rotate<br></br>tasks</span>
+                        </CircleButton>
+                    </div>
+
                 </div>
 
             </div>
+        )
+    }
 
-        </div>
+    return (
+        <>
+            {renderWheel()}
+        </>
     )
 }
 const Header = styled.h1`

@@ -73,6 +73,21 @@ code {
   /* justify-content: center;
   align-items: center; */
   position: relative;
+  
+}
+
+.fade-in {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 #bottom-circle {
@@ -80,25 +95,34 @@ code {
   left: 50%;
   top: 50%;
   transform: translate(-50%, 10%);
+  width: 100%;
 }
 
 #top-circle {
   position: absolute;
   left: 50%;
-  top: 30%;
+  top: 50%;
   transform: translate(-50%, 20%);
-  
+
 }
 
 .spin {
-  animation: rotation 5s infinite ease-in-out;
+  animation: rotation 5s infinite ease-in-out, fadeOut 3s ease-in-out;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 @keyframes rotation {
   from {
     transform: rotate(0deg);
+    opacity: 1;
   }
+
   to {
     transform: rotate(5000deg);
+    opacity: 0;
   }
 }
