@@ -7,7 +7,6 @@ class MemberTask < ApplicationRecord
 
   def send_new_task_email
     MemberMailer.new_chore(member: self.member, member_task: self).deliver_now
-    Rails.logger.info("email sent successfully! to #{self.member}")
   end
 
   def self.rotate_all
