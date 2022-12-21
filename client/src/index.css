@@ -73,7 +73,7 @@ code {
   /* justify-content: center;
   align-items: center; */
   position: relative;
-  
+  min-width: 300px;
 }
 
 .fade-in {
@@ -96,6 +96,7 @@ code {
   top: 50%;
   transform: translate(-50%, 10%);
   width: 100%;
+  min-width: 300px;
 }
 
 #top-circle {
@@ -103,7 +104,7 @@ code {
   left: 50%;
   top: 50%;
   transform: translate(-50%, 20%);
-
+  min-width: 300px;
 }
 
 .spin {
