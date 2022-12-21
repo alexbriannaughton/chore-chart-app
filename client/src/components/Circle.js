@@ -3,17 +3,19 @@ import { useParams } from 'react-router-dom'
 import { useState } from "react"
 import Button from "./Button"
 import styled from "styled-components"
+import DetailsModal from "./DetailsModal"
 
 
 function Circle({ memberTasks, setMemberTasks }) {
 
     const [rotate, setRotate] = useState(false)
 
+    const [showModal, setShowModal] = useState(false)
+    const [currentDetails, setCurrentDetails] = useState({})
+
     const params = useParams()
 
     const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)"]
-
-    console.log(memberTasks)
 
     const datas = memberTasks.map((mt, index) => {
         return {
@@ -25,8 +27,13 @@ function Circle({ memberTasks, setMemberTasks }) {
         }
     })
 
-    function renderDetails(segment) {
-        console.log(segment)
+    function renderDetailsModal(segment) {
+        setCurrentDetails(segment)
+        setShowModal(true)
+    }
+    function mouseOutModal(segment) {
+        setCurrentDetails({})
+        setShowModal(false)
     }
 
     async function rotateFetch() {
@@ -75,14 +82,16 @@ function Circle({ memberTasks, setMemberTasks }) {
                                 fontSize: '5px',
                                 fontFamily: 'sans-serif',
                             })}
-                            onClick={(e, segmentIndex) => renderDetails(datas[segmentIndex])}
+                            onMouseOver={(e, segmentIndex) => renderDetailsModal(datas[segmentIndex])}
+                            onMouseOut={(e, segmentIndex) => mouseOutModal(datas[segmentIndex])}
 
                         />
                         <CircleButton onClick={rotateTasks}>
                             <span>rotate<br></br>tasks</span>
                         </CircleButton>
-                    </div>
 
+                    </div>
+                    <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
                 </div>
 
             </div>
@@ -95,6 +104,7 @@ function Circle({ memberTasks, setMemberTasks }) {
         </>
     )
 }
+
 const Header = styled.h1`
     margin: 0;
     margin-bottom: -50px;
