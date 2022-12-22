@@ -31,7 +31,7 @@ function Homepage({ setUser, user }) {
                         <Divider />
                         <p>already have an account? &nbsp;
                             <Button color="secondary" onClick={e => setShowLogin(true)}>
-                                <span>log in!</span>
+                                <span>Log in!</span>
                             </Button>
                         </p>
 

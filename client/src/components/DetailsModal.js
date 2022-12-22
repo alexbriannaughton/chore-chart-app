@@ -1,10 +1,18 @@
 import styled from "styled-components"
+import { useRef } from 'react'
 
 function DetailsModal({ showModal, setShowModal, currentDetails }) {
+  const modalRef = useRef()
+
+  function handleModalClick(e) {
+    e.stopPropagation()
+    setShowModal(false)
+  }
+
     return (
         <>
             {showModal ? (
-                <Background>
+                <Background ref={modalRef} onClick={handleModalClick}>
                     <ModalWrapper showModal={showModal}>
                         <ModalContent>
                             <p>{currentDetails.details}</p>
@@ -17,13 +25,12 @@ function DetailsModal({ showModal, setShowModal, currentDetails }) {
 }
 
 const Background = styled.div`
-    width: 50%;
+
   height: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, 50%);
-  pointer-events: none;
   animation: fadeIn 1s;
 
   @keyframes fadeIn {
@@ -45,7 +52,7 @@ const ModalWrapper = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, 210%);
-  opacity: 90%;
+  opacity: 95%;
 `;
 const ModalContent = styled.div`
   display: flex;

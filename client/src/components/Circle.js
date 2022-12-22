@@ -10,8 +10,9 @@ function Circle({ memberTasks, setMemberTasks }) {
 
     const [rotate, setRotate] = useState(false)
 
-    const [showModal, setShowModal] = useState(false)
-    const [currentDetails, setCurrentDetails] = useState({})
+    const [showModal, setShowModal] = useState(null)
+    const [currentDetails, setCurrentDetails] = useState(null)
+    const [hovered, setHovered] = useState(undefined);
 
     const params = useParams()
 
@@ -23,17 +24,35 @@ function Circle({ memberTasks, setMemberTasks }) {
             task: mt.task.name,
             value: 1,
             color: wheelColors[index % wheelColors.length],
-            details: `${mt.member.name} is on ${mt.task.name} duty. further details will go here.`
+            details: `${mt.member.name} is on ${mt.task.name} duty. \n further details will go hereasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf.`
         }
     })
 
-    function renderDetailsModal(segment) {
-        setCurrentDetails(segment)
-        setShowModal(true)
-    }
-    function mouseOutModal(segment) {
-        setCurrentDetails({})
-        setShowModal(false)
+    const data = datas.map((entry, i) => {
+        if (hovered === i) {
+            return {
+                ...entry,
+                color: 'white',
+            };
+        }
+        return entry;
+    });
+
+
+
+    function handleSliceClick(segment, i) {
+        if (!showModal) {
+            setCurrentDetails(segment)
+            setShowModal(true)
+        }
+        if (showModal) {
+            if (currentDetails.member === segment.member) {
+                setShowModal(false)
+                setCurrentDetails(null)
+            } else {
+                setCurrentDetails(segment)
+            }
+        }
     }
 
     async function rotateFetch() {
@@ -60,7 +79,7 @@ function Circle({ memberTasks, setMemberTasks }) {
                     <div id="bottom-circle">
                         <PieChart
                             data={datas}
-                            style={{ height: '500px' }}
+                            style={{ height: '500px', minWidth: '200px' }}
                             label={({ dataEntry }) => dataEntry.member}
                             labelStyle={(index) => ({
                                 fill: 'black',
@@ -74,18 +93,27 @@ function Circle({ memberTasks, setMemberTasks }) {
                     <div id="top-circle">
                         <PieChart
                             className={rotate ? "spin" : null}
-                            data={datas}
-                            style={{ height: '430px' }}
+                            data={data}
+                            style={{ height: '500px' }}
                             label={({ dataEntry }) => dataEntry.task}
                             labelStyle={(index) => ({
                                 fill: 'black',
                                 fontSize: '5px',
                                 fontFamily: 'sans-serif',
+                                pointerEvents: 'none',
                             })}
-                            onMouseOver={(e, segmentIndex) => renderDetailsModal(datas[segmentIndex])}
-                            onMouseOut={(e, segmentIndex) => mouseOutModal(datas[segmentIndex])}
+                            onClick={(e, segmentIndex) => handleSliceClick(datas[segmentIndex], segmentIndex)}
+                            onMouseOver={(e, segmentIndex) => {
+                                setHovered(segmentIndex);
+                            }}
+                            onMouseOut={() => {
+                                setHovered(undefined);
+                            }}
+                            radius={42}
+                            labelPosition={60}
 
                         />
+
                         <CircleButton onClick={rotateTasks}>
                             <span>rotate<br></br>tasks</span>
                         </CircleButton>
