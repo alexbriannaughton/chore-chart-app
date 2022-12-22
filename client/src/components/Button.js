@@ -9,7 +9,7 @@ const COLORS = {
     secondary: {
         "--main": "chartreuse",
         "--accent": "black",
-        "--accent2": "whitesmoke"
+        "--accent2": "#e8e8e8"
     },
 };
 

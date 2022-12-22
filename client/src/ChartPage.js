@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Circle from './components/Circle'
 import styled from "styled-components"
 import { PieChart } from "react-minimal-pie-chart"
+import Button from './components/Button'
 
 
 function ChartPage() {
@@ -11,11 +12,13 @@ function ChartPage() {
 
     const [errors, setErrors] = useState(undefined)
 
+    const [activeButton, setActiveButton] = useState("Wheel")
+
     const params = useParams()
 
     const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)"]
 
-    const datas = [1,1,1,1,1,1,1,1,1,1].map((mt, index) => {
+    const datas = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((mt, index) => {
         return {
             value: 1,
             color: wheelColors[index % wheelColors.length]
@@ -34,6 +37,10 @@ function ChartPage() {
 
     }, [])
 
+    function handleMenuClick(e) {
+        setActiveButton(e.target.innerText)
+    }
+    console.log(activeButton)
     function noAuth() {
         return (
             <>
@@ -47,16 +54,111 @@ function ChartPage() {
         )
     }
 
-    return (
-        <div>
-            {/* {renderMemberTasks()} */}
-            {errors ? noAuth() : <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks}
-            />}
+    function wheelPage() {
+        return (
+            <>
+                <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks}
+                />
+            </>
+        )
+    }
 
-        </div>
+    function bulletinBoard() {
+        return (
+            <>
+                <h1>bulletinBoard</h1>
+            </>
+        )
+    }
+
+    function options() {
+        return (
+            <>
+                <h1>options</h1>
+            </>
+        )
+    }
+
+    function renderWhichPage() {
+        if (activeButton === "Wheel") {
+            return (
+                <>
+                    {wheelPage()}
+                </>
+            )
+        }
+        else if (activeButton === "Bulletin Board") {
+            return (
+                <>
+                    {bulletinBoard()}
+                </>
+            )
+        }
+        else if (activeButton === "Options") {
+            return (
+                <>
+                    {options()}
+                </>
+            )
+        }
+    }
+
+
+
+    return (
+        <>
+            <Header3>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header3>
+            <Parent onClick={(e) => handleMenuClick(e)}>
+                <OutsideButtons
+                    color="secondary"
+                    // style={activeButton === "Wheel" ? { borderStyle: "ridge" } : {}}
+                >
+                    <span>Wheel</span>
+                </OutsideButtons>
+                <Button1><span>Bulletin Board</span></Button1>
+                <OutsideButtons color="secondary"><span>Options</span></OutsideButtons>
+            </Parent>
+            {errors ? noAuth() : renderWhichPage()}
+        </>
     )
 }
+const Button1 = styled(Button)`
+    margin-top: 20px;
+    color: black;
 
+    &:focus {
+  border-style: ridge;
+     span {
+  top: 2px;
+  left: 1px;
+}
+    }
+
+ 
+`;
+const OutsideButtons = styled(Button1)`
+    margin-top: 30px;
+`
+const Parent = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+`
+const Child1 = styled.div`
+    width: 75%;
+    text-align: left;
+`
+const Child2 = styled.div`
+    width: 26%;
+    text-align: right;
+`
+const Header3 = styled.h1`
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: 500;
+`
 const Header = styled.h1`
 text-align: center;
 position: absolute;
@@ -84,6 +186,7 @@ width: 200px;
 height: 80px;
 border-radius: 50%;
 `
+
 
 
 export default ChartPage

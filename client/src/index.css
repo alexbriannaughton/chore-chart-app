@@ -69,11 +69,12 @@ code {
 } */
 
 #circle-div {
-  display: flex;
+  /* display: flex; */
   /* justify-content: center;
   align-items: center; */
-  position: relative;
-  min-width: 300px;
+  /* position: relative;
+  min-width: 300px; */
+  /* transform: translate(10%); */
 }
 
 .fade-in {
@@ -92,19 +93,19 @@ code {
 
 #bottom-circle {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, 20%);
+  /* left: 50%;
+  top: 50%; */
+  /* transform: translate(-30%, 20%); */
   width: 100%;
-  min-width: 300px;
+  /* min-width: 300px; */
 }
 
 #top-circle {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, 20%);
-  min-width: 300px;
+  /* left: 50%;
+  top: 50%; */
+  /* transform: translate(-50%, 20%); */
+  /* min-width: 300px; */
   width: 100%;
 }
 
@@ -140,4 +141,8 @@ code {
     transform: rotate(5000deg);
     opacity: 0;
   }
+}
+
+.ridge-button {
+  border-style: ridge;
 }

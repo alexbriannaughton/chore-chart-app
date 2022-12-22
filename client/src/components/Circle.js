@@ -72,57 +72,54 @@ function Circle({ memberTasks, setMemberTasks }) {
 
     function renderWheel() {
         return (
-            <div>
-                <Header>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header>
-                <div id="circle-div" className="fade-in">
-
-                    <div id="bottom-circle">
-                        <PieChart
-                            data={datas}
-                            style={{ height: '500px', minWidth: '200px' }}
-                            label={({ dataEntry }) => dataEntry.member}
-                            labelStyle={(index) => ({
-                                fill: 'black',
-                                fontSize: '5px',
-                                fontFamily: 'sans-serif',
-                            })}
-                            radius={42}
-                            labelPosition={112}
-                        />
-                    </div>
-                    <div id="top-circle">
-                        <PieChart
-                            className={rotate ? "spin" : null}
-                            data={data}
-                            style={{ height: '500px' }}
-                            label={({ dataEntry }) => dataEntry.task}
-                            labelStyle={(index) => ({
-                                fill: 'black',
-                                fontSize: '5px',
-                                fontFamily: 'sans-serif',
-                                pointerEvents: 'none',
-                            })}
-                            onClick={(e, segmentIndex) => handleSliceClick(datas[segmentIndex], segmentIndex)}
-                            onMouseOver={(e, segmentIndex) => {
-                                setHovered(segmentIndex);
-                            }}
-                            onMouseOut={() => {
-                                setHovered(undefined);
-                            }}
-                            radius={42}
-                            labelPosition={60}
-
-                        />
-
-                        <CircleButton onClick={rotateTasks}>
-                            <span>rotate<br></br>tasks</span>
-                        </CircleButton>
-
-                    </div>
-                    <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
+            <div id="circle-div" className="fade-in">
+                <div id="bottom-circle">
+                    <PieChart
+                        data={datas}
+                        style={{ height: '500px', minWidth: '200px' }}
+                        label={({ dataEntry }) => dataEntry.member}
+                        labelStyle={(index) => ({
+                            fill: 'black',
+                            fontSize: '5px',
+                            fontFamily: 'sans-serif',
+                        })}
+                        radius={42}
+                        labelPosition={112}
+                    />
                 </div>
+                <div id="top-circle">
+                    <PieChart
+                        className={rotate ? "spin" : null}
+                        data={data}
+                        style={{ height: '500px' }}
+                        label={({ dataEntry }) => dataEntry.task}
+                        labelStyle={(index) => ({
+                            fill: 'black',
+                            fontSize: '5px',
+                            fontFamily: 'sans-serif',
+                            pointerEvents: 'none',
+                        })}
+                        onClick={(e, segmentIndex) => handleSliceClick(datas[segmentIndex], segmentIndex)}
+                        onMouseOver={(e, segmentIndex) => {
+                            setHovered(segmentIndex);
+                        }}
+                        onMouseOut={() => {
+                            setHovered(undefined);
+                        }}
+                        radius={42}
+                        labelPosition={60}
 
+                    />
+
+                    <CircleButton onClick={rotateTasks}>
+                        <span>rotate<br></br>tasks</span>
+                    </CircleButton>
+
+                </div>
+                <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
             </div>
+
+
         )
     }
 
@@ -132,13 +129,6 @@ function Circle({ memberTasks, setMemberTasks }) {
         </>
     )
 }
-
-const Header = styled.h1`
-    margin: 0;
-    margin-bottom: -50px;
-    padding: 0;
-    text-align: center;
-`
 
 const CircleButton = styled(Button)`
     position: absolute;
