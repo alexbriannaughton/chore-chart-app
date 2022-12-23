@@ -71,9 +71,9 @@ function SignUpForm({ setUser }) {
                     onChange={(e) => setPasswordConfirmation(e.target.value)}
                 />
             </FormField>
-            <Button type="submit">
+            <div style={{display: "flex", justifyContent: "center"}}><Button type="submit">
                 {isLoading ? "Loading" : <span>Sign Up!</span>}
-            </Button>
+            </Button></div>
             {errors.map((err) => (
                 <Error key={err}>{err}</Error>
             ))}

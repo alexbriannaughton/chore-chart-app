@@ -106,7 +106,7 @@ function ChartPage() {
             <Parent onClick={(e) => handleMenuClick(e)}>
                 <OutsideButtons
                     color="secondary"
-                    // style={activeButton === "Wheel" ? { borderStyle: "ridge" } : {}}
+                    // style={{ borderStyle: "ridge" }}
                 >
                     <span>Wheel</span>
                 </OutsideButtons>
