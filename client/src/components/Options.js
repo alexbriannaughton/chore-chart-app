@@ -19,6 +19,8 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
     const [editTaskDetails, setEditTaskDetails] = useState("")
     const [editMemberName, setEditMemberName] = useState("")
     const [editMemberEmail, setEditMemberEmail] = useState("")
+    const [newTaskName, setNewTaskName] = useState("")
+    const [newTaskDetails, setNewTaskDetails] = useState("")
 
     function handleEditTaskClick(task) {
         setTaskToEdit(task)
@@ -33,9 +35,6 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
     function handleTaskEditSubmit(e) {
 
         e.preventDefault()
-        console.log(taskToEdit)
-        console.log(editTaskName)
-        console.log(editTaskDetails)
 
         const updateObj = {
             name: editTaskName,
@@ -125,6 +124,37 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 }
             })
     }
+    function newTaskSubmit(e) {
+        e.preventDefault()
+        console.log(newTaskName)
+        console.log(newTaskDetails)
+
+        const taskObj = {
+            name: newTaskName,
+            details: newTaskDetails,
+            chore_wheel_id: params.chartId,
+        }
+
+        fetch(`/new_task`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskObj)
+        }).then((r) => {
+            if (r.ok) {
+                fetch(`/chore_wheels/${params.chartId}`)
+                    .then((res) => res.json())
+                    .then((mt) => {
+                        setMemberTasks(mt)
+                        setActiveButton("Wheel")
+                    })
+
+            } else {
+                r.json().then((err) => setErrors(err.errors))
+            }
+        })
+    }
 
     function renderPage() {
         if (taskToEdit) {
@@ -146,7 +176,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                                 onChange={(e) => setEditTaskDetails(e.target.value)}
                             />
                         </FormField>
-                        <div style={{ width: "500px", margin: "auto" }}>
+                        <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
                             <FormField>
                                 {errors.map((err) => (
                                     <Error1 key={err}>{err}</Error1>
@@ -187,7 +217,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                                 onChange={(e) => setEditMemberEmail(e.target.value)}
                             />
                         </FormField>
-                        <div style={{ width: "500px", margin: "auto" }}>
+                        <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
                             <FormField>
                                 {errors.map((err) => (
                                     <Error1 key={err}>{err}</Error1>
@@ -217,10 +247,11 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                     <OptionsHeader>Options</OptionsHeader>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit Tasks</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit Members</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new task</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new member</span></OptionsButtons>
                 </>
             )
         }
-
         if (subMenu === "Edit Tasks") {
 
             function renderTasks() {
@@ -245,7 +276,6 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 </>
             )
         }
-
         if (subMenu === "Edit Members") {
 
             function renderMembers() {
@@ -269,6 +299,48 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 </>
             )
         }
+        if (subMenu === "Add new task") {
+            return (
+                <>
+                    <OptionsHeader>Add new task:</OptionsHeader>
+                    <form onSubmit={newTaskSubmit}>
+                        <LabelDiv><Label>name:</Label></LabelDiv>
+                        <FormField>
+                            <Input
+                                type="text"
+                                value={newTaskName}
+                                onChange={(e) => setNewTaskName(e.target.value)}
+                            />
+                        </FormField>
+                        <LabelDiv><Label>details:</Label></LabelDiv>
+                        <FormField>
+                            <TextArea
+                                type="text"
+                                value={newTaskDetails}
+                                onChange={(e) => setNewTaskDetails(e.target.value)}
+                            />
+                        </FormField>
+
+
+                        <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
+                            <FormField>
+                                {errors.map((err) => (
+                                    <Error1 key={err}>{err}</Error1>
+                                ))}
+                            </FormField>
+                        </div>
+
+                        <FormField>
+                            <SubButton type="submit">
+                                Submit task
+                            </SubButton>
+                        </FormField>
+
+
+                    </form>
+                </>
+            )
+        }
     }
 
     return (
@@ -278,8 +350,25 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         </>
     )
 }
+const LabelDiv = styled.div`
+    width: 500px;
+    margin: auto;
+    display: block;
+`
+const Label = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+
+  @media only screen and (max-width: 600px) {
+    margin-left: 40px;
+  }
+`;
 const Error1 = styled(Error)`
 width: 500px;
+max-width: 80%;
 `
 
 const DeleteButton = styled(Button)`
@@ -361,9 +450,5 @@ const Input = styled.input`
   margin: auto;
   display: block;
 `;
-
-const Li = styled.h3`
-margin-left: 9%;
-`
 
 export default Options

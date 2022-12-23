@@ -50,11 +50,11 @@ function ChartPage() {
 
                 <Header2>404 Unauthorized!!</Header2>
 
-                <PieChart className="spin-unauth" style={{ height: '500px', pointerEvents: "none" }} data={datas}></PieChart>
+                <PieChart className="spin-unauth" style={{ height: '400px', pointerEvents: "none" }} data={datas}></PieChart>
             </>
         )
     }
-console.log(memberTasks)
+
     function wheelPage() {
         return (
             <>

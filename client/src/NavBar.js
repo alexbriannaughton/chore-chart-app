@@ -67,7 +67,9 @@ function NavBar({ user, setUser }) {
         </>
     )
 }
-
+const NavButt = styled(Button)`
+max-width: 100px;
+`
 const Wrapper = styled.header`
   display: flex;
   justify-content: space-evenly;

@@ -23,7 +23,7 @@ class MembersController < ApplicationController
         member.destroy
 
         if cw.tasks.length > cw.members.length
-            nobody = Member.create!(chore_wheel: cw, name: "nobody")
+            nobody = Member.create!(chore_wheel: cw, name: "nobody", email: "")
             MemberTask.create!(chore_wheel: cw, member: nobody, task: task)
         end
 
