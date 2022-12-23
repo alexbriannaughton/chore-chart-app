@@ -4,6 +4,7 @@ import Circle from './components/Circle'
 import styled from "styled-components"
 import { PieChart } from "react-minimal-pie-chart"
 import Button from './components/Button'
+import Options from './components/Options'
 
 
 function ChartPage() {
@@ -40,7 +41,7 @@ function ChartPage() {
     function handleMenuClick(e) {
         setActiveButton(e.target.innerText)
     }
-    console.log(activeButton)
+
     function noAuth() {
         return (
             <>
@@ -53,7 +54,7 @@ function ChartPage() {
             </>
         )
     }
-
+console.log(memberTasks)
     function wheelPage() {
         return (
             <>
@@ -71,13 +72,7 @@ function ChartPage() {
         )
     }
 
-    function options() {
-        return (
-            <>
-                <h1>options</h1>
-            </>
-        )
-    }
+
 
     function renderWhichPage() {
         if (activeButton === "Wheel") {
@@ -97,7 +92,7 @@ function ChartPage() {
         else if (activeButton === "Options") {
             return (
                 <>
-                    {options()}
+                    <Options setActiveButton={setActiveButton}setMemberTasks={setMemberTasks} memberTasks={memberTasks}/>
                 </>
             )
         }
@@ -123,7 +118,7 @@ function ChartPage() {
     )
 }
 const Button1 = styled(Button)`
-    margin-top: 20px;
+    margin-top: 0;
     color: black;
 
     &:focus {
@@ -144,6 +139,8 @@ const Parent = styled.div`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    max-width: 700px;
+    margin: auto;
 `
 const Child1 = styled.div`
     width: 75%;

@@ -22,7 +22,8 @@ function CreatePage({ user }) {
 
     const taskInputArr = [
         {
-            value: ""
+            nameValue: "",
+            detailsValue: ""
         }
     ]
 
@@ -46,12 +47,12 @@ function CreatePage({ user }) {
             return [
                 ...s,
                 {
-                    value: ""
+                    nameValue: "",
+                    detailsValue: ""
                 }
             ]
         })
     }
-
     function removeMemberInput(i) {
         const updated =
             membersArr.filter((task, index) => index !== i)
@@ -88,13 +89,24 @@ function CreatePage({ user }) {
         })
     }
 
-    function handleTasksChange(e) {
+    function handleTaskNameChange(e) {
         e.preventDefault()
 
         const index = e.target.id
         setTasksArr(s => {
             const newArr = s.slice()
-            newArr[index].value = e.target.value
+            newArr[index].nameValue = e.target.value
+
+            return newArr
+        })
+    }
+    function handleTaskDetailsChange(e) {
+        e.preventDefault()
+
+        const index = e.target.id
+        setTasksArr(s => {
+            const newArr = s.slice()
+            newArr[index].detailsValue = e.target.value
 
             return newArr
         })
@@ -107,12 +119,12 @@ function CreatePage({ user }) {
         try {
             //no blank fields catcher
             membersArr.map((member) => {
-                if (member.value === "") {
+                if (member.nameValue === "" || member.emailValue === "") {
                     throw ['no blank fields may be submitted']
                 }
             })
             tasksArr.map((task) => {
-                if (task.value === "") {
+                if (task.nameValue === "" || task.detailsValue === "") {
                     throw ['no blank fields may be submitted']
                 }
             })
@@ -169,7 +181,8 @@ function CreatePage({ user }) {
                                 "Content-Type": "application/json",
                             },
                             body: JSON.stringify({
-                                name: task.value,
+                                name: task.nameValue,
+                                details: task.detailsValue,
                                 chore_wheel_id: newChart.id
                             })
                         })
@@ -267,7 +280,7 @@ function CreatePage({ user }) {
                                                     onChange={handleEmailsChange}
                                                     value={item.emailValue}
                                                     id={i}
-                                                    type={item.type}
+                                                    type="email"
                                                     size="40"
 
                                                 />&nbsp;
@@ -295,12 +308,26 @@ function CreatePage({ user }) {
                                                     Task name:
                                                 </Label>
                                                 <Input
-                                                    onChange={handleTasksChange}
-                                                    value={item.value}
+                                                    onChange={handleTaskNameChange}
+                                                    value={item.nameValue}
                                                     id={i}
                                                     type={item.type}
                                                     size="40"
-                                                />&nbsp;
+                                                />
+                                            </FormField>
+                                            <FormField>
+                                                <Label>
+                                                    & Task details:
+                                                </Label>
+                                                <Input
+                                                    onChange={handleTaskDetailsChange}
+                                                    value={item.detailsValue}
+                                                    id={i}
+                                                    type={item.type}
+                                                    size="40"
+
+                                                />
+                                                &nbsp;
                                                 <button
                                                     type="button"
                                                     onClick={(e) => removeTaskInput(i)}

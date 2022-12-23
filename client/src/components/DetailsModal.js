@@ -26,12 +26,12 @@ function DetailsModal({ showModal, setShowModal, currentDetails }) {
 
 const Background = styled.div`
 
-  height: 10px;
+  /* height: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, 50%);
-  animation: fadeIn 1s;
+  animation: fadeIn 1s; */
 
   @keyframes fadeIn {
   0% {
@@ -49,13 +49,19 @@ const ModalWrapper = styled.div`
   position: absolute;
   z-index: 10;
   border-radius: 10px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, 210%);
+width: 300px;
+
   opacity: 95%;
+
+margin-left: auto;
+margin-right: auto;
+left: 0;
+right: 0;
+text-align: center;
+margin-top: -30px;
 `;
 const ModalContent = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -65,7 +71,7 @@ const ModalContent = styled.div`
     margin-bottom: 1rem;
     padding-left: 2%;
     padding-right: 2%;
-  }
+  } */
 `;
 
 

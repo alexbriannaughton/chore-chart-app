@@ -11,7 +11,7 @@ function Homepage({ setUser, user }) {
     function loginStuff() {
         return (
             <Wrapper>
-                <Logo>{"chore changr :~)"}</Logo>
+                <Logo>{"chore :~) changr"}</Logo>
                 {showLogin ? (
                     <>
                         <LoginForm

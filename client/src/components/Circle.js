@@ -24,7 +24,7 @@ function Circle({ memberTasks, setMemberTasks }) {
             task: mt.task.name,
             value: 1,
             color: wheelColors[index % wheelColors.length],
-            details: `${mt.member.name} is on ${mt.task.name} duty. \n further details will go hereasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf.`
+            details: `${mt.member.name} is on ${mt.task.name} duty. ${mt.task.details}`
         }
     })
 
@@ -76,7 +76,7 @@ function Circle({ memberTasks, setMemberTasks }) {
                 <div id="bottom-circle">
                     <PieChart
                         data={datas}
-                        style={{ height: '500px', minWidth: '200px' }}
+                        style={{ height: '400px', minWidth: '200px' }}
                         label={({ dataEntry }) => dataEntry.member}
                         labelStyle={(index) => ({
                             fill: 'black',
@@ -91,7 +91,7 @@ function Circle({ memberTasks, setMemberTasks }) {
                     <PieChart
                         className={rotate ? "spin" : null}
                         data={data}
-                        style={{ height: '500px' }}
+                        style={{ height: '400px' }}
                         label={({ dataEntry }) => dataEntry.task}
                         labelStyle={(index) => ({
                             fill: 'black',
@@ -114,9 +114,9 @@ function Circle({ memberTasks, setMemberTasks }) {
                     <CircleButton onClick={rotateTasks}>
                         <span>rotate<br></br>tasks</span>
                     </CircleButton>
-
+                    <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
                 </div>
-                <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
+
             </div>
 
 
