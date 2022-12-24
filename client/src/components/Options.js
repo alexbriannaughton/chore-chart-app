@@ -21,6 +21,8 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
     const [editMemberEmail, setEditMemberEmail] = useState("")
     const [newTaskName, setNewTaskName] = useState("")
     const [newTaskDetails, setNewTaskDetails] = useState("")
+    const [newMemberName, setNewMemberName] = useState("")
+    const [newMemberEmail, setNewMemberEmail] = useState("")
 
     function handleEditTaskClick(task) {
         setTaskToEdit(task)
@@ -115,19 +117,22 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         })
             .then((r) => {
                 if (r.ok) {
-                    fetch(`/chore_wheels/${params.chartId}`)
-                        .then((res) => res.json())
-                        .then((mt) => {
-                            setMemberTasks(mt)
-                            setActiveButton("Wheel")
-                        })
+                    fetch(`/rotate/${params.chartId}`).then((r) => {
+                        if (r.ok) {
+                            fetch(`/chore_wheels/${params.chartId}`)
+                                .then((res) => res.json())
+                                .then((mt) => {
+                                    setMemberTasks(mt)
+                                    setActiveButton("Wheel")
+                                })
+                        }
+                    })
+
                 }
             })
     }
     function newTaskSubmit(e) {
         e.preventDefault()
-        console.log(newTaskName)
-        console.log(newTaskDetails)
 
         const taskObj = {
             name: newTaskName,
@@ -141,6 +146,37 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(taskObj)
+        }).then((r) => {
+            if (r.ok) {
+                fetch(`/chore_wheels/${params.chartId}`)
+                    .then((res) => res.json())
+                    .then((mt) => {
+                        setMemberTasks(mt)
+                        setActiveButton("Wheel")
+                    })
+
+            } else {
+                r.json().then((err) => setErrors(err.errors))
+            }
+        })
+    }
+    function newMemberSubmit(e) {
+        e.preventDefault()
+        console.log(newMemberName)
+        console.log(newMemberEmail)
+
+        const memberObj = {
+            name: newMemberName,
+            details: newMemberEmail,
+            chore_wheel_id: params.chartId,
+        }
+
+        fetch(`/new_member`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(memberObj)
         }).then((r) => {
             if (r.ok) {
                 fetch(`/chore_wheels/${params.chartId}`)
@@ -321,7 +357,6 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                             />
                         </FormField>
 
-
                         <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
                             <FormField>
                                 {errors.map((err) => (
@@ -335,9 +370,56 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                                 Submit task
                             </SubButton>
                         </FormField>
-
-
                     </form>
+                    <BackButton
+                        onClick={handleBackButtonClick}
+                    ><span>Go back</span></BackButton>
+                </>
+            )
+        }
+        if (subMenu === "Add new member") {
+            return (
+                <>
+                    <OptionsHeader>Add new member:</OptionsHeader>
+                    <form onSubmit={newMemberSubmit}>
+                        <LabelDiv><Label>name:</Label></LabelDiv>
+                        <FormField>
+                            <Input
+                                type="text"
+                                value={newMemberName}
+                                onChange={(e) => setNewMemberName(e.target.value)}
+                            />
+                        </FormField>
+                        <LabelDiv><Label>email:</Label></LabelDiv>
+                        <FormField>
+                            <TextArea
+                                type="email"
+                                value={newMemberEmail}
+                                onChange={(e) => setNewMemberEmail(e.target.value)}
+                            />
+                        </FormField>
+
+                        <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
+                            <FormField>
+                                {errors.map((err) => (
+                                    <Error1 key={err}>{err}</Error1>
+                                ))}
+                            </FormField>
+                        </div>
+
+                        <FormField>
+                            <SubButton type="submit">
+                                Submit
+                            </SubButton>
+                        </FormField>
+                    </form>
+                    <BackButton
+                        onClick={handleBackButtonClick}
+                    >
+                        <span>
+                            Go back
+                        </span>
+                    </BackButton>
                 </>
             )
         }

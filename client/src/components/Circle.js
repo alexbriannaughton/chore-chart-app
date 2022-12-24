@@ -16,7 +16,7 @@ function Circle({ memberTasks, setMemberTasks }) {
 
     const params = useParams()
 
-    const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)"]
+    const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)", "chartreuse", "dimgray"]
 
     const datas = memberTasks.map((mt, index) => {
         return {

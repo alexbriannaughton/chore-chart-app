@@ -11,17 +11,17 @@ class MemberTasksController < ApplicationController
 
     def rotate
         cw = ChoreWheel.find(params[:id])
+        cw.rotate
+        # num = cw.members.length
 
-        num = cw.members.length
+        # arr = []
+        # cw.member_tasks.last(num).each do |i|
+        #     arr << i.task.id
+        # end
 
-        arr = []
-        cw.member_tasks.last(num).each do |i|
-            arr << i.task.id
-        end
-
-        cw.members.each_with_index do |i, index|
-            MemberTask.create!(chore_wheel: cw, member_id: i.id, task_id: arr.rotate(-1)[index])
-        end
+        # cw.members.each_with_index do |i, index|
+        #     MemberTask.create!(chore_wheel: cw, member_id: i.id, task_id: arr.rotate(-1)[index])
+        # end
     end
 
     private

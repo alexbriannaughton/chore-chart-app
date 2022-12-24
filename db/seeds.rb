@@ -11,6 +11,7 @@ puts 'seedin...'
 
 alex = User.create(username: 'alex', password: 'alex', email: 'alexbriannaughton@gmail.com')
 cw = ChoreWheel.create(name: 'first chorewheel', user: alex)
-free_task = Task.create(name: "free space", chore_wheel: cw)
+free_task = Task.create(name: "Free space!", details: "do whatever you want! Find a creative way to be helpful :)", chore_wheel: cw)
+nobody = Member.create(name: "nobody", chore_wheel: cw, email: "nil")
 
 puts 'done seedin.'

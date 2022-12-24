@@ -10,7 +10,7 @@ import Options from './components/Options'
 function ChartPage() {
 
     const [memberTasks, setMemberTasks] = useState([])
-
+console.log(memberTasks)
     const [errors, setErrors] = useState(undefined)
 
     const [activeButton, setActiveButton] = useState("Wheel")

@@ -221,9 +221,9 @@ function CreatePage({ user }) {
                     })
                 )
 
-
-            await fetch(`/empty_tasks/${newChart.id}`)
-
+            if (newTasks.length > newMembers.length) {
+                await fetch(`/empty_tasks/${newChart.id}`)
+            }
             // const newMTs =
             //     await Promise.all(
             //         mtResps.map((mt) => {
