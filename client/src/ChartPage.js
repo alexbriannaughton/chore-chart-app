@@ -49,8 +49,8 @@ console.log(memberTasks)
 
 
                 <Header2>404 Unauthorized!!</Header2>
-
-                <PieChart className="spin-unauth" style={{ height: '400px', pointerEvents: "none" }} data={datas}></PieChart>
+                <div className='circle-div'><div id='top-circle'>
+                <PieChart className="spin-unauth" style={{ height: '370px', pointerEvents: "none" }} data={datas}></PieChart></div></div>
             </>
         )
     }
