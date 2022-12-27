@@ -11,30 +11,39 @@ function Homepage({ setUser, user }) {
     function loginStuff() {
         return (
             <Wrapper>
-                <Logo>{"chore changr :~)"}</Logo>
+                <Logo>{"chore :~) changr"}</Logo>
                 {showLogin ? (
                     <>
                         <LoginForm
                             setUser={setUser}
                         />
                         <Divider />
-                        <div>
-                            <p>don't have an account? &nbsp;
-                                <Button color="secondary" onClick={e => setShowLogin(false)}>
-                                    <span>Sign up!</span>
-                                </Button></p>
-                        </div>
+                        
+                            <p align="center">
+                                don't have an account? &nbsp;
+                                <div style={{ display: "flex", justifyContent: "right", marginTop: "23px", marginRight: "12px" }}>
+                                    <Button color="secondary" onClick={e => setShowLogin(false)}>
+                                        <span>Sign up!</span>
+                                    </Button>
+                                </div>
+                            </p>
+                        
                     </>
                 ) : (
                     <>
                         <SignUpForm setUser={setUser} />
                         <Divider />
-                        <p>already have an account? &nbsp;
-                            <Button color="secondary" onClick={e => setShowLogin(true)}>
-                                <span>Log in!</span>
-                            </Button>
-                        </p>
+                        
+                            <p align="center">
+                                have an account? &nbsp;
+                                <div style={{ display: "flex", justifyContent: "right", marginTop: "23px", marginRight: "12px" }}>
 
+                                    <Button color="secondary" onClick={e => setShowLogin(true)}>
+                                        <span>Log in!</span>
+                                    </Button>
+                                </div>
+                            </p>
+                        
 
                     </>
                 )}
@@ -60,6 +69,8 @@ function Homepage({ setUser, user }) {
         </>
     )
 }
+
+
 const Wrapper = styled.section`
   max-width: 500px;
   margin: 40px auto;
@@ -68,6 +79,10 @@ const Wrapper = styled.section`
   border: 3px solid rgb(250, 194, 255);
   border-radius: 5px;
   box-shadow: 0px 0px 20px black;
+
+  @media only screen and (max-width: 600px) {
+    max-width: 300px;
+  }
 `;
 const Logo = styled.h1`
   font-family: "Londrina Outline", cursive;

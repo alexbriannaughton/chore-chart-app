@@ -44,7 +44,7 @@ function NavBar({ user, setUser }) {
                     to="your-charts"
                     className="nav-logo"
                 >
-                    <Logo>{"chore changr :~)"}</Logo>
+                    <Logo>{"chore :~) changr"}</Logo>
                 </NavLink>
 
                 <Button
@@ -67,10 +67,12 @@ function NavBar({ user, setUser }) {
         </>
     )
 }
-
+const NavButt = styled(Button)`
+max-width: 100px;
+`
 const Wrapper = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 8px;
 `;
@@ -87,6 +89,18 @@ const Logo = styled.h1`
   text-decoration: none;
   padding-left: 15px;
   padding-right: 15px;
+
+  &:hover {
+    background-color: black;
+    color: rgb(242, 98, 255);
+  }
+
+  
+
+  @media only screen and (max-width: 600px) {
+    font-size: 1.3rem;
+    max-width: 100px;
+  }
 `;
 
 export default NavBar

@@ -56,9 +56,9 @@ function LoginForm({ setUser }) {
                     />
                 </FormField>
                 <FormField>
-                    <Button type="submit">
+                    <div style={{display: "flex", justifyContent: "center"}}><Button type="submit">
                         {isLoading ? "Loading..." : <span>Login</span>}
-                    </Button>
+                    </Button></div>
                 </FormField>
                 <FormField>
                     {errors.map((err) => (
