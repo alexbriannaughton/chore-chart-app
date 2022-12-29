@@ -5,9 +5,13 @@ import styled from "styled-components"
 import { PieChart } from "react-minimal-pie-chart"
 import Button from './components/Button'
 import Options from './components/Options'
+import DetailsModal from "./components/DetailsModal"
 
 
 function ChartPage() {
+
+    const [showModal, setShowModal] = useState(null)
+    const [currentDetails, setCurrentDetails] = useState(null)
 
     const [memberTasks, setMemberTasks] = useState([])
 console.log(memberTasks)
@@ -58,8 +62,9 @@ console.log(memberTasks)
     function wheelPage() {
         return (
             <>
-                <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks}
+                <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks} showModal={showModal} setShowModal={setShowModal} currentDetails={currentDetails} setCurrentDetails={setCurrentDetails}
                 />
+                <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
             </>
         )
     }

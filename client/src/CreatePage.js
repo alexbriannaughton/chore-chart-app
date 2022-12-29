@@ -231,7 +231,7 @@ function CreatePage({ user }) {
             //         })
             //     )
             // console.log(newMTs)
-            navigate(`/your-charts/${newChart.id}`)
+            navigate(`/${newChart.id}`)
         } catch (error) {
             setErrors(error)
         }
@@ -243,110 +243,119 @@ function CreatePage({ user }) {
             <Wrapper>
                 <div id="chart-name">
                     <form onSubmit={handleSubmit}>
-                        <WrapperChild1>
-                            <Label>
-                                Your new chore wheel's name:
-                            </Label><br />
+                        <WrapperChild2>
+                            <Label3>
+                                First, name your new chore chart:
+                            </Label3><br />
                             <NameInput
                                 type="text"
                                 value={chartName}
                                 onChange={(e) => setChartName(e.target.value)}
                             /><br />
-                        </WrapperChild1>
-                        <Wrapper>
+                        </WrapperChild2>
+                        <Divider />
+                        <Label3>
+                            {"Next, let us know the names of your chart's heroes (the people who will be doing the chores):"}
+                        </Label3><br />
+                        <HeroWrapper>
 
                             {/* members form */}
-                            <WrapperChild>
-                                {membersArr.map((item, i) => {
-                                    return (
-                                        <div>
-                                            <FormField>
-                                                <Label>
-                                                    Member name:
-                                                </Label>
-                                                <Input
-                                                    onChange={handleMembersChange}
-                                                    value={item.nameValue}
-                                                    id={i}
-                                                    type={item.type}
-                                                    size="40"
-                                                />
-                                            </FormField>
-                                            <FormField>
-                                                <Label>
-                                                    & Member email:
-                                                </Label>
-                                                <Input
-                                                    onChange={handleEmailsChange}
-                                                    value={item.emailValue}
-                                                    id={i}
-                                                    type="email"
-                                                    size="40"
 
-                                                />&nbsp;
-                                                <button
-                                                    type="button"
-                                                    onClick={(e) => removeMemberInput(i)}
-                                                >
-                                                    x
-                                                </button>
-                                            </FormField>
-                                        </div>
-                                    );
-                                })}
-                                <Button color="secondary" type="button" onClick={addMembersInput}><span>Add another member</span></Button>
-                            </WrapperChild>
+                            {/* <WrapperChild> */}
+                            {membersArr.map((item, i) => {
+                                return (
+                                    <WrapperChild>
+                                        <FormField>
+                                            <Label>
+                                                Hero name:
+                                            </Label>
+                                            <Input
+                                                onChange={handleMembersChange}
+                                                value={item.nameValue}
+                                                id={i}
+                                                type={item.type}
+                                                size="40"
+                                            />
+                                        </FormField>
+                                        <FormField>
+                                            <Label2>
+                                                & Hero email:
+                                            </Label2>
+                                            <Input
+                                                onChange={handleEmailsChange}
+                                                value={item.emailValue}
+                                                id={i}
+                                                type="email"
+                                                size="40"
+
+                                            />&nbsp;
+                                            <RemoveButton
+                                                type="button"
+                                                onClick={(e) => removeMemberInput(i)}
+                                            >
+                                                <span>Remove</span>
+                                            </RemoveButton>
+                                        </FormField>
+                                    </WrapperChild>
+                                );
+                            })}
+                            <AddButton color="secondary" type="button" onClick={addMembersInput}><span>Add another hero</span></AddButton>
+                            {/* </WrapperChild> */}
                             <br />
-
+                            <Divider />
                             {/* tasks form */}
-                            <WrapperChild>
-                                {tasksArr.map((item, i) => {
-                                    return (
-                                        <div>
-                                            <FormField>
-                                                <Label>
-                                                    Task name:
-                                                </Label>
-                                                <Input
-                                                    onChange={handleTaskNameChange}
-                                                    value={item.nameValue}
-                                                    id={i}
-                                                    type={item.type}
-                                                    size="40"
-                                                />
-                                            </FormField>
-                                            <FormField>
-                                                <Label>
-                                                    & Task details:
-                                                </Label>
-                                                <Input
-                                                    onChange={handleTaskDetailsChange}
-                                                    value={item.detailsValue}
-                                                    id={i}
-                                                    type={item.type}
-                                                    size="40"
+                            <Label3>
+                                {"Last, let us know the chores that will be on your chart:"}
+                            </Label3><br />
+                            {/* <WrapperChild> */}
+                            {tasksArr.map((item, i) => {
+                                return (
 
-                                                />
-                                                &nbsp;
-                                                <button
-                                                    type="button"
-                                                    onClick={(e) => removeTaskInput(i)}
-                                                >
-                                                    x
-                                                </button>
-                                            </FormField>
-                                        </div>
-                                    );
-                                })}
-                                <Button color="secondary" type="button" onClick={addTasksInput}><span>Add another task</span></Button>
-                            </WrapperChild>
+                                    <WrapperChild>
+                                        <FormField>
+                                            <Label>
+                                                Chore name:
+                                            </Label>
+                                            <Input
+                                                onChange={handleTaskNameChange}
+                                                value={item.nameValue}
+                                                id={i}
+                                                type={item.type}
+                                                size="40"
+                                            />
+                                        </FormField>
+                                        <FormField>
+                                            <Label2>
+                                                & Chore details:
+                                            </Label2>
+                                            <Input
+                                                onChange={handleTaskDetailsChange}
+                                                value={item.detailsValue}
+                                                id={i}
+                                                type={item.type}
+                                                size="40"
+
+                                            />
+                                            &nbsp;
+                                            <RemoveButton
+                                                type="button"
+                                                onClick={(e) => removeTaskInput(i)}
+                                            >
+                                                <span>Remove</span>
+                                            </RemoveButton>
+                                        </FormField>
+                                    </WrapperChild>
+                                );
+                            })}
+                            <AddButton color="secondary" type="button" onClick={addTasksInput}><span>Add another chore</span></AddButton>
+                            {/* </WrapperChild> */}
                             <br /><br />
 
-                        </Wrapper>
+                        </HeroWrapper>
 
                         <WrapperChild1>
                             <Button type="submit">
-                                {isLoading ? "Loading..." : <span>Submit</span>}
+                                {isLoading ? "Loading..." : <span>Submit!</span>}
                             </Button>
                         </WrapperChild1>
                         <br />
@@ -362,18 +371,71 @@ function CreatePage({ user }) {
     )
 }
 
+const AddButton = styled(Button)`
+margin: auto;
+display: block;
+/* margin-top: 10px; */
+`
+
+const RemoveButton = styled(Button)`
+background-color: red;
+margin: auto;
+display: block;
+margin-top: -15px;
+margin-bottom: 5px;
+padding: 4px;
+font-size: .8rem;
+border-width: 5px;
+border-color: whitesmoke;
+`
+
 const Label = styled.label`
   color: dimgray;
   display: block;
   font-size: 1rem;
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-left: 5%;
+  /* margin-bottom: 8px; */
+  /* @media only screen and (max-width: 600px) {
+        text-align: center;
+    } */
+`;
+const Label2 = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 5%;
+  /* margin-bottom: 8px; */
+  @media only screen and (max-width: 600px) {
+        /* text-align: center; */
+        margin-top: -10px;
+        
+    }
+`;
+const Label3 = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 5%;
+  text-align: center;
+  /* margin-bottom: 8px; */
+  /* @media only screen and (max-width: 600px) {
+        text-align: center;
+    } */
 `;
 
 const FormField = styled.div`
   &:not(:last-child) {
     margin-bottom: 12px;
   }
+`;
+const Divider = styled.hr`
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 16px 0;
+  margin-top: 0;
 `;
 
 
@@ -388,9 +450,18 @@ const Input = styled.input`
   font-size: 1rem;
   line-height: 1.5;
   padding: 4px;
+  margin: auto;
+    display: block;
+
 `;
 const NameInput = styled(Input)`
     width: 50%;
+    margin-bottom: 6px;
+
+    @media only screen and (max-width: 600px) {
+        width: 75%;
+        margin-bottom: 0;
+    }
 `;
 
 const WrapperGrandpa = styled.div`
@@ -398,6 +469,10 @@ const WrapperGrandpa = styled.div`
   border-radius: 5px;
   box-shadow: 0px 0px 20px black;
   margin: 2% 18%;
+  @media only screen and (max-width: 600px) {
+    margin: 2% 5%;
+    /* max-width: 300px; */
+  }
 `;
 
 const Wrapper = styled.section`
@@ -405,17 +480,32 @@ const Wrapper = styled.section`
   margin: 30px auto;
   padding-left: 16px;
   padding-right: 16px;
-  display: flex;
+  display: block;
   justify-content: space-evenly;
+
 `;
+const HeroWrapper = styled(Wrapper)`
+margin-top: 5px;
+`
 
 const WrapperChild = styled.div`
-  flex: 1;
+  /* flex: 1; */
   border: 2px dotted rgb(250, 194, 255);
-  
+  width: 70%;
+  margin: auto;
+  margin-bottom: 8px;
+  display: block;
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 const WrapperChild1 = styled.div`
     text-align: center;
+    margin-top: -32px;
+`;
+const WrapperChild2 = styled.div`
+    text-align: center;
+    /* margin-top: -32px; */
 `;
 
 

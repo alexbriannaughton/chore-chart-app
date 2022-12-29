@@ -58,7 +58,8 @@ margin-right: auto;
 left: 0;
 right: 0;
 text-align: center;
-margin-top: -30px;
+/* margin-top: -30px; */
+top: 80%;
 `;
 const ModalContent = styled.div`
   /* display: flex;

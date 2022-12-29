@@ -3,15 +3,13 @@ import { useParams } from 'react-router-dom'
 import { useState } from "react"
 import Button from "./Button"
 import styled from "styled-components"
-import DetailsModal from "./DetailsModal"
 
 
-function Circle({ memberTasks, setMemberTasks }) {
+
+function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentDetails, setCurrentDetails }) {
 
     const [rotate, setRotate] = useState(false)
 
-    const [showModal, setShowModal] = useState(null)
-    const [currentDetails, setCurrentDetails] = useState(null)
     const [hovered, setHovered] = useState(undefined);
 
     const params = useParams()
@@ -85,6 +83,7 @@ function Circle({ memberTasks, setMemberTasks }) {
                         })}
                         radius={42}
                         labelPosition={112}
+                        // startAngle={50}
                     />
                 </div>
                 <div id="top-circle">
@@ -114,7 +113,7 @@ function Circle({ memberTasks, setMemberTasks }) {
                     <CircleButton onClick={rotateTasks}>
                         <span>rotate<br></br>tasks</span>
                     </CircleButton>
-                    <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
+                    
                 </div>
 
             </div>

@@ -3,47 +3,51 @@ import LoginForm from "./components/LoginForm"
 import SignUpForm from "./components/SignUpForm"
 import styled from "styled-components";
 import Button from "./components/Button";
+import { Link, Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 function Homepage({ setUser, user }) {
+
+    const navigate = useNavigate()
 
     const [showLogin, setShowLogin] = useState(true)
 
     function loginStuff() {
         return (
             <Wrapper>
-                <Logo>{"chore :~) changr"}</Logo>
+                <Logo>{"chore :~) heroes"}</Logo>
                 {showLogin ? (
                     <>
                         <LoginForm
                             setUser={setUser}
                         />
                         <Divider />
-                        
-                            <p align="center">
-                                don't have an account? &nbsp;
-                                <div style={{ display: "flex", justifyContent: "right", marginTop: "23px", marginRight: "12px" }}>
-                                    <Button color="secondary" onClick={e => setShowLogin(false)}>
-                                        <span>Sign up!</span>
-                                    </Button>
-                                </div>
-                            </p>
-                        
+
+                        <p align="center">
+                            don't have an account? &nbsp;
+                            <div style={{ display: "flex", justifyContent: "right", marginTop: "23px", marginRight: "12px" }}>
+                                <Button color="secondary" onClick={e => setShowLogin(false)}>
+                                    <span>Sign up!</span>
+                                </Button>
+                            </div>
+                        </p>
+
                     </>
                 ) : (
                     <>
                         <SignUpForm setUser={setUser} />
                         <Divider />
-                        
-                            <p align="center">
-                                have an account? &nbsp;
-                                <div style={{ display: "flex", justifyContent: "right", marginTop: "23px", marginRight: "12px" }}>
 
-                                    <Button color="secondary" onClick={e => setShowLogin(true)}>
-                                        <span>Log in!</span>
-                                    </Button>
-                                </div>
-                            </p>
-                        
+                        <p align="center">
+                            have an account? &nbsp;
+                            <div style={{ display: "flex", justifyContent: "right", marginTop: "23px", marginRight: "12px" }}>
+
+                                <Button color="secondary" onClick={e => setShowLogin(true)}>
+                                    <span>Log in!</span>
+                                </Button>
+                            </div>
+                        </p>
+
 
                     </>
                 )}
@@ -63,14 +67,69 @@ function Homepage({ setUser, user }) {
         // }
     }
 
+    function renderAllCharts() {
+        return (
+            user && user.chore_wheels.map((cw) => {
+                return (
+                    <div align="center">
+                        <Link
+                            key={cw.id}
+                            to={`${cw.id}`}
+                        >
+                            {cw.name}
+                        </Link>
+                    </div>
+                )
+            })
+        )
+    }
+    function newChartClick() {
+        navigate("/create-new-chart")
+    }
+    function renderWhichHomePage() {
+        if (user.chore_wheels.length >= 1) {
+            return (
+                <>
+                    <h2 align="center">Yo, {user.username}!</h2>
+                    <h4 align="center">view your charts:</h4>
+                    {renderAllCharts()}
+                    <NewButton onClick={newChartClick}color="secondary">
+                        <span>
+                            Make a new chart!
+                        </span>
+                    </NewButton>
+                </>
+            )
+        }
+        if (user.chore_wheels.length < 1) {
+            return (
+                <>
+                    <h2 align="center">Welcome, {user.username}!</h2>
+                    <NewButton onClick={newChartClick}color="secondary">
+                        <span>
+                            Make a new chart!
+                        </span>
+                    </NewButton>
+                </>
+            )
+        }
+    }
+
     return (
         <>
-            {user ? userHome() : loginStuff()}
+            {user ? renderWhichHomePage() : loginStuff()}
         </>
     )
 }
 
-
+const NewButton = styled(Button)`
+border-radius: 50%;
+height: 130px;
+width: 130px;
+margin: auto;
+display: block;
+margin-top: 35px;
+`
 const Wrapper = styled.section`
   max-width: 500px;
   margin: 40px auto;

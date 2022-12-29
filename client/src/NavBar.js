@@ -2,15 +2,18 @@ import { NavLink } from "react-router-dom"
 import styled from "styled-components";
 import Button from "./components/Button";
 import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom"
 
 
 function NavBar({ user, setUser }) {
+    const navigate = useNavigate()
 
     function handleLogout() {
         if (user) {
             fetch("/logout", { method: "DELETE" }).then((r) => {
                 if (r.ok) {
                     setUser(null)
+                    navigate("/")
                 }
             })
         }
@@ -32,30 +35,33 @@ function NavBar({ user, setUser }) {
 
     function withUser() {
         return (
-            <Wrapper>
-                <Button
+            <><Wrapper>
+                {/* <Button
                     as={Link}
                     to="create-new-chart"
                 >
                     <span>New Chart</span>
-                </Button>
+                </Button> */}
 
                 <NavLink         
-                    to="your-charts"
+                    to="/"
                     className="nav-logo"
                 >
-                    <Logo>{"chore :~) changr"}</Logo>
+                    <Logo>{"chore :~) heroes"}</Logo>
                 </NavLink>
 
-                <Button
-                    as={Link}
-                    exact to="/"
+                
+
+            </Wrapper>
+            
+            <LogoutButton
+                  
+                    to="/"
                     onClick={handleLogout}
                 >
                     <span>Logout</span>
-                </Button>
-
-            </Wrapper>
+                </LogoutButton>
+                </>
         )
     }
     
@@ -67,12 +73,26 @@ function NavBar({ user, setUser }) {
         </>
     )
 }
+// const Wrapper2 = styled.div`
+// position: relative;
+// `
+const LogoutButton = styled(Button)`
+position: absolute;
+right: 0;
+top: 0;
+margin-top: 3px;
+margin-right: 3px;
+font-size: .75rem;
+border-width: 6px;
+
+
+`
 const NavButt = styled(Button)`
 max-width: 100px;
 `
 const Wrapper = styled.header`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   padding: 8px;
 `;
@@ -98,8 +118,8 @@ const Logo = styled.h1`
   
 
   @media only screen and (max-width: 600px) {
-    font-size: 1.3rem;
-    max-width: 100px;
+    font-size: 1.6rem;
+    max-width: 200px;
   }
 `;
 
