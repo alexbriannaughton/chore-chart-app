@@ -1,8 +1,9 @@
 class ChoreWheel < ApplicationRecord
     has_many :members
     has_many :tasks
-    belongs_to :user
     has_many :member_tasks
+    has_many :chore_wheel_users
+    has_many :users, through: :chore_wheel_users
 
     validates :name, length: { minimum: 3 }
 

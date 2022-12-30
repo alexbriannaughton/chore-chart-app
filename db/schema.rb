@@ -10,17 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_13_174224) do
+ActiveRecord::Schema.define(version: 2022_12_30_185933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "chore_wheels", force: :cascade do |t|
-    t.string "name"
+  create_table "chore_wheel_users", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "chore_wheel_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_chore_wheels_on_user_id"
+    t.index ["chore_wheel_id"], name: "index_chore_wheel_users_on_chore_wheel_id"
+    t.index ["user_id"], name: "index_chore_wheel_users_on_user_id"
+  end
+
+  create_table "chore_wheels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "member_tasks", force: :cascade do |t|
@@ -60,7 +67,8 @@ ActiveRecord::Schema.define(version: 2022_12_13_174224) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "chore_wheels", "users"
+  add_foreign_key "chore_wheel_users", "chore_wheels"
+  add_foreign_key "chore_wheel_users", "users"
   add_foreign_key "member_tasks", "chore_wheels"
   add_foreign_key "member_tasks", "members"
   add_foreign_key "member_tasks", "tasks"

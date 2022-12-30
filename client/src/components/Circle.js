@@ -22,7 +22,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
             task: mt.task.name,
             value: 1,
             color: wheelColors[index % wheelColors.length],
-            details: `${mt.member.name} is on ${mt.task.name} duty. ${mt.task.details}`
+            details: `${mt.member.name} is on "${mt.task.name}" duty. ${mt.task.details}`
         }
     })
 

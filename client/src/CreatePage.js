@@ -138,12 +138,29 @@ function CreatePage({ user }) {
                     },
                     body: JSON.stringify({
                         name: chartName,
-                        user_id: user.id
+                        // user_id: user.id
                     })
                 })
             const newChart = await chartResp.json()
             if (!chartResp.ok) {
                 throw newChart.errors
+            }
+
+            //create chore wheel user
+            const cwuResp =
+                await fetch("/chore_wheel_users", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        chore_wheel_id: newChart.id,
+                        user_id: user.id
+                    })
+                })
+            const newCwu = await cwuResp.json()
+            if (!cwuResp.ok) {
+                throw newCwu.errors
             }
 
             //create members

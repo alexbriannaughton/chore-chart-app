@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :chore_wheel_users
   resources :member_tasks
   resources :tasks
   resources :members

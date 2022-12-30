@@ -6,11 +6,13 @@ class ChoreWheelsController < ApplicationController
 
     def show
         cw = ChoreWheel.find(params[:id])
-        if cw.user.id != session[:user_id]
-            render json: { errors: ["Not authorized"] }, status: :unauthorized         
-        else
+
+        if cw.chore_wheel_users.exists?(user_id: session[:user_id])
             num = cw.members.length
             render json: cw.member_tasks.last(num)
+            
+        else
+            render json: { errors: ["Not authorized"] }, status: :unauthorized
         end
     end
 

@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :chore_wheels
+  has_many :chore_wheel_users
+  has_many :chore_wheels, through: :chore_wheel_users
 
   validates :username, presence: true, uniqueness: true
 
