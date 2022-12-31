@@ -272,7 +272,7 @@ function CreatePage({ user }) {
                         </WrapperChild2>
                         <Divider />
                         <Label3>
-                            {"Next, let us know the names of your chart's heroes (the people who will be doing the chores):"}
+                            {"Next, who are the Chore Heroes? (the people who will be doing the chores):"}
                         </Label3><br />
                         <HeroWrapper>
 
@@ -322,7 +322,7 @@ function CreatePage({ user }) {
                             <Divider />
                             {/* tasks form */}
                             <Label3>
-                                {"Last, let us know the chores that will be on your chart:"}
+                                {"Last, let us know the chores that will be on the chart:"}
                             </Label3><br />
                             {/* <WrapperChild> */}
                             {tasksArr.map((item, i) => {
