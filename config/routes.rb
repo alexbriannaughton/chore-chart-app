@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
   post "/new_task", to: "tasks#new_task"
 
-   post "/new_member", to: "members#new_member"
+  post "/new_member", to: "members#new_member"
+
+  post "/add_user", to: "chore_wheel_users#add_user"
 
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"

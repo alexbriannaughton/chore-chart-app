@@ -110,9 +110,9 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
 
                     />
 
-                    <CircleButton onClick={rotateTasks}>
+                    {datas ? <CircleButton onClick={rotateTasks}>
                         <span>rotate<br></br>tasks</span>
-                    </CircleButton>
+                    </CircleButton> : <CircleButton>loading...</CircleButton>}
                     
                 </div>
 

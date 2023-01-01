@@ -15,6 +15,8 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
     const [taskToEdit, setTaskToEdit] = useState(null)
     const [memberToEdit, setMemberToEdit] = useState(null)
 
+    const [addNewUser, setAddNewUser] = useState("")
+
     const [editTaskName, setEditTaskName] = useState("")
     const [editTaskDetails, setEditTaskDetails] = useState("")
     const [editMemberName, setEditMemberName] = useState("")
@@ -60,6 +62,33 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
 
             } else {
                 r.json().then((err) => setErrors(err.errors))
+            }
+        })
+    }
+    function newUserSubmit(e) {
+        e.preventDefault()
+        console.log(addNewUser)
+        fetch("/add_user", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                chore_wheel_id: params.chartId,
+                username: addNewUser
+            })
+        }).then((r) => {
+            if (r.ok) {
+                setErrors(["Success!"])
+            } else {
+                r.json().then((err) => {
+                    if (err.errors[0] === 'User has already been taken') {
+                        setErrors([`${addNewUser} has already been added`])
+                    } else {
+                        setErrors(err.errors)
+                    } 
+
+                })
             }
         })
     }
@@ -196,7 +225,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         if (taskToEdit) {
             return (
                 <>
-                    <OptionsHeader>Edit task:</OptionsHeader>
+                    <OptionsHeader>Edit chore:</OptionsHeader>
                     <form onSubmit={handleTaskEditSubmit}>
                         <FormField>
                             <Input
@@ -226,7 +255,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                         </FormField>
                     </form>
                     <DeleteButton onClick={handleDeleteTask}>
-                        <span>Delete this task</span>
+                        <span>Delete this chore</span>
                     </DeleteButton>
                     <BackButton
                         onClick={handleBackButtonClick}
@@ -237,7 +266,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         if (memberToEdit) {
             return (
                 <>
-                    <OptionsHeader>Edit member:</OptionsHeader>
+                    <OptionsHeader>Edit hero:</OptionsHeader>
                     <form onSubmit={handleMemberEditSubmit}>
                         <FormField>
                             <Input
@@ -268,7 +297,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                     </form>
 
                     <DeleteButton onClick={handleDeleteMember}>
-                        <span>Delete this member</span>
+                        <span>Delete this hero</span>
                     </DeleteButton>
 
                     <BackButton
@@ -281,14 +310,50 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
             return (
                 <>
                     <OptionsHeader>Options</OptionsHeader>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit Tasks</span></OptionsButtons>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit Members</span></OptionsButtons>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new task</span></OptionsButtons>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new member</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add a user</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit chores</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit heroes</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new chore</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new hero</span></OptionsButtons>
+
                 </>
             )
         }
-        if (subMenu === "Edit Tasks") {
+        if (subMenu === "Add a user") {
+            return (
+                <>
+                    <OptionsHeader>Options</OptionsHeader>
+                    <Subhead>Provide a pre-existing username below to add another user for this chart. This will give the user ability to view and edit this chore wheel from their own login.</Subhead>
+                    <form onSubmit={newUserSubmit}>
+                        <LabelDiv><Label>username:</Label></LabelDiv>
+                        <FormField>
+                            <Input
+                                type="text"
+                                value={addNewUser}
+                                onChange={(e) => setAddNewUser(e.target.value)}
+                            ></Input>
+                        </FormField>
+                        <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
+                            <FormField>
+                                {errors.map((err) => (
+                                    <Error1 key={err}>{err}</Error1>
+                                ))}
+                            </FormField>
+                        </div>
+
+                        <FormField>
+                            <SubButton type="submit">
+                                Submit
+                            </SubButton>
+                        </FormField>
+                    </form>
+                    <BackButton
+                        onClick={handleBackButtonClick}
+                    ><span>Go back</span></BackButton>
+                </>
+            )
+        }
+        if (subMenu === "Edit chores") {
 
             function renderTasks() {
                 return (
@@ -303,7 +368,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
             return (
                 <>
                     <OptionsHeader>Options</OptionsHeader>
-                    <Subhead>Which task would you like to edit?</Subhead>
+                    <Subhead>Which chore would you like to edit?</Subhead>
                     {renderTasks()}
                     <BackButton
                         onClick={handleBackButtonClick}
@@ -312,7 +377,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 </>
             )
         }
-        if (subMenu === "Edit Members") {
+        if (subMenu === "Edit heroes") {
 
             function renderMembers() {
                 return (
@@ -327,7 +392,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
             return (
                 <>
                     <OptionsHeader>Options</OptionsHeader>
-                    <Subhead>Which member would you like to edit?</Subhead>
+                    <Subhead>Which hero would you like to edit?</Subhead>
                     {renderMembers()}
                     <BackButton
                         onClick={handleBackButtonClick}
@@ -335,10 +400,10 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 </>
             )
         }
-        if (subMenu === "Add new task") {
+        if (subMenu === "Add new chore") {
             return (
                 <>
-                    <OptionsHeader>Add new task:</OptionsHeader>
+                    <OptionsHeader>Add new chore:</OptionsHeader>
                     <form onSubmit={newTaskSubmit}>
                         <LabelDiv><Label>name:</Label></LabelDiv>
                         <FormField>
@@ -367,7 +432,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
 
                         <FormField>
                             <SubButton type="submit">
-                                Submit task
+                                Submit chore
                             </SubButton>
                         </FormField>
                     </form>
@@ -377,10 +442,10 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 </>
             )
         }
-        if (subMenu === "Add new member") {
+        if (subMenu === "Add new hero") {
             return (
                 <>
-                    <OptionsHeader>Add new member:</OptionsHeader>
+                    <OptionsHeader>Add new hero:</OptionsHeader>
                     <form onSubmit={newMemberSubmit}>
                         <LabelDiv><Label>name:</Label></LabelDiv>
                         <FormField>
@@ -486,7 +551,7 @@ border-width: 5px;
 const SubButton = styled(Button)`
 margin: auto;
 display: block;
-width: 149px;
+/* width: 149px; */
 `
 
 const OptionsHeader = styled.h1`
@@ -497,6 +562,8 @@ text-decoration: underline;
 const Subhead = styled.h4`
     text-align: center;
     font-weight: 500;
+    margin-left: 4%;
+    margin-right: 4%;
 `
 
 const FormField = styled.div`
