@@ -4,8 +4,11 @@ import NavBar from './NavBar';
 import Homepage from './Homepage';
 import CreatePage from './CreatePage'
 import ChartPage from "./ChartPage";
+import { Helmet } from "react-helmet";
 
 function App() {
+
+
 
   const [user, setUser] = useState(null)
 
@@ -22,6 +25,11 @@ function App() {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Chore Heroes</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <NavBar
         user={user}
         setUser={setUser}
@@ -39,12 +47,12 @@ function App() {
 
         <Route
           path="/create-new-chart"
-          element={<CreatePage user={user}/>}
+          element={<CreatePage user={user} />}
         />
 
         <Route
           path={`/:chartId`}
-          element={<ChartPage/>}
+          element={<ChartPage />}
         />
 
       </Routes>
