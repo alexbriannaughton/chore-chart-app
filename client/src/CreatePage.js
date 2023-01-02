@@ -249,6 +249,7 @@ function CreatePage({ user }) {
             //     )
             // console.log(newMTs)
             navigate(`/${newChart.id}`)
+            user.chore_wheels.push(newChart)
         } catch (error) {
             setErrors(error)
         }

@@ -10,7 +10,6 @@ class ChoreWheelsController < ApplicationController
         if cw.chore_wheel_users.exists?(user_id: session[:user_id])
             num = cw.members.length
             render json: cw.member_tasks.last(num)
-            
         else
             render json: { errors: ["Not authorized"] }, status: :unauthorized
         end

@@ -191,8 +191,6 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
     }
     function newMemberSubmit(e) {
         e.preventDefault()
-        console.log(newMemberName)
-        console.log(newMemberEmail)
 
         const memberObj = {
             name: newMemberName,
@@ -310,11 +308,12 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
             return (
                 <>
                     <OptionsHeader>Options</OptionsHeader>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add a user</span></OptionsButtons>
+                    
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit chores</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit heroes</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new chore</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new hero</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add a user</span></OptionsButtons>
 
                 </>
             )

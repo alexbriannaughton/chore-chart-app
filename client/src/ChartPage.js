@@ -10,8 +10,8 @@ import DetailsModal from "./components/DetailsModal"
 
 function ChartPage({ user }) {
 
-    const [showModal, setShowModal] = useState(null)
-    const [currentDetails, setCurrentDetails] = useState(null)
+    const [showModal, setShowModal] = useState(true)
+    const [currentDetails, setCurrentDetails] = useState({details2: "Click a segment for chore details"})
 
     const [memberTasks, setMemberTasks] = useState([])
     const [comments, setComments] = useState([])
@@ -249,6 +249,7 @@ const Button1 = styled(Button)`
 `;
 const OutsideButtons = styled(Button1)`
     margin-top: 30px;
+    min-width: 89.15px;
 `
 const Parent = styled.div`
     display: flex;

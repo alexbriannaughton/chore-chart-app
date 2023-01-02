@@ -15,7 +15,8 @@ function DetailsModal({ showModal, setShowModal, currentDetails }) {
                 <Background ref={modalRef} onClick={handleModalClick}>
                     <ModalWrapper showModal={showModal}>
                         <ModalContent>
-                            <p>{currentDetails.details}</p>
+                            <H4>{currentDetails.details1}</H4>
+                            <Par>{currentDetails.details2}</Par>
                         </ModalContent>
                     </ModalWrapper>
                 </Background>
@@ -23,7 +24,16 @@ function DetailsModal({ showModal, setShowModal, currentDetails }) {
         </>
     )
 }
-
+const H4 = styled.h4`
+margin: 0;
+margin-top: 5px;
+`
+const Par = styled.p`
+margin-top: 0;
+margin-left: 2px;
+margin-right: 2px;
+margin-bottom: 5px;
+`
 const Background = styled.div`
 
   /* height: 10px;

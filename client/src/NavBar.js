@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom"
 import styled from "styled-components";
 import Button from "./components/Button";
-import { Link } from "react-router-dom";
 import {useNavigate} from "react-router-dom"
+import logo from "./images/logo.png"
 
 
 function NavBar({ user, setUser }) {
@@ -33,6 +33,14 @@ function NavBar({ user, setUser }) {
         )
     }
 
+    const size = window.matchMedia("(max-width: 600px)")
+
+    function logoMediaQuery() {
+        if(size.matches) {
+            return 18
+        } else return 30
+    }
+
     function withUser() {
         return (
             <><Wrapper>
@@ -47,7 +55,11 @@ function NavBar({ user, setUser }) {
                     to="/"
                     className="nav-logo"
                 >
-                    <Logo>{"chore :~) heroes"}</Logo>
+                    <Logo>
+                        {"chore"} 
+                        <img style={{height: `${logoMediaQuery()}px`}} src={logo}></img>
+                        {"heroes"}
+                    </Logo>
                 </NavLink>
 
                 
@@ -84,6 +96,10 @@ margin-top: 3px;
 margin-right: 3px;
 font-size: .75rem;
 border-width: 6px;
+@media only screen and (max-width: 600px) {
+    font-size: .65rem;
+    border-width: 4px;
+  }
 
 
 `

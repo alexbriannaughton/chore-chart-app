@@ -14,7 +14,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
 
     const params = useParams()
 
-    const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)", "chartreuse", "dimgray"]
+    const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)", "chartreuse", "dimgray", "rgb(250, 194, 255)", "chartreuse"]
 
     const datas = memberTasks.map((mt, index) => {
         return {
@@ -22,7 +22,8 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
             task: mt.task.name,
             value: 1,
             color: wheelColors[index % wheelColors.length],
-            details: `${mt.member.name} is on "${mt.task.name}" duty. ${mt.task.details}`
+            details1: `${mt.member.name} is on "${mt.task.name}"`,
+            details2: `${mt.task.details}`
         }
     })
 
@@ -68,33 +69,95 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         setTimeout(rotateFetch, 2000)
     }
 
+    function labelSpot() {
+        if (datas.length === 3 ) {
+            return 30
+        } 
+        else if (datas.length === 5) {
+            return 17
+        }
+        else if (datas.length === 7) {
+            return 12.5
+        }
+        else if (datas.length===9) {
+            return 10
+        }
+        else return 0
+    }
+
+    const size = window.matchMedia("(max-width: 600px)")
+
+    function circleMediaQuery(s) {
+        if (size.matches&&datas.length===2) {
+            return 380
+        }
+        if (size.matches&&datas.length===3) {   
+            return 278
+        } 
+        else if (size.matches&&datas.length===5) {
+            return 300
+        }
+        else if (size.matches&&datas.length===6) {
+            return 330
+        }
+        else if (size.matches&&datas.length>6) {
+            return 340
+        }
+    
+        else {
+            return 400
+        } 
+
+    }
+
+    function choreFontSize(s) {
+        if (size.matches&&datas.length>6) {
+            return 3.5
+        } 
+        else if (datas.length === 7) {
+            return 4
+        }
+        else return 5
+    }
+    function nameFontSize(s) {
+        if(datas.length === 3) {
+            return 5
+        } else return 4
+    }
+
+    function positionTheLabel() {
+        if (datas.length>6) {
+            return 70
+        } else return 60
+    }
+
     function renderWheel() {
         return (
             <div id="circle-div" className="fade-in">
                 <div id="bottom-circle">
                     <PieChart
                         data={datas}
-                        style={{ height: '400px', minWidth: '200px' }}
+                        style={{ height: `${circleMediaQuery(size)}`}}
                         label={({ dataEntry }) => dataEntry.member}
                         labelStyle={(index) => ({
                             fill: 'black',
-                            fontSize: '5px',
+                            fontSize: `${nameFontSize(size)}px`,
                             fontFamily: 'sans-serif',
                         })}
                         radius={42}
-                        labelPosition={112}
-                        // startAngle={50}
+                        labelPosition={107}
+                        startAngle={labelSpot()}
                     />
                 </div>
                 <div id="top-circle">
                     <PieChart
                         className={rotate ? "spin" : null}
                         data={data}
-                        style={{ height: '400px' }}
+                        style={{ height: `${circleMediaQuery(size)}`}}
                         label={({ dataEntry }) => dataEntry.task}
                         labelStyle={(index) => ({
                             fill: 'black',
-                            fontSize: '5px',
+                            fontSize: `${choreFontSize(size)}`,
                             fontFamily: 'sans-serif',
                             pointerEvents: 'none',
                         })}
@@ -106,14 +169,14 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                             setHovered(undefined);
                         }}
                         radius={42}
-                        labelPosition={60}
-
+                        labelPosition={positionTheLabel()}
+                        startAngle={labelSpot()}
                     />
 
                     {datas ? <CircleButton onClick={rotateTasks}>
                         <span>rotate<br></br>tasks</span>
                     </CircleButton> : <CircleButton>loading...</CircleButton>}
-                    
+
                 </div>
 
             </div>

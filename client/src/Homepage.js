@@ -3,8 +3,9 @@ import LoginForm from "./components/LoginForm"
 import SignUpForm from "./components/SignUpForm"
 import styled from "styled-components";
 import Button from "./components/Button";
-import { Link, Navigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
+import logo from "./images/logo.png"
 
 function Homepage({ setUser, user }) {
 
@@ -15,7 +16,11 @@ function Homepage({ setUser, user }) {
     function loginStuff() {
         return (
             <Wrapper>
-                <Logo>{"chore :~) heroes"}</Logo>
+                <Logo>
+                    <h1 style={{ margin: "0", marginBottom: "-12px" }}>chore</h1>
+                    <img style={{ height: "60px", position: "absolute", left: "0", right: "0", marginLeft: "auto", marginRight: "auto" }} src={logo}></img><br />
+                    <h1 style={{ margin: "0", marginTop: "-24px" }}>heroes</h1>
+                </Logo>
                 {showLogin ? (
                     <>
                         <LoginForm
@@ -55,18 +60,6 @@ function Homepage({ setUser, user }) {
         )
     }
 
-    function userHome() {
-        // if (user) {
-        return (
-            <div>
-                <h1>
-                    Welcome, {user.username}!
-                </h1>
-            </div>
-        )
-        // }
-    }
-
     function renderAllCharts() {
         return (
             user && user.chore_wheels.map((cw) => {
@@ -89,23 +82,23 @@ function Homepage({ setUser, user }) {
     function renderWhichHomePage() {
         if (user.chore_wheels.length >= 1) {
             return (
-                <>
+                <Wrapper>
                     <h2 align="center">Yo, {user.username}!</h2>
                     <h4 align="center">view your charts:</h4>
                     {renderAllCharts()}
-                    <NewButton onClick={newChartClick}color="secondary">
+                    <NewButton onClick={newChartClick} color="secondary">
                         <span>
                             Make a new chart!
                         </span>
                     </NewButton>
-                </>
+                </Wrapper>
             )
         }
         if (user.chore_wheels.length < 1) {
             return (
                 <>
                     <h2 align="center">Welcome, {user.username}!</h2>
-                    <NewButton onClick={newChartClick}color="secondary">
+                    <NewButton onClick={newChartClick} color="secondary">
                         <span>
                             Make a new chart!
                         </span>
@@ -129,6 +122,7 @@ width: 130px;
 margin: auto;
 display: block;
 margin-top: 35px;
+margin-bottom: 45px;
 `
 const Wrapper = styled.section`
   max-width: 500px;
@@ -143,7 +137,8 @@ const Wrapper = styled.section`
     max-width: 300px;
   }
 `;
-const Logo = styled.h1`
+const Logo = styled.div`
+position: relative;
   font-family: "Londrina Outline", cursive;
   font-size: 3rem;
   color: chartreuse;
