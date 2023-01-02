@@ -8,12 +8,15 @@ import Options from './components/Options'
 import DetailsModal from "./components/DetailsModal"
 
 
-function ChartPage() {
+function ChartPage({ user }) {
 
     const [showModal, setShowModal] = useState(null)
     const [currentDetails, setCurrentDetails] = useState(null)
 
     const [memberTasks, setMemberTasks] = useState([])
+    const [comments, setComments] = useState([])
+
+    const [newComment, setNewComment] = useState("")
 
     const [errors, setErrors] = useState(undefined)
 
@@ -42,6 +45,45 @@ function ChartPage() {
 
     }, [])
 
+    useEffect(() => {
+        fetch(`/comments/${params.chartId}`)
+            .then((res) => {
+                if (res.ok) {
+                    res.json().then((coms) => setComments(coms))
+                } else {
+                    res.json().then((err) => setErrors(err))
+                }
+            })
+    }, [])
+
+    function newCommentSubmit(e) {
+
+        e.preventDefault()
+
+        const newCommentObj = {
+            text: newComment,
+            user_id: user.id,
+            chore_wheel_id: params.chartId
+        }
+        fetch(`/comments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newCommentObj)
+
+
+        }).then((r) => {
+            if (r.ok) {
+                r.json().then((comment) => {
+                    
+                    setComments([comment, ...comments.slice(0, 5)])
+                    setNewComment("")
+                }
+                )
+             }
+        })
+    }
     function handleMenuClick(e) {
         setActiveButton(e.target.innerText)
     }
@@ -54,7 +96,7 @@ function ChartPage() {
 
                 <Header2>404 Unauthorized!!</Header2>
                 <div className='circle-div'><div id='top-circle'>
-                <PieChart className="spin-unauth" style={{ height: '370px', pointerEvents: "none" }} data={datas}></PieChart></div></div>
+                    <PieChart className="spin-unauth" style={{ height: '370px', pointerEvents: "none" }} data={datas}></PieChart></div></div>
             </>
         )
     }
@@ -70,9 +112,42 @@ function ChartPage() {
     }
 
     function bulletinBoard() {
+        function renderComments() {
+            return (
+                comments.map((comment) => {
+                    return (
+                        <p>
+                            {comment.created_at.slice(5, 10)}-{comment.created_at.slice(0, 4)} @ {comment.created_at.slice(12, 16)}
+                            <br />
+                            {comment.user.username}: {comment.text}
+                        </p>
+                    )
+                })
+            )
+        }
+
         return (
             <>
-                <h1>bulletinBoard</h1>
+                <h1 align="center">Bulletin Board</h1>
+                <Wrapper>
+                    {renderComments()}
+                </Wrapper>
+                <form onSubmit={newCommentSubmit}>
+                    <FormField>
+                        <TextArea
+                            type="text"
+                            placeholder='post something here...'
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                        />
+                    </FormField>
+                    <FormField>
+                        <SubButton type="submit">
+                            Post
+                        </SubButton>
+                    </FormField>
+                </form>
+
             </>
         )
     }
@@ -97,7 +172,7 @@ function ChartPage() {
         else if (activeButton === "Options") {
             return (
                 <>
-                    <Options setActiveButton={setActiveButton}setMemberTasks={setMemberTasks} memberTasks={memberTasks}/>
+                    <Options setActiveButton={setActiveButton} setMemberTasks={setMemberTasks} memberTasks={memberTasks} />
                 </>
             )
         }
@@ -111,7 +186,7 @@ function ChartPage() {
             <Parent onClick={(e) => handleMenuClick(e)}>
                 <OutsideButtons
                     color="secondary"
-                    // style={{ borderStyle: "ridge" }}
+                // style={{ borderStyle: "ridge" }}
                 >
                     <span>Wheel</span>
                 </OutsideButtons>
@@ -122,6 +197,42 @@ function ChartPage() {
         </>
     )
 }
+const SubButton = styled(Button)`
+margin: auto;
+display: block;
+/* width: 149px; */
+`
+const TextArea = styled.textarea`
+  border-radius: 5px;
+  border: 1px solid transparent;
+  border-color: dimgray;
+  -webkit-appearance: none;
+  max-width: 80%;
+  width: 500px;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 4px;
+  margin: auto;
+  display: block;
+  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 400;
+  margin-top: 5px;
+`
+const FormField = styled.div`
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+  `;
+const Wrapper = styled.div`
+margin-left: 20%;
+margin-right: 20%;
+border: 2px dotted chartreuse;
+
+@media only screen and (max-width: 600px) {
+    margin-left: 10%;
+margin-right: 10%;
+  }
+`
 const Button1 = styled(Button)`
     margin-top: 0;
     color: black;

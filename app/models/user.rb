@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_many :chore_wheel_users
   has_many :chore_wheels, through: :chore_wheel_users
+  has_many :comments
 
   validates :username, presence: true, uniqueness: true
 

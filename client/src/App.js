@@ -52,7 +52,7 @@ function App() {
 
         <Route
           path={`/:chartId`}
-          element={<ChartPage />}
+          element={<ChartPage user={user} />}
         />
 
       </Routes>
