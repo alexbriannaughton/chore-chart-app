@@ -10,10 +10,10 @@ puts 'seedin...'
 
 
 alex = User.create(username: 'alex', password: 'alex', email: 'alexbriannaughton@gmail.com')
-cw = ChoreWheel.create(name: 'first chorewheel')
-alex_cw = ChoreWheelUser.create(chore_wheel: cw, user: alex)
-free_task = Task.create(name: "Free space!", details: "do whatever you want! Find a creative way to be helpful :)", chore_wheel: cw)
-nobody = Member.create(name: "nobody", chore_wheel: cw, email: "nil")
-test_comment = Comment.create(text: "this is a test comment!!", user: alex, chore_wheel: cw)
+# cw = ChoreWheel.create(name: 'first chorewheel')
+# alex_cw = ChoreWheelUser.create(chore_wheel: cw, user: alex)
+# free_task = Task.create(name: "Free space!", details: "do whatever you want! Find a creative way to be helpful :)", chore_wheel: cw)
+# nobody = Member.create(name: "nobody", chore_wheel: cw, email: "nil")
+# test_comment = Comment.create(text: "this is a test comment!!", user: alex, chore_wheel: cw)
 
 puts 'done seedin.'
