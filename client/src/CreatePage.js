@@ -119,13 +119,16 @@ function CreatePage({ user }) {
         try {
             //no blank fields catcher
             membersArr.map((member) => {
-                if (member.nameValue === "" || member.emailValue === "") {
-                    throw ['no blank fields may be submitted']
+                if (member.nameValue === "") {
+                    throw ['All heroes must have a name']
                 }
             })
             tasksArr.map((task) => {
-                if (task.nameValue === "" || task.detailsValue === "") {
-                    throw ['no blank fields may be submitted']
+                if (task.nameValue === "") {
+                    throw ['All chores must have a name']
+                }
+                if (task.detailsValue === "") {
+                    throw ['All chore details must be at least 3 characters']
                 }
             })
 
@@ -219,7 +222,7 @@ function CreatePage({ user }) {
                     newMembers.map((member, index) => {
                         function assignTasks() {
                             if (!newTasks[index]) {
-                                return 1
+                                return "none"
                             }
                             else return newTasks[index].id
                         }
@@ -307,6 +310,7 @@ function CreatePage({ user }) {
                                                 size="40"
 
                                             />&nbsp;
+                                            <Label4>{`*Leave email blank if this hero does not need chore reminder emails.`}</Label4>
                                             <RemoveButton
                                                 type="button"
                                                 onClick={(e) => removeMemberInput(i)}
@@ -389,6 +393,7 @@ function CreatePage({ user }) {
     )
 }
 
+
 const AddButton = styled(Button)`
 margin: auto;
 display: block;
@@ -438,6 +443,20 @@ const Label3 = styled.label`
   font-weight: 500;
   margin-left: 5%;
   text-align: center;
+  /* margin-bottom: 8px; */
+  /* @media only screen and (max-width: 600px) {
+        text-align: center;
+    } */
+`;
+const Label4 = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: .9rem;
+  font-weight: 450;
+  margin-left: 5%;
+  margin-top: -20px;
+  margin-right: 4%;
+  margin-bottom: 19px;
   /* margin-bottom: 8px; */
   /* @media only screen and (max-width: 600px) {
         text-align: center;

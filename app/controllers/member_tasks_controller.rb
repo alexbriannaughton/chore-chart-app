@@ -5,7 +5,7 @@ class MemberTasksController < ApplicationController
     end
 
     def create
-        if mt_params[:task_id] == 1
+        if mt_params[:task_id] == "none"
             free_space = Task.create!(chore_wheel_id: mt_params[:chore_wheel_id], name: "Free space!", details: "ask yourself. what can i do for my chore wheel?")
             mt = MemberTask.create(task: free_space, member_id: mt_params[:member_id], chore_wheel_id: mt_params[:chore_wheel_id])
         else

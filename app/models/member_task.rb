@@ -6,7 +6,10 @@ class MemberTask < ApplicationRecord
   after_create :send_new_task_email
 
   def send_new_task_email
-    MemberMailer.new_chore(member: self.member, member_task: self).deliver_now
+    if self.member.email != ""
+      MemberMailer.new_chore(member: self.member, member_task: self).deliver_now
+    else return nil
+    end
   end
 
   def self.rotate_all

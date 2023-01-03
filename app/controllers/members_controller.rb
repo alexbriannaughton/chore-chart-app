@@ -33,7 +33,7 @@ class MembersController < ApplicationController
                 deleted_member.destroy
                 # free_space_mt.task.destroy
             else
-                nobody = Member.create!(chore_wheel: cw, email: "nil", name: "nobody")
+                nobody = Member.create!(chore_wheel: cw, name: "nobody")
                 MemberTask.create!(chore_wheel: cw, member: nobody, task: ex_members_last_task)
                 deleted_member.destroy
             end
