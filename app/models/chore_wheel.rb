@@ -1,8 +1,8 @@
 class ChoreWheel < ApplicationRecord
-    has_many :members
-    has_many :tasks
+    has_many :members, dependent: :destroy
+    has_many :tasks, dependent: :destroy
     has_many :member_tasks
-    has_many :chore_wheel_users
+    has_many :chore_wheel_users, dependent: :destroy
     has_many :users, through: :chore_wheel_users
     has_many :comments
 
