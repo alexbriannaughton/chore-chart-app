@@ -86,7 +86,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                         setErrors([`${addNewUser} has already been added`])
                     } else {
                         setErrors(err.errors)
-                    } 
+                    }
 
                 })
             }
@@ -266,6 +266,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 <>
                     <OptionsHeader>Edit hero:</OptionsHeader>
                     <form onSubmit={handleMemberEditSubmit}>
+                        <LabelDiv><Label>name:</Label></LabelDiv>
                         <FormField>
                             <Input
                                 type="text"
@@ -273,6 +274,8 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                                 onChange={(e) => setEditMemberName(e.target.value)}
                             />
                         </FormField>
+
+                        <LabelDiv><Label>email:</Label></LabelDiv>
                         <FormField>
                             <Input
                                 type="email"
@@ -280,6 +283,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                                 onChange={(e) => setEditMemberEmail(e.target.value)}
                             />
                         </FormField>
+                        <NoteDiv><Note>{`*Leave email blank if ${memberToEdit.name} does not need chore reminder emails.`}</Note></NoteDiv>
                         <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
                             <FormField>
                                 {errors.map((err) => (
@@ -308,7 +312,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
             return (
                 <>
                     <OptionsHeader>Options</OptionsHeader>
-                    
+
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit chores</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit heroes</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new chore</span></OptionsButtons>
@@ -321,8 +325,8 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         if (subMenu === "Add a user") {
             return (
                 <>
-                    <OptionsHeader>Options</OptionsHeader>
-                    <Subhead>Provide a pre-existing username below to add another user for this chart. This will give the user ability to view and edit this chore wheel from their own login.</Subhead>
+                    <OptionsHeader>Add new user</OptionsHeader>
+                    <Subhead>Provide a pre-existing username below to add another user to this chart.<br /><br />Gives access to view, edit and post to this chore wheel.</Subhead>
                     <form onSubmit={newUserSubmit}>
                         <LabelDiv><Label>username:</Label></LabelDiv>
                         <FormField>
@@ -491,11 +495,27 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
 
     return (
         <>
-
             {renderPage()}
         </>
     )
 }
+const NoteDiv = styled.div`
+    width: 500px;
+    margin: auto;
+    display: block;
+`
+const Note = styled.label`
+  color: dimgray;
+  display: block;
+  font-size: .9rem;
+  font-weight: 450;
+  margin-bottom: 15px;
+  margin-top: -10px;
+
+  @media only screen and (max-width: 600px) {
+
+  }
+`;
 const LabelDiv = styled.div`
     width: 500px;
     margin: auto;
