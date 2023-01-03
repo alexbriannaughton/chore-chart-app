@@ -6,9 +6,10 @@ class MemberTask < ApplicationRecord
   after_create :send_new_task_email
 
   def send_new_task_email
-    if self.member.email != "" || self.member.email != nil
+    if self.member.email == "" || self.member.email == nil
+      return nil
+    else
       MemberMailer.new_chore(member: self.member, member_task: self).deliver_now
-    else return nil
     end
   end
 
