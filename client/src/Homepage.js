@@ -96,14 +96,14 @@ function Homepage({ setUser, user }) {
         }
         if (user.chore_wheels.length < 1) {
             return (
-                <>
+                <Wrapper>
                     <h2 align="center">Welcome, {user.username}!</h2>
                     <NewButton onClick={newChartClick} color="secondary">
                         <span>
                             Make a new chart!
                         </span>
                     </NewButton>
-                </>
+                </Wrapper>
             )
         }
     }
