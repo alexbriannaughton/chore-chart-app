@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2023_01_02_021403) do
 
   create_table "chore_wheels", force: :cascade do |t|
     t.string "name"
+    t.boolean "auto_rotate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

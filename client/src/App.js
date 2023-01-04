@@ -12,7 +12,7 @@ function App() {
 
   const [user, setUser] = useState(null)
 
-  console.log(user)
+
 
   useEffect(() => {
     // auto-login
@@ -52,7 +52,7 @@ function App() {
 
         <Route
           path={`/:chartId`}
-          element={<ChartPage user={user} />}
+          element={<ChartPage user={user} setUser={setUser} />}
         />
 
       </Routes>

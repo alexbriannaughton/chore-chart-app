@@ -144,7 +144,7 @@ code {
   }
 
   to {
-    transform: rotate(5000deg);
+    transform: rotate(-2000deg);
     opacity: 0;
   }
 }

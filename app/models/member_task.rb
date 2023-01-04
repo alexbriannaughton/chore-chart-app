@@ -14,7 +14,7 @@ class MemberTask < ApplicationRecord
   end
 
   def self.rotate_all
-    all_cw = ChoreWheel.all
+    all_cw = ChoreWheel.where(auto_rotate: true)
     all_cw.each do |cw|
       num = cw.members.length
       arr = []

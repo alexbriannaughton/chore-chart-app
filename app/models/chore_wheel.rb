@@ -7,6 +7,7 @@ class ChoreWheel < ApplicationRecord
     has_many :comments
 
     validates :name, length: { minimum: 3 }
+    validates :auto_rotate, inclusion: { in: [ true, false ] }
 
     def rotate
         num = self.members.length
