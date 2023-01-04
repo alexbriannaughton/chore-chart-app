@@ -71,6 +71,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         setRotate(true)
         setTimeout(rotateFetch, 2000)
     }
+    
     function renderConfirmModal() {
         return (
             <>

@@ -242,10 +242,6 @@ function CreatePage({ user }) {
                         })
                     })
                 )
-
-            if (newTasks.length > newMembers.length) {
-                await fetch(`/empty_tasks/${newChart.id}`)
-            }
             // const newMTs =
             //     await Promise.all(
             //         mtResps.map((mt) => {
@@ -253,6 +249,14 @@ function CreatePage({ user }) {
             //         })
             //     )
             // console.log(newMTs)
+
+            if (newTasks.length > newMembers.length) {
+                await fetch(`/empty_tasks/${newChart.id}`)
+            }
+            await fetch(`/rotate/${newChart.id}`)
+
+
+
             navigate(`/${newChart.id}`)
             user.chore_wheels.push(newChart)
         } catch (error) {
@@ -288,7 +292,7 @@ function CreatePage({ user }) {
                                 onChange={(e) => setRotateBool(e.target.value)}
                                 name="auto-rotate"
                             />
-                            <Label style={{display: "inline", fontWeight: "400"}}>Yes</Label>
+                            <Label style={{ display: "inline", fontWeight: "400" }}>Yes</Label>
                             <br />
                             <RadioInput
                                 type="radio"
@@ -296,12 +300,12 @@ function CreatePage({ user }) {
                                 onChange={(e) => setRotateBool(e.target.value)}
                                 name="auto-rotate"
                             />
-                            <Label style={{display: "inline", fontWeight: "400"}}>No, I'll rotate it myself</Label>
-                           
-                            
-                            
+                            <Label style={{ display: "inline", fontWeight: "400" }}>No, I'll rotate it myself</Label>
+
+
+
                         </WrapperChild2>
-                         <br/>
+                        <br />
                         <Divider />
                         <Label3>
                             {"Third, who are the Chore Heroes? (the people who will be doing the chores):"}

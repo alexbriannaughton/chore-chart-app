@@ -71,7 +71,7 @@ left: 0;
 right: 0;
 text-align: center;
 /* margin-top: -30px; */
-top: 80%;
+top: 83%;
 `;
 const ModalContent = styled.div`
   /* display: flex;
