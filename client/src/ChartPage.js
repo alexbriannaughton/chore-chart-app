@@ -8,7 +8,7 @@ import Options from './components/Options'
 import DetailsModal from "./components/DetailsModal"
 
 
-function ChartPage({ user }) {
+function ChartPage({ user, setUser }) {
 
     const [showModal, setShowModal] = useState(true)
     const [currentDetails, setCurrentDetails] = useState({details2: "Click a segment for chore details"})
@@ -172,7 +172,7 @@ function ChartPage({ user }) {
         else if (activeButton === "Options") {
             return (
                 <>
-                    <Options setActiveButton={setActiveButton} setMemberTasks={setMemberTasks} memberTasks={memberTasks} />
+                    <Options setActiveButton={setActiveButton} setMemberTasks={setMemberTasks} memberTasks={memberTasks} user={user} setUser={setUser}/>
                 </>
             )
         }

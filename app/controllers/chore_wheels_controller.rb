@@ -20,6 +20,17 @@ class ChoreWheelsController < ApplicationController
         render json: cw, status: :created
     end
 
+    def update
+        cw = ChoreWheel.find(params[:id])
+        cw.update!(chore_wheel_params)
+        render json: cw
+    end
+
+    def destroy
+        cw = ChoreWheel.find(params[:id])
+        cw.destroy
+    end
+
     def create_empty_tasks
         cw = ChoreWheel.find(params[:id])
 
@@ -40,6 +51,6 @@ class ChoreWheelsController < ApplicationController
     private
 
     def chore_wheel_params
-        params.permit(:name, :user_id)
+        params.permit(:name, :user_id, :auto_rotate)
     end
 end

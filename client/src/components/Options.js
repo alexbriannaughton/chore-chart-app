@@ -3,14 +3,19 @@ import { useState } from 'react'
 import Button from "./Button"
 import { useParams } from 'react-router-dom'
 import Error from "./Error"
+import { useNavigate } from "react-router-dom"
 
-function Options({ memberTasks, setMemberTasks, setActiveButton }) {
+function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }) {
+
+    const navigate = useNavigate()
 
     const params = useParams()
 
     const [subMenu, setSubMenu] = useState(null)
 
     const [errors, setErrors] = useState([])
+
+    const [rotateBool, setRotateBool] = useState(null)
 
     const [taskToEdit, setTaskToEdit] = useState(null)
     const [memberToEdit, setMemberToEdit] = useState(null)
@@ -25,6 +30,13 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
     const [newTaskDetails, setNewTaskDetails] = useState("")
     const [newMemberName, setNewMemberName] = useState("")
     const [newMemberEmail, setNewMemberEmail] = useState("")
+
+    const [autoRotateMenu, setAutoRotateMenu] = useState(false)
+
+    const [renameChart, setRenameChart] = useState(false)
+    const [newChartName, setNewChartName] = useState(memberTasks[0].chore_wheel.name)
+
+    const [deleteChartMenu, showDeleteChartMenu] = useState(false)
 
     function handleEditTaskClick(task) {
         setTaskToEdit(task)
@@ -124,6 +136,9 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         setSubMenu(null)
         setTaskToEdit(null)
         setMemberToEdit(null)
+        setAutoRotateMenu(false)
+        setRenameChart(false)
+        showDeleteChartMenu(false)
     }
     function handleDeleteMember() {
         fetch(`/members/${memberToEdit.id}`, {
@@ -219,6 +234,58 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         })
     }
 
+    function updateAutoRotate(e) {
+        e.preventDefault()
+
+        fetch(`/chore_wheels/${params.chartId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ auto_rotate: rotateBool })
+        }).then((r) => {
+            if (r.ok) {
+                setErrors(["Updated!"])
+            }
+            else {
+                r.json().then((err) => setErrors(err.errors))
+            }
+        })
+    }
+    function updateChartName(e) {
+        e.preventDefault()
+
+        fetch(`/chore_wheels/${params.chartId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: newChartName })
+        }).then((r) => {
+            if (r.ok) {
+                fetch(`/chore_wheels/${params.chartId}`)
+                    .then((res) => res.json())
+                    .then((mt) => {
+                        setMemberTasks(mt)
+                        setActiveButton("Wheel")
+                    })
+            }
+            else {
+                r.json().then((err) => setErrors(err.errors))
+            }
+        })
+    }
+    function handleDeleteChart() {
+        fetch(`/chore_wheels/${params.chartId}`, {
+            method: "DELETE"
+        }).then((r) => {
+            if (r.ok) {
+                fetch(`/users/${user.id}`)
+                .then((res) => res.json()).then((updatedUser) => setUser(updatedUser))
+                navigate("/")
+            }
+        })
+    }
     function renderPage() {
         if (taskToEdit) {
             return (
@@ -248,7 +315,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                         </div>
                         <FormField>
                             <SubButton type="submit">
-                                Submit changes
+                                <span>Submit changes</span>
                             </SubButton>
                         </FormField>
                     </form>
@@ -293,7 +360,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                         </div>
                         <FormField>
                             <SubButton type="submit">
-                                Submit changes
+                                <span>Submit changes</span>
                             </SubButton>
                         </FormField>
                     </form>
@@ -308,11 +375,97 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 </>
             )
         }
+        if (autoRotateMenu) {
+            return (
+                <>
+                    <OptionsHeader>Chart settings:</OptionsHeader>
+                    <Subhead>Auto-rotate chores every Sunday morning?</Subhead>
+                    <form onSubmit={updateAutoRotate}>
+                        <BoolWrapper>
+                            <RadioInput
+                                type="radio"
+                                value={true}
+                                onChange={(e) => setRotateBool(e.target.value)}
+                                name="auto-rotate"
+                            />
+                            <BoolLabel style={{ fontWeight: "400" }}>Yes</BoolLabel>
+                            <br></br>
+                            <RadioInput
+                                type="radio"
+                                value={0}
+                                onChange={(e) => setRotateBool(e.target.value)}
+                                name="auto-rotate"
+                            />
+                            <BoolLabel style={{ fontWeight: "400" }}>No, I'll rotate it myself</BoolLabel>
+                        </BoolWrapper>
+                        <SubButton type="submit">
+                            <span>Update</span>
+                        </SubButton>
+                        <div style={{ maxWidth: "70%", width: "500px", margin: "auto" }}>
+                            <FormField>
+                                {errors.map((err) => (
+                                    <Error1 key={err}>{err}</Error1>
+                                ))}
+                            </FormField>
+                        </div>
+                    </form>
+                    <BackButton
+                        onClick={handleBackButtonClick}
+                    ><span>Go back</span></BackButton>
+                </>
+            )
+        }
+        if (renameChart) {
+            return (
+                <>
+                    <OptionsHeader>Chart settings:</OptionsHeader>
+                    <Subhead>Enter chart's new name:</Subhead>
+                    <form onSubmit={updateChartName}>
+                        <FormField>
+                            <Input
+                                type="text"
+                                value={newChartName}
+                                onChange={(e) => setNewChartName(e.target.value)}
+                            />
+                        </FormField>
+                        <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
+                            <FormField>
+                                {errors.map((err) => (
+                                    <Error1 key={err}>{err}</Error1>
+                                ))}
+                            </FormField>
+                        </div>
+                        <SubButton type="submit">
+                            <span>Update</span>
+                        </SubButton>
+                    </form>
+                    <BackButton
+                        onClick={handleBackButtonClick}
+                    ><span>Go back</span></BackButton>
+                </>
+            )
+        }
+        if (deleteChartMenu) {
+            return (
+                <>
+                    <OptionsHeader>Are you sure</OptionsHeader>
+                    <Subhead>you want to delete this chart<br></br> and all of its data?</Subhead>
+                    <DeleteAllButton onClick={handleDeleteChart}>
+                        <span>Delete</span>
+                    </DeleteAllButton>
+                    <BackButton
+                        onClick={handleBackButtonClick}
+                    >
+                        <span>Go back</span>
+                    </BackButton>
+                </>
+            )
+        }
         if (!subMenu) {
             return (
                 <>
                     <OptionsHeader>Options</OptionsHeader>
-
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit chart</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit chores</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit heroes</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new chore</span></OptionsButtons>
@@ -396,7 +549,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 <>
                     <OptionsHeader>Options</OptionsHeader>
                     <Subhead>Which hero would you like to edit?</Subhead>
-                    {renderMembers()}
+                    {renderMembers()}Au
                     <BackButton
                         onClick={handleBackButtonClick}
                     ><span>Go back</span></BackButton>
@@ -491,6 +644,19 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
                 </>
             )
         }
+        if (subMenu === "Edit chart") {
+            return (
+                <>
+                    <OptionsHeader>Chart settings:</OptionsHeader>
+                    <OptionsButtons onClick={(e) => setAutoRotateMenu(true)}><span>Auto-rotate</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setRenameChart(true)}><span>Rename</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => showDeleteChartMenu(true)}><span>Delete</span></OptionsButtons>
+                    <BackButton
+                        onClick={handleBackButtonClick}
+                    ><span>Go back</span></BackButton>
+                </>
+            )
+        }
     }
 
     return (
@@ -499,6 +665,19 @@ function Options({ memberTasks, setMemberTasks, setActiveButton }) {
         </>
     )
 }
+const BoolWrapper = styled.div`
+/* display: ;
+justify-content: center;
+margin: auto; */
+text-align: center;
+margin-bottom: 15px;
+`
+const RadioInput = styled.input`
+   
+    @media only screen and (max-width: 600px) {
+    
+    }
+`;
 const NoteDiv = styled.div`
     width: 500px;
     margin: auto;
@@ -521,6 +700,12 @@ const LabelDiv = styled.div`
     margin: auto;
     display: block;
 `
+const BoolLabel = styled.label`
+  color: dimgray;
+
+  font-size: 1rem;
+  font-weight: 500;
+`;
 const Label = styled.label`
   color: dimgray;
   display: block;
@@ -544,6 +729,13 @@ display: block;
 background-color: red;
 border-color: #F5C2C1;
 width: 149px;
+`
+const DeleteAllButton = styled(Button)`
+margin: auto;
+margin-top: 15px;
+display: block;
+background-color: red;
+border-color: #F5C2C1;
 `
 
 const OptionsButtons = styled(Button)`

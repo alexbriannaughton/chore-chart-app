@@ -12,6 +12,7 @@ function CreatePage({ user }) {
     const [isLoading, setIsLoading] = useState(false)
 
     const [chartName, setChartName] = useState("")
+    const [rotateBool, setRotateBool] = useState(null)
 
     const memberInputArr = [
         {
@@ -141,6 +142,7 @@ function CreatePage({ user }) {
                     },
                     body: JSON.stringify({
                         name: chartName,
+                        auto_rotate: rotateBool
                         // user_id: user.id
                     })
                 })
@@ -275,8 +277,34 @@ function CreatePage({ user }) {
                             /><br />
                         </WrapperChild2>
                         <Divider />
+                        <WrapperChild2>
+                            <Label3>
+                                Would you like us to auto-rotate your chore wheel every Sunday morning?
+                            </Label3>
+                            <Label5>{"(you can always change this later)"}</Label5><br />
+                            <RadioInput
+                                type="radio"
+                                value={true}
+                                onChange={(e) => setRotateBool(e.target.value)}
+                                name="auto-rotate"
+                            />
+                            <Label style={{display: "inline", fontWeight: "400"}}>Yes</Label>
+                            <br />
+                            <RadioInput
+                                type="radio"
+                                value={0}
+                                onChange={(e) => setRotateBool(e.target.value)}
+                                name="auto-rotate"
+                            />
+                            <Label style={{display: "inline", fontWeight: "400"}}>No, I'll rotate it myself</Label>
+                           
+                            
+                            
+                        </WrapperChild2>
+                         <br/>
+                        <Divider />
                         <Label3>
-                            {"Next, who are the Chore Heroes? (the people who will be doing the chores):"}
+                            {"Third, who are the Chore Heroes? (the people who will be doing the chores):"}
                         </Label3><br />
                         <HeroWrapper>
 
@@ -441,7 +469,7 @@ const Label3 = styled.label`
   display: block;
   font-size: 1rem;
   font-weight: 500;
-  margin-left: 5%;
+  /* margin-left: 5%; */
   text-align: center;
   /* margin-bottom: 8px; */
   /* @media only screen and (max-width: 600px) {
@@ -457,6 +485,19 @@ const Label4 = styled.label`
   margin-top: -20px;
   margin-right: 4%;
   margin-bottom: 19px;
+  /* margin-bottom: 8px; */
+  /* @media only screen and (max-width: 600px) {
+        text-align: center;
+    } */
+`;
+const Label5 = styled.label`
+  color: dimgray;
+    display: block;
+  font-size: .9rem;
+  font-weight: 450;
+ 
+  text-align: center;
+
   /* margin-bottom: 8px; */
   /* @media only screen and (max-width: 600px) {
         text-align: center;
@@ -498,6 +539,12 @@ const NameInput = styled(Input)`
     @media only screen and (max-width: 600px) {
         width: 75%;
         margin-bottom: 0;
+    }
+`;
+const RadioInput = styled.input`
+    margin-right: -13px;
+    @media only screen and (max-width: 600px) {
+    
     }
 `;
 
