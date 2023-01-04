@@ -9,7 +9,7 @@
 puts 'seedin...'
 
 
-alex = User.create(username: 'alex', password: 'alex', email: 'alexbriannaughton@gmail.com')
+# alex = User.create(username: 'alex', password: 'alex', email: 'alexbriannaughton@gmail.com')
 # cw = ChoreWheel.create(name: 'first chorewheel')
 # alex_cw = ChoreWheelUser.create(chore_wheel: cw, user: alex)
 # free_task = Task.create(name: "Free space!", details: "do whatever you want! Find a creative way to be helpful :)", chore_wheel: cw)
