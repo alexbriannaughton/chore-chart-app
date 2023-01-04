@@ -379,7 +379,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
             return (
                 <>
                     <OptionsHeader>Chart settings:</OptionsHeader>
-                    <Subhead>Auto-rotate chores every Sunday morning?</Subhead>
+                    <Subhead>Auto-rotate chores every Monday morning?</Subhead>
                     <form onSubmit={updateAutoRotate}>
                         <BoolWrapper>
                             <RadioInput

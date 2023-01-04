@@ -102,6 +102,7 @@ code {
   width: 100%;
   /* min-width: 300px; */
   overflow: hidden;
+  z-index: 0;
 }
 
 #top-circle {

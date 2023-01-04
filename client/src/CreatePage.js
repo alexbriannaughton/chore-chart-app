@@ -279,7 +279,7 @@ function CreatePage({ user }) {
                         <Divider />
                         <WrapperChild2>
                             <Label3>
-                                Would you like us to auto-rotate your chore wheel every Sunday morning?
+                                Would you like us to auto-rotate your chore wheel every Monday morning?
                             </Label3>
                             <Label5>{"(you can always change this later)"}</Label5><br />
                             <RadioInput
