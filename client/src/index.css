@@ -112,6 +112,7 @@ code {
   /* min-width: 300px; */
   width: 100%;
   overflow: hidden;
+  z-index: 1;
 }
 
 .spin {
@@ -144,7 +145,7 @@ code {
   }
 
   to {
-    transform: rotate(359deg);
+    transform: rotate(5000deg);
     opacity: 0;
   }
 }

@@ -229,6 +229,7 @@ display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
+  
 `
 const ConfirmModal = styled.div`
   position: absolute;
@@ -237,7 +238,8 @@ const ConfirmModal = styled.div`
   transform: translate(-50%,-50%);
   width: 200px;
   height: 185px;
-  background-color: rgb(250, 194, 255);;
+  background-color: rgb(250, 194, 255);
+  z-index: 3;
 
   border-radius: 10px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
@@ -250,6 +252,7 @@ const CircleButton = styled(Button)`
   transform: translate(-50%,-50%);
   border-radius: 50%;
   height: 70px;
+  z-index: 2;
   @media only screen and (max-width: 600px) {
     /* height: 60px;
     width: 60px;
