@@ -181,7 +181,7 @@ function ChartPage({ user, setUser }) {
 
     return (
         <>
-        <Wrapper1>
+   
             <Header3>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header3>
             <Parent>
                 <OutsideButtons
@@ -199,7 +199,7 @@ function ChartPage({ user, setUser }) {
                     color="secondary"><span>Settings</span></OutsideButtons>
             </Parent>
             {errors ? noAuth() : renderWhichPage()}
-            </Wrapper1>
+       
         </>
     )
 }
@@ -215,8 +215,11 @@ const Wrapper1 = styled.section`
   min-height: 670px;
 
   @media only screen and (max-width: 600px) {
-    max-width: 98%;
+    max-width: 100%;
     min-height: 90vh;
+    padding: 0;
+    border: 0 solid whitesmoke;
+    box-shadow: none;
   }
 `;
 const BBHeader = styled.h1`
