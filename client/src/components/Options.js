@@ -514,8 +514,13 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
             function renderTasks() {
                 return (
                     memberTasks.map((mt) => {
+                        function longName() {
+                            if (mt.task.name.length > 13) {
+                                return `${mt.task.name.substring(0, 13)}...`
+                            } else return mt.task.name
+                        }
                         return (
-                            <OptionsButtons key={mt.id} onClick={(e) => handleEditTaskClick(mt.task)}><span>{mt.task.name}</span></OptionsButtons>
+                            <OptionsButtons key={mt.id} onClick={(e) => handleEditTaskClick(mt.task)}><span>{longName()}</span></OptionsButtons>
                         )
                     })
                 )

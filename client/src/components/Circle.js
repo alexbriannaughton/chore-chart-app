@@ -31,15 +31,27 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                 return 'white'
             } else return 'black'
         }
+        function freeSpaceFontWeight() {
+            if (mt.task.name === "Free space!") {
+                return 'bold'
+            } else return 'normal'
+        }
+        function longTaskName() {
+            if (mt.task.name.length > 15) {
+                return `${mt.task.name.substring(0, 15)}...`
+            }
+            else return mt.task.name
+        }
         return {
             member: mt.member.name,
-            task: mt.task.name,
+            task: longTaskName(),
             value: 1,
             color: wheelColors[index % wheelColors.length],
             details1: `${mt.member.name} is on "${mt.task.name}"`,
             details2: `${mt.task.details}`,
             nameColor: nameColor(),
-            taskColor: taskNameColor()
+            taskColor: taskNameColor(),
+            weight: freeSpaceFontWeight()
         }
     })
 
@@ -111,7 +123,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
             return 30
         }
         else if (datas.length === 5) {
-            return 17
+            return 18.1
         }
         else if (datas.length === 7) {
             return 12.5
@@ -150,26 +162,30 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         if (size.matches && datas.length===4) {
             return 3.5
         }
-        if (size.matches && datas.length > 6) {
-            return 3.5
-        }
-        else if (datas.length === 7) {
-            return 4
+        else if (datas.length >= 5) {
+            return 3.2
         }
         else return 5
     }
     function nameFontSize(s) {
         if (datas.length === 3) {
             return 5
-        } else return 4
+        }
+        if (size.matches&&datas.length>6) {
+            return 3
+        }
+        else return 4
     }
 
     function positionTheLabel() {
         if (datas.length === 2) {
             return 50
         }
+        if (datas.length === 5) {
+            return 61
+        }
         if (datas.length > 6) {
-            return 70
+            return 67
         } else return 60
     }
  
@@ -202,6 +218,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                             fontSize: `${choreFontSize(size)}`,
                             fontFamily: 'sans-serif',
                             pointerEvents: 'none',
+                            fontWeight: datas[index].weight
                         })}
                         onClick={(e, segmentIndex) => handleSliceClick(datas[segmentIndex], segmentIndex)}
                         onMouseOver={(e, segmentIndex) => {
@@ -216,7 +233,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                     />
 
                     {datas ? <CircleButton onClick={(e) => showConfirmRotate(true)}>
-                        <span>rotate<br></br>tasks</span>
+                        <span><i>rotate</i></span>
                     </CircleButton> : <CircleButton>loading...</CircleButton>}
                     {confirmRotate ? renderConfirmModal() : null}
                 </div>
@@ -272,7 +289,7 @@ const CircleButton = styled(Button)`
   top: 50%;
   transform: translate(-50%,-50%);
   border-radius: 50%;
-  height: 70px;
+  height: 73px;
   z-index: 2;
   border-style: outset;
  
@@ -283,8 +300,9 @@ const CircleButton = styled(Button)`
     /* height: 60px;
     width: 60px;
     font-size: smaller; */
- border-width: 6px;
-
+ border-width: 5px;
+ font-size: .8rem;
+ height: 58px;
 }
 `
 export default Circle

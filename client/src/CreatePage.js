@@ -129,7 +129,7 @@ function CreatePage({ user }) {
                     throw ['All chores must have a name']
                 }
                 if (task.detailsValue === "") {
-                    throw ['All chore details must be at least 3 characters']
+                    throw ['Chore details cannot be blank']
                 }
             })
 
@@ -216,6 +216,11 @@ function CreatePage({ user }) {
                         return task.json()
                     })
                 )
+            if (!taskResps.ok) {
+                newTasks.map((err) => {
+                    throw err.errors
+                })
+            }
             // console.log(newTasks)
 
             //create membertask for every member
@@ -359,7 +364,7 @@ function CreatePage({ user }) {
                             <Divider />
                             {/* tasks form */}
                             <Label3>
-                                {"Last, let us know the chores that will be on the chart:"}
+                                {"Last, let us know the chores that need be on the chart:"}
                             </Label3><br />
                             {/* <WrapperChild> */}
                             {tasksArr.map((item, i) => {

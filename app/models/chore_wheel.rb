@@ -6,7 +6,7 @@ class ChoreWheel < ApplicationRecord
     has_many :users, through: :chore_wheel_users
     has_many :comments, dependent: :destroy
 
-    validates :name, length: { minimum: 3 }
+    validates :name, length: { minimum: 2 }
     validates :auto_rotate, inclusion: { in: [ true, false ] }
 
     def rotate

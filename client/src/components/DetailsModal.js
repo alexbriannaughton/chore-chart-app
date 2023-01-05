@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useRef } from 'react'
+
 
 function DetailsModal({ showModal, setShowModal, currentDetails }) {
 
