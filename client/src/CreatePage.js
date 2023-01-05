@@ -216,11 +216,11 @@ function CreatePage({ user }) {
                         return task.json()
                     })
                 )
-            if (!taskResps.ok) {
-                newTasks.map((err) => {
-                    throw err.errors
-                })
-            }
+            // if (!taskResps.ok) {
+            //     newTasks.map((err) => {
+            //         throw err.errors
+            //     })
+            // }
             // console.log(newTasks)
 
             //create membertask for every member

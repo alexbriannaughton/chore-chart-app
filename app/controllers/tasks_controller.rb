@@ -60,6 +60,7 @@ class TasksController < ApplicationController
         if assignee
             MemberTask.create!(chore_wheel: cw, task: task, member: assignee.member)
             assignee.task.destroy
+            cw.rotate
         else
             nobody = Member.create!(chore_wheel: cw, name: "nobody", email: "nil")
             MemberTask.create!(chore_wheel: cw, member: nobody, task: task)

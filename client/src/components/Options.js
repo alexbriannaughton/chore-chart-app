@@ -626,8 +626,10 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
                                 onChange={(e) => setNewMemberEmail(e.target.value)}
                             />
                         </FormField>
-
+                        <NoteDiv><Note>{`*Leave email blank if this hero does not need chore reminder emails.`}</Note></NoteDiv>
                         <div style={{ maxWidth: "80%", width: "500px", margin: "auto" }}>
+
+                            
                             <FormField>
                                 {errors.map((err) => (
                                     <Error1 key={err}>{err}</Error1>
@@ -689,6 +691,9 @@ const NoteDiv = styled.div`
     width: 500px;
     margin: auto;
     display: block;
+    @media only screen and (max-width: 600px) {
+        max-width: 80%;
+  }
 `
 const Note = styled.label`
   color: dimgray;
@@ -698,9 +703,7 @@ const Note = styled.label`
   margin-bottom: 15px;
   margin-top: -10px;
 
-  @media only screen and (max-width: 600px) {
-
-  }
+  
 `;
 const LabelDiv = styled.div`
     width: 500px;

@@ -15,7 +15,7 @@ function ChartPage({ user, setUser }) {
 
     const [memberTasks, setMemberTasks] = useState([])
     const [comments, setComments] = useState([])
-
+console.log(memberTasks)
     const [newComment, setNewComment] = useState("")
 
     const [errors, setErrors] = useState(undefined)
