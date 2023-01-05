@@ -556,7 +556,7 @@ const WrapperGrandpa = styled.div`
   border: 3px solid chartreuse;  
   border-radius: 5px;
   box-shadow: 0px 0px 20px black;
-  margin: 2% 18%;
+  margin: 2% 22%;
   @media only screen and (max-width: 600px) {
     margin: 2% 5%;
     /* max-width: 300px; */

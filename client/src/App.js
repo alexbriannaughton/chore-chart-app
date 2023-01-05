@@ -28,7 +28,7 @@ function App() {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Chore Heroes</title>
-        <link rel="canonical" href="http://mysite.com/example" />
+        <link rel="canonical" href="https://chore-chart-app.onrender.com/" />
       </Helmet>
       <NavBar
         user={user}

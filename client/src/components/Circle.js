@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useState } from "react"
 import Button from "./Button"
 import styled from "styled-components"
+import DetailsModal from "./DetailsModal"
 
 
 
@@ -19,13 +20,26 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
     const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)", "chartreuse", "dimgray", "rgb(250, 194, 255)", "chartreuse"]
 
     const datas = memberTasks.map((mt, index) => {
+        function nameColor() {
+            if (mt.member.name === "nobody") {
+                return 'red'
+            } else return 'black'
+            
+        }
+        function taskNameColor() {
+            if (mt.task.name === "Free space!") {
+                return 'white'
+            } else return 'black'
+        }
         return {
             member: mt.member.name,
             task: mt.task.name,
             value: 1,
             color: wheelColors[index % wheelColors.length],
             details1: `${mt.member.name} is on "${mt.task.name}"`,
-            details2: `${mt.task.details}`
+            details2: `${mt.task.details}`,
+            nameColor: nameColor(),
+            taskColor: taskNameColor()
         }
     })
 
@@ -90,6 +104,9 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
     }
 
     function labelSpot() {
+        if (datas.length === 2) {
+            return 41.5
+        }
         if (datas.length === 3) {
             return 30
         }
@@ -112,7 +129,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
             return 380
         }
         if (size.matches && datas.length === 3) {
-            return 278
+            return 290
         }
         else if (size.matches && datas.length === 5) {
             return 300
@@ -123,11 +140,10 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         else if (size.matches && datas.length > 6) {
             return 340
         }
-
-        else {
+        else if (size.matches) {
             return 400
         }
-
+        else return 450
     }
 
     function choreFontSize(s) {
@@ -149,11 +165,14 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
     }
 
     function positionTheLabel() {
+        if (datas.length === 2) {
+            return 50
+        }
         if (datas.length > 6) {
             return 70
         } else return 60
     }
-
+ 
     function renderWheel() {
         return (
             <div id="circle-div" className="fade-in">
@@ -163,7 +182,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                         style={{ height: `${circleMediaQuery(size)}` }}
                         label={({ dataEntry }) => dataEntry.member}
                         labelStyle={(index) => ({
-                            fill: 'black',
+                            fill: datas[index].nameColor,
                             fontSize: `${nameFontSize(size)}px`,
                             fontFamily: 'sans-serif',
                         })}
@@ -179,7 +198,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                         style={{ height: `${circleMediaQuery(size)}` }}
                         label={({ dataEntry }) => dataEntry.task}
                         labelStyle={(index) => ({
-                            fill: 'black',
+                            fill: datas[index].taskColor,
                             fontSize: `${choreFontSize(size)}`,
                             fontFamily: 'sans-serif',
                             pointerEvents: 'none',
@@ -211,6 +230,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
     return (
         <>
             {renderWheel()}
+            <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
         </>
     )
 }
@@ -254,11 +274,16 @@ const CircleButton = styled(Button)`
   border-radius: 50%;
   height: 70px;
   z-index: 2;
+  border-style: outset;
+ 
+  &:active {
+    border-style: inset;
+  }
   @media only screen and (max-width: 600px) {
     /* height: 60px;
     width: 60px;
     font-size: smaller; */
-
+ border-width: 6px;
 
 }
 `

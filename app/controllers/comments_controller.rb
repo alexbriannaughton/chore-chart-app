@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
     def show
         cw = ChoreWheel.find(params[:id])
-        render json: cw.comments.order(created_at: :desc).limit(6)
+        render json: cw.comments.order(created_at: :desc).limit(5)
     end
     def create
         comment = Comment.create!(comment_params)

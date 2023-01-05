@@ -37,7 +37,7 @@ const ButtonBase = styled.button`
 const FillButton = styled(ButtonBase)`
   background-color: var(--main);
   color: var(--accent);
-  border: 7px groove var(--accent2);
+  border: 8px groove var(--accent2);
 
   &:active {
   border-style: ridge;
@@ -47,8 +47,8 @@ span {
   position: relative;
 }
 span:active {
-  top: 2px;
-  left: 1px;
+  top: 3px;
+  left: 2px;
 }
 `;
 

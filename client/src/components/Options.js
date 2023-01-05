@@ -464,12 +464,12 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
         if (!subMenu) {
             return (
                 <>
-                    <OptionsHeader>Options</OptionsHeader>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit chart</span></OptionsButtons>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit chores</span></OptionsButtons>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Edit heroes</span></OptionsButtons>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new chore</span></OptionsButtons>
-                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new hero</span></OptionsButtons>
+                    <OptionsHeader>Settings</OptionsHeader>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Chart</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Chores</span></OptionsButtons>
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Heroes</span></OptionsButtons>
+                    
+                    
                     <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add a user</span></OptionsButtons>
 
                 </>
@@ -479,7 +479,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
             return (
                 <>
                     <OptionsHeader>Add new user</OptionsHeader>
-                    <Subhead>Provide a pre-existing username below to add another user to this chart.<br /><br />Gives access to view, edit and post to this chore wheel.</Subhead>
+                    <Subhead>Provide a pre-existing username below to add another user to this chart.<br /><small>Gives view, edit and post access to this chore wheel.</small></Subhead>
                     <form onSubmit={newUserSubmit}>
                         <LabelDiv><Label>username:</Label></LabelDiv>
                         <FormField>
@@ -509,7 +509,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
                 </>
             )
         }
-        if (subMenu === "Edit chores") {
+        if (subMenu === "Chores") {
 
             function renderTasks() {
                 return (
@@ -523,9 +523,10 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
 
             return (
                 <>
-                    <OptionsHeader>Options</OptionsHeader>
+                    <OptionsHeader>Chore Settings</OptionsHeader>
                     <Subhead>Which chore would you like to edit?</Subhead>
                     {renderTasks()}
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new chore</span></OptionsButtons>
                     <BackButton
                         onClick={handleBackButtonClick}
                     ><span>Go back</span></BackButton>
@@ -533,7 +534,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
                 </>
             )
         }
-        if (subMenu === "Edit heroes") {
+        if (subMenu === "Heroes") {
 
             function renderMembers() {
                 return (
@@ -547,9 +548,10 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
 
             return (
                 <>
-                    <OptionsHeader>Options</OptionsHeader>
+                    <OptionsHeader>Hero settings</OptionsHeader>
                     <Subhead>Which hero would you like to edit?</Subhead>
-                    {renderMembers()}Au
+                    {renderMembers()}
+                    <OptionsButtons onClick={(e) => setSubMenu(e.target.innerText)}><span>Add new hero</span></OptionsButtons>
                     <BackButton
                         onClick={handleBackButtonClick}
                     ><span>Go back</span></BackButton>
@@ -644,10 +646,10 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
                 </>
             )
         }
-        if (subMenu === "Edit chart") {
+        if (subMenu === "Chart") {
             return (
                 <>
-                    <OptionsHeader>Chart settings:</OptionsHeader>
+                    <OptionsHeader>Chart settings</OptionsHeader>
                     <OptionsButtons onClick={(e) => setAutoRotateMenu(true)}><span>Auto-rotate</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => setRenameChart(true)}><span>Rename</span></OptionsButtons>
                     <OptionsButtons onClick={(e) => showDeleteChartMenu(true)}><span>Delete</span></OptionsButtons>
@@ -742,10 +744,18 @@ const OptionsButtons = styled(Button)`
 margin: auto;
   display: block;
   border-radius: 50%;
-  margin-top: 6px;
+  font-size: 1.4rem;
+  margin-top: 14px;
   background-color: dimgray;
   border-color: #e8e8e8;
-  min-width: 140px;
+  min-width: 175px;
+
+  @media only screen and (max-width: 600px) {
+    min-width: 140px;
+    font-size: 1rem;
+    margin-top: 6px;
+  }
+  
 `
 const BackButton = styled(OptionsButtons)`
 background-color: rgb(250, 194, 255);
@@ -753,10 +763,15 @@ color: black;
 border-color: whitesmoke;
 border-radius: 50%;
 min-width: 0;
-font-size: small;
 padding: 4px;
-margin-top: 15px;
+margin-top: 22px;
 border-width: 5px;
+font-size: 1rem;
+
+@media only screen and (max-width: 600px) {
+    font-size: small;
+    margin-top: 15px;
+  }
 `
 
 const SubButton = styled(Button)`
@@ -768,6 +783,10 @@ display: block;
 const OptionsHeader = styled.h1`
 text-align: center;
 text-decoration: underline;
+font-size: 2.5rem;
+@media only screen and (max-width: 600px) {
+  font-size: 2rem;
+  }
 `
 
 const Subhead = styled.h4`

@@ -83,8 +83,8 @@ function Homepage({ setUser, user }) {
         if (user.chore_wheels.length >= 1) {
             return (
                 <Wrapper>
-                    <h2 align="center">Yo, {user.username}!</h2>
-                    <h4 align="center">view your charts:</h4>
+                    <H2>Yo, {user.username}!</H2>
+                    <H4>view your charts:</H4>
                     {renderAllCharts()}
                     <NewButton onClick={newChartClick} color="secondary">
                         <span>
@@ -97,10 +97,10 @@ function Homepage({ setUser, user }) {
         if (user.chore_wheels.length < 1) {
             return (
                 <Wrapper>
-                    <h2 align="center">Welcome, {user.username}!</h2>
+                    <H2>Welcome, {user.username}!</H2>
                     <NewButton onClick={newChartClick} color="secondary">
                         <span>
-                            Make a new chart!
+                            Make a chore chart!
                         </span>
                     </NewButton>
                 </Wrapper>
@@ -114,7 +114,17 @@ function Homepage({ setUser, user }) {
         </>
     )
 }
-
+const H4 = styled.h4`
+text-align: center;
+font-size: large;
+`
+const H2 = styled.h2`
+text-align: center;
+font-size: 3rem;
+@media only screen and (max-width: 600px) {
+   font-size: xx-large;
+  }
+`
 const NewButton = styled(Button)`
 border-radius: 50%;
 height: 130px;
@@ -122,7 +132,15 @@ width: 130px;
 margin: auto;
 display: block;
 margin-top: 35px;
-margin-bottom: 45px;
+margin-bottom: 75px;
+border-style: outset;
+  &:active {
+    border-style: inset;
+  }
+
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 45px;
+  }
 `
 const Wrapper = styled.section`
   max-width: 500px;

@@ -11,7 +11,7 @@ import DetailsModal from "./components/DetailsModal"
 function ChartPage({ user, setUser }) {
 
     const [showModal, setShowModal] = useState(true)
-    const [currentDetails, setCurrentDetails] = useState({details2: "Click a segment for chore details"})
+    const [currentDetails, setCurrentDetails] = useState({ details2: "Click a segment for chore details" })
 
     const [memberTasks, setMemberTasks] = useState([])
     const [comments, setComments] = useState([])
@@ -76,12 +76,12 @@ function ChartPage({ user, setUser }) {
         }).then((r) => {
             if (r.ok) {
                 r.json().then((comment) => {
-                    
-                    setComments([comment, ...comments.slice(0, 5)])
+
+                    setComments([comment, ...comments.slice(0, 4)])
                     setNewComment("")
                 }
                 )
-             }
+            }
         })
     }
     function handleMenuClick(e) {
@@ -106,7 +106,6 @@ function ChartPage({ user, setUser }) {
             <>
                 <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks} showModal={showModal} setShowModal={setShowModal} currentDetails={currentDetails} setCurrentDetails={setCurrentDetails}
                 />
-                <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
             </>
         )
     }
@@ -128,7 +127,7 @@ function ChartPage({ user, setUser }) {
 
         return (
             <>
-                <h1 align="center">Bulletin Board</h1>
+                <BBHeader>Bulletin Board</BBHeader>
                 <Wrapper>
                     {renderComments()}
                 </Wrapper>
@@ -169,10 +168,10 @@ function ChartPage({ user, setUser }) {
                 </>
             )
         }
-        else if (activeButton === "Options") {
+        else if (activeButton === "Settings") {
             return (
                 <>
-                    <Options setActiveButton={setActiveButton} setMemberTasks={setMemberTasks} memberTasks={memberTasks} user={user} setUser={setUser}/>
+                    <Options setActiveButton={setActiveButton} setMemberTasks={setMemberTasks} memberTasks={memberTasks} user={user} setUser={setUser} />
                 </>
             )
         }
@@ -182,21 +181,52 @@ function ChartPage({ user, setUser }) {
 
     return (
         <>
+        <Wrapper1>
             <Header3>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header3>
-            <Parent onClick={(e) => handleMenuClick(e)}>
+            <Parent>
                 <OutsideButtons
                     color="secondary"
+                    onClick={(e) => handleMenuClick(e)}
                 // style={{ borderStyle: "ridge" }}
                 >
                     <span>Wheel</span>
                 </OutsideButtons>
-                <Button1><span>Bulletin Board</span></Button1>
-                <OutsideButtons color="secondary"><span>Options</span></OutsideButtons>
+                <Button1
+                    onClick={(e) => handleMenuClick(e)}
+                ><span>Bulletin Board</span></Button1>
+                <OutsideButtons
+                    onClick={(e) => handleMenuClick(e)}
+                    color="secondary"><span>Settings</span></OutsideButtons>
             </Parent>
             {errors ? noAuth() : renderWhichPage()}
+            </Wrapper1>
         </>
     )
 }
+const Wrapper1 = styled.section`
+  width: 700px;
+  margin: auto;
+  margin-top: 10px;
+  padding: 16px;
+
+  border: 3px solid rgb(250, 194, 255);
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px black;
+  min-height: 670px;
+
+  @media only screen and (max-width: 600px) {
+    max-width: 98%;
+    min-height: 90vh;
+  }
+`;
+const BBHeader = styled.h1`
+text-align: center;
+text-decoration: underline;
+font-size: 2.5rem;
+@media only screen and (max-width: 600px) {
+  font-size: 2rem;
+  }
+`
 const SubButton = styled(Button)`
 margin: auto;
 display: block;
@@ -224,18 +254,21 @@ const FormField = styled.div`
   }
   `;
 const Wrapper = styled.div`
-margin-left: 20%;
-margin-right: 20%;
+margin-left: 30%;
+margin-right: 30%;
 border: 2px dotted chartreuse;
+margin-bottom: 30px;
 
 @media only screen and (max-width: 600px) {
     margin-left: 10%;
 margin-right: 10%;
+margin-bottom: 23px;
   }
 `
 const Button1 = styled(Button)`
     margin-top: 0;
     color: black;
+    font-size: 1.3rem;
 
     &:focus {
   border-style: ridge;
@@ -245,11 +278,19 @@ const Button1 = styled(Button)`
 }
     }
 
+    @media only screen and (max-width: 600px) {
+    font-size: 1rem;
+  }
+
  
 `;
 const OutsideButtons = styled(Button1)`
     margin-top: 30px;
-    min-width: 89.15px;
+    min-width: 112px;
+    @media only screen and (max-width: 600px) {
+  min-width: 93.81px;
+  }
+   
 `
 const Parent = styled.div`
     display: flex;
@@ -258,14 +299,6 @@ const Parent = styled.div`
     align-items: center;
     max-width: 700px;
     margin: auto;
-`
-const Child1 = styled.div`
-    width: 75%;
-    text-align: left;
-`
-const Child2 = styled.div`
-    width: 26%;
-    text-align: right;
 `
 const Header3 = styled.h1`
     margin: 0;
