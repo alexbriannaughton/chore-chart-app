@@ -57,7 +57,7 @@ function NavBar({ user, setUser }) {
                 >
                     <Logo>
                         {"chore"} 
-                        <img style={{height: `${logoMediaQuery()}px`}} src={logo}></img>
+                        <img alt="Chore Heroes Logo" style={{height: `${logoMediaQuery()}px`}} src={logo}></img>
                         {"heroes"}
                     </Logo>
                 </NavLink>
@@ -102,9 +102,6 @@ border-width: 6px;
   }
 
 
-`
-const NavButt = styled(Button)`
-max-width: 100px;
 `
 const Wrapper = styled.header`
   display: flex;

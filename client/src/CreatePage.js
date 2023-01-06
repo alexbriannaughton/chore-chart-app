@@ -224,7 +224,7 @@ function CreatePage({ user }) {
             // console.log(newTasks)
 
             //create membertask for every member
-            const mtResps =
+            // const mtResps =
                 await Promise.all(
                     newMembers.map((member, index) => {
                         function assignTasks() {

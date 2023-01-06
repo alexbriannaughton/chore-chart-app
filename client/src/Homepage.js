@@ -18,7 +18,7 @@ function Homepage({ setUser, user }) {
             <Wrapper>
                 <Logo>
                     <h1 style={{ margin: "0", marginBottom: "-12px" }}>chore</h1>
-                    <img style={{ height: "60px", position: "absolute", left: "0", right: "0", marginLeft: "auto", marginRight: "auto" }} src={logo}></img><br />
+                    <img alt="Chore Heroes Logo" style={{ height: "60px", position: "absolute", left: "0", right: "0", marginLeft: "auto", marginRight: "auto" }} src={logo}></img><br />
                     <h1 style={{ margin: "0", marginTop: "-24px" }}>heroes</h1>
                 </Logo>
                 {showLogin ? (

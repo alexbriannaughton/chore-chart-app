@@ -5,7 +5,6 @@ import styled from "styled-components"
 import { PieChart } from "react-minimal-pie-chart"
 import Button from './components/Button'
 import Options from './components/Options'
-import DetailsModal from "./components/DetailsModal"
 
 
 function ChartPage({ user, setUser }) {
@@ -43,7 +42,7 @@ console.log(memberTasks)
                 }
             })
 
-    }, [])
+    }, [params.chartId])
 
     useEffect(() => {
         fetch(`/comments/${params.chartId}`)
@@ -54,7 +53,7 @@ console.log(memberTasks)
                     res.json().then((err) => setErrors(err))
                 }
             })
-    }, [])
+    }, [params.chartId])
 
     function newCommentSubmit(e) {
 
@@ -203,25 +202,7 @@ console.log(memberTasks)
         </>
     )
 }
-const Wrapper1 = styled.section`
-  width: 700px;
-  margin: auto;
-  margin-top: 10px;
-  padding: 16px;
 
-  border: 3px solid rgb(250, 194, 255);
-  border-radius: 5px;
-  box-shadow: 0px 0px 20px black;
-  min-height: 670px;
-
-  @media only screen and (max-width: 600px) {
-    max-width: 100%;
-    min-height: 90vh;
-    padding: 0;
-    border: 0 solid whitesmoke;
-    box-shadow: none;
-  }
-`;
 const BBHeader = styled.h1`
 text-align: center;
 text-decoration: underline;
