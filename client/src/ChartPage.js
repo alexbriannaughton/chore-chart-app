@@ -14,7 +14,7 @@ function ChartPage({ user, setUser }) {
 
     const [memberTasks, setMemberTasks] = useState([])
     const [comments, setComments] = useState([])
-console.log(memberTasks)
+
     const [newComment, setNewComment] = useState("")
 
     const [errors, setErrors] = useState(undefined)
@@ -91,8 +91,6 @@ console.log(memberTasks)
         return (
             <>
                 <Header>Woops!</Header>
-
-
                 <Header2>404 Unauthorized!!</Header2>
                 <div className='circle-div'><div id='top-circle'>
                     <PieChart className="spin-unauth" style={{ height: '370px', pointerEvents: "none" }} data={datas}></PieChart></div></div>
@@ -180,7 +178,6 @@ console.log(memberTasks)
 
     return (
         <>
-   
             <Header3>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header3>
             <Parent>
                 <OutsideButtons
@@ -192,13 +189,15 @@ console.log(memberTasks)
                 </OutsideButtons>
                 <Button1
                     onClick={(e) => handleMenuClick(e)}
-                ><span>Bulletin Board</span></Button1>
+                >
+                    <span>Bulletin Board</span>
+                </Button1>
                 <OutsideButtons
                     onClick={(e) => handleMenuClick(e)}
-                    color="secondary"><span>Settings</span></OutsideButtons>
+                    color="secondary"><span>Settings</span>
+                </OutsideButtons>
             </Parent>
             {errors ? noAuth() : renderWhichPage()}
-       
         </>
     )
 }

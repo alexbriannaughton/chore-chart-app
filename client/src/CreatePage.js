@@ -42,7 +42,6 @@ function CreatePage({ user }) {
             ]
         })
     }
-
     function addTasksInput(e) {
         setTasksArr(s => {
             return [
@@ -112,7 +111,6 @@ function CreatePage({ user }) {
             return newArr
         })
     }
-
     async function handleSubmit(e) {
         e.preventDefault()
         setIsLoading(true)
@@ -306,9 +304,6 @@ function CreatePage({ user }) {
                                 name="auto-rotate"
                             />
                             <Label style={{ display: "inline", fontWeight: "400" }}>No, I'll rotate it myself</Label>
-
-
-
                         </WrapperChild2>
                         <br />
                         <Divider />
@@ -345,7 +340,6 @@ function CreatePage({ user }) {
                                                 id={i}
                                                 type="email"
                                                 size="40"
-
                                             />&nbsp;
                                             <Label4>{`*Leave email blank if this hero does not need chore reminder emails.`}</Label4>
                                             <RemoveButton

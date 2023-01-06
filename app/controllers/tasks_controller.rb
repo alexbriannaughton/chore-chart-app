@@ -51,17 +51,20 @@ class TasksController < ApplicationController
 
     def new_task
         # if there's a member with a free space--assign them to this new task. otherwise assign it to nobody
-        task = Task.create!(task_params)
-        cw = task.chore_wheel
+        
+        cw = ChoreWheel.find(task_params[:chore_wheel_id])
         num = cw.members.length
 
         assignee = cw.member_tasks.last(num).find {|i| i.task.name == "Free space!"}
         
         if assignee
-            MemberTask.create!(chore_wheel: cw, task: task, member: assignee.member)
-            assignee.task.destroy
-            cw.rotate
+            # MemberTask.create!(chore_wheel: cw, task: task, member: assignee.member)
+            # assignee.task.destroy
+            # cw.rotate
+            assignee.task.update!(task_params)
+            MemberMailer.new_chore(member: assignee.member, member_task: assignee)
         else
+            task = Task.create!(task_params)
             nobody = Member.create!(chore_wheel: cw, name: "nobody", email: "nil")
             MemberTask.create!(chore_wheel: cw, member: nobody, task: task)
         end

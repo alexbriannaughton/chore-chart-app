@@ -79,7 +79,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
     }
     function newUserSubmit(e) {
         e.preventDefault()
-        console.log(addNewUser)
+     
         fetch("/add_user", {
             method: "POST",
             headers: {
