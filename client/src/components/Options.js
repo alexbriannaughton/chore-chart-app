@@ -514,6 +514,9 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
             function renderTasks() {
                 return (
                     memberTasks.map((mt) => {
+                        if (mt.task.name === "Free space!") {
+                            return
+                        }
                         function longName() {
                             if (mt.task.name.length > 13) {
                                 return `${mt.task.name.substring(0, 13)}...`
@@ -544,8 +547,16 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
             function renderMembers() {
                 return (
                     memberTasks.map((mt) => {
+                        if (mt.member.name === "nobody") {
+                            return
+                        }
+                        function longName() {
+                            if (mt.member.name.length > 9) {
+                                return `${mt.member.name.substring(0, 9)}...`
+                            } else return mt.member.name
+                        }
                         return (
-                            <OptionsButtons key={mt.id} onClick={(e) => handleEditMemberClick(mt.member)}><span>{mt.member.name}</span></OptionsButtons>
+                            <OptionsButtons key={mt.id} onClick={(e) => handleEditMemberClick(mt.member)}><span>{longName()}</span></OptionsButtons>
                         )
                     })
                 )
