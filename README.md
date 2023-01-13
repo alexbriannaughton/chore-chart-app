@@ -28,35 +28,35 @@ My app is a tool for sharing chores--it will make it easier to divvy up and keep
 
 ## DB Schema
 ### chore_wheel_user
--belongs_to :user
--belongs_to :chore_wheel
+- belongs_to :user
+- belongs_to :chore_wheel
 
 ### chore_wheel
--has_many :members
--has_many :tasks
--has_many :member_tasks
--has_many :chore_wheel_users
--has_many :users
--has_many :comments
+- has_many :members
+- has_many :tasks
+- has_many :member_tasks
+- has_many :chore_wheel_users
+- has_many :users
+- has_many :comments
 
 ### comment
--belongs_to :user
--belongs_to :chore_wheel
+- belongs_to :user
+- belongs_to :chore_wheel
 
 ### member_task
--belongs_to :member
--belongs_to :task
--belongs_to :chore_wheel
+- belongs_to :member
+- belongs_to :task
+- belongs_to :chore_wheel
 
 ### member
--belongs_to :chore_wheel
--has_many :member_tasks
+- belongs_to :chore_wheel
+- has_many :member_tasks
 
 ### task
--belongs_to :chore_wheel
--has_many :member_tasks
+- belongs_to :chore_wheel
+- has_many :member_tasks
 
 ### user
--has_many :chore_wheel_users
--has_many :chore_wheels
--has_many :comments
+- has_many :chore_wheel_users
+- has_many :chore_wheels
+- has_many :comments
