@@ -38,18 +38,8 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
 
     const [deleteChartMenu, showDeleteChartMenu] = useState(false)
 
-    function handleEditTaskClick(task) {
-        setTaskToEdit(task)
-        setEditTaskName(task.name)
-        setEditTaskDetails(task.details)
-    }
-    function handleEditMemberClick(member) {
-        setMemberToEdit(member)
-        setEditMemberName(member.name)
-        setEditMemberEmail(member.email)
-    }
+    // starting here are hanlders for the various fetch requests which can be made by the options menu
     function handleTaskEditSubmit(e) {
-
         e.preventDefault()
 
         const updateObj = {
@@ -131,14 +121,6 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
                 r.json().then((err) => setErrors(err.errors))
             }
         })
-    }
-    function handleBackButtonClick() {
-        setSubMenu(null)
-        setTaskToEdit(null)
-        setMemberToEdit(null)
-        setAutoRotateMenu(false)
-        setRenameChart(false)
-        showDeleteChartMenu(false)
     }
     function handleDeleteMember() {
         fetch(`/members/${memberToEdit.id}`, {
@@ -233,7 +215,6 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
             }
         })
     }
-
     function updateAutoRotate(e) {
         e.preventDefault()
 
@@ -286,6 +267,42 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
             }
         })
     }
+    // end fetch requests
+
+
+    // starting here are the more complex handlers for button clicks and their state changes while navigating the options menu
+        // other more simple handlers/state changes will be found on the jsx button elements themselves in the renderPage() function
+    function handleEditTaskClick(task) {
+        setTaskToEdit(task)
+        setEditTaskName(task.name)
+        setEditTaskDetails(task.details)
+    }
+    function handleEditMemberClick(member) {
+        setMemberToEdit(member)
+        setEditMemberName(member.name)
+        setEditMemberEmail(member.email)
+    }
+    function handleBackButtonClick() {
+        setSubMenu(null)
+        setTaskToEdit(null)
+        setMemberToEdit(null)
+        setAutoRotateMenu(false)
+        setRenameChart(false)
+        showDeleteChartMenu(false)
+    }
+    // end complex button handlers
+
+
+
+    // renderPage function manages that which is rendered to the DOM based on the following state variables:
+        // taskToEdit - if there is a task to edit, that tasks information will be pulled up with inputs ready for patch request
+        // memberToEdit - same as taskToEdit but for members
+        // autoRotateMenu - if true, pulls up current auto-rotate setting and appropriate input for patch request
+        // renameChart
+        // deleteChartMenu
+        // subMenu
+            // when null the main options menu wil be pulled up. i.e. "Chart", "Chores", "Heroes", "Add a user" buttons
+            // otherwise, subMenu will have a value of one of those buttons and it will render that topic's menu, i.e. a sub-menu
     function renderPage() {
         if (taskToEdit) {
             return (
