@@ -8,22 +8,33 @@ function DetailsModal({ showModal, setShowModal, currentDetails }) {
     setShowModal(false)
   }
 
-    return (
-        <>
-            {showModal ? (
-              
-                    <ModalWrapper onClick={handleModalClick} showModal={showModal}>
-                    
-                            <H4>{currentDetails.details1}</H4>
-                            {currentDetails.member === "nobody" || currentDetails.task === "Free space!" ? null : <Par>{currentDetails.details2}</Par>}
-                            {currentDetails.task === "Free space!" ? <Par>There are more heroes than chores on your chore wheel.</Par> : null}
-                            {currentDetails.member === "nobody" ? <Par >There are more chores than heroes on your chore wheel.</Par> : null}
-                     
-                    </ModalWrapper>
-             
-            ) : null}
-        </>
-    )
+  return (
+    <>
+      {showModal ? (
+        <ModalWrapper onClick={handleModalClick} showModal={showModal}>
+          <H4>{currentDetails.details1}</H4>
+          {currentDetails.member === "nobody" || currentDetails.task === "Free space!" ?
+            null
+            :
+            <Par>{currentDetails.details2}</Par>
+          }
+          {currentDetails.task === "Free space!" ?
+            <Par>There are more heroes than chores on your chore wheel.</Par>
+            :
+            null
+          }
+          {currentDetails.member === "nobody" ?
+            <Par >There are more chores than heroes on your chore wheel.</Par>
+            :
+            null
+          }
+        </ModalWrapper>
+      )
+        :
+        null
+      }
+    </>
+  )
 }
 const H4 = styled.h4`
 margin: 0;

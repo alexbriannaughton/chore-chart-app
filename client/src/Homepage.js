@@ -13,6 +13,7 @@ function Homepage({ setUser, user }) {
 
     const [showLogin, setShowLogin] = useState(true)
 
+    // render login form / sign up form
     function loginStuff() {
         return (
             <Wrapper>
@@ -60,6 +61,7 @@ function Homepage({ setUser, user }) {
         )
     }
 
+    // when logged in, this function will render all of user's charts
     function renderAllCharts() {
         return (
             user && user.chore_wheels.map((cw) => {
@@ -76,9 +78,12 @@ function Homepage({ setUser, user }) {
             })
         )
     }
+
     function newChartClick() {
         navigate("/create-new-chart")
     }
+
+    // checks if user has made any charts yet, renders appropriate greeting/homepage
     function renderWhichHomePage() {
         if (user.chore_wheels.length >= 1) {
             return (
@@ -108,12 +113,14 @@ function Homepage({ setUser, user }) {
         }
     }
 
+    //homepage either renders a login page or user homepage
     return (
         <>
             {user ? renderWhichHomePage() : loginStuff()}
         </>
     )
 }
+
 const H4 = styled.h4`
 text-align: center;
 font-size: large;

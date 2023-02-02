@@ -56,7 +56,7 @@ function LoginForm({ setUser }) {
                     />
                 </FormField>
                 <FormField>
-                    <div style={{display: "flex", justifyContent: "center"}}><Button type="submit">
+                    <div style={{ display: "flex", justifyContent: "center" }}><Button type="submit">
                         {isLoading ? "Loading..." : <span>Login</span>}
                     </Button></div>
                 </FormField>

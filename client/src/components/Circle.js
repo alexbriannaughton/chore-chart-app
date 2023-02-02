@@ -19,6 +19,8 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
 
     const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)", "chartreuse", "dimgray", "rgb(250, 194, 255)", "chartreuse"]
 
+
+    // data to render each segment on the wheel
     const datas = memberTasks.map((mt, index) => {
         function nameColor() {
             if (mt.member.name === "nobody") {
@@ -55,7 +57,8 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         }
     })
 
-    const data = datas.map((entry, i) => {
+    // segment turns white when hover over segment
+    const whiteOnHover = datas.map((entry, i) => {
         if (hovered === i) {
             return {
                 ...entry,
@@ -66,7 +69,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
     });
 
 
-
+    // show modal when segment is clicked
     function handleSliceClick(segment, i) {
         if (!showModal) {
             setCurrentDetails(segment)
@@ -82,6 +85,8 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         }
     }
 
+
+    // rotate button fetch, animation turns off when fetch finishes
     async function rotateFetch() {
         await fetch(`/rotate/${params.chartId}`)
         await fetch(`/chore_wheels/${params.chartId}`)
@@ -92,12 +97,14 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
             })
     }
 
+    // rotate button animation
     async function rotateTasks() {
         showConfirmRotate(false)
         setRotate(true)
         setTimeout(rotateFetch, 2000)
     }
-    
+
+    // confirmation modal for rotate button
     function renderConfirmModal() {
         return (
             <>
@@ -115,7 +122,11 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         )
     }
 
-    function labelSpot() {
+
+    // conditional rendering for circle and labels based on screen size starts here:
+    const size = window.matchMedia("(max-width: 600px)")
+
+    function insideLabel() {
         if (datas.length === 2) {
             return 41.5
         }
@@ -134,9 +145,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         else return 0
     }
 
-    const size = window.matchMedia("(max-width: 600px)")
-
-    function circleMediaQuery(s) {
+    function circleSize(s) {
         if (size.matches && datas.length === 2) {
             return 380
         }
@@ -167,6 +176,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         }
         else return 5
     }
+
     function nameFontSize(s) {
         if (datas.length === 3) {
             return 5
@@ -177,7 +187,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         else return 4
     }
 
-    function positionTheLabel() {
+    function outsideLabel() {
         if (datas.length === 2) {
             return 50
         }
@@ -195,7 +205,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                 <div id="bottom-circle">
                     <PieChart
                         data={datas}
-                        style={{ height: `${circleMediaQuery(size)}` }}
+                        style={{ height: `${circleSize(size)}` }}
                         label={({ dataEntry }) => dataEntry.member}
                         labelStyle={(index) => ({
                             fill: datas[index].nameColor,
@@ -204,14 +214,14 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                         })}
                         radius={42}
                         labelPosition={107}
-                        startAngle={labelSpot()}
+                        startAngle={insideLabel()}
                     />
                 </div>
                 <div id="top-circle">
                     <PieChart
                         className={rotate ? "spin" : null}
-                        data={data}
-                        style={{ height: `${circleMediaQuery(size)}` }}
+                        data={whiteOnHover}
+                        style={{ height: `${circleSize(size)}` }}
                         label={({ dataEntry }) => dataEntry.task}
                         labelStyle={(index) => ({
                             fill: datas[index].taskColor,
@@ -228,8 +238,8 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
                             setHovered(undefined);
                         }}
                         radius={42}
-                        labelPosition={positionTheLabel()}
-                        startAngle={labelSpot()}
+                        labelPosition={outsideLabel()}
+                        startAngle={insideLabel()}
                     />
 
                     {datas ? <CircleButton onClick={(e) => showConfirmRotate(true)}>

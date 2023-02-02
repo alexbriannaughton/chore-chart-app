@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
 import styled from "styled-components";
 import Button from "./components/Button";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import logo from "./images/logo.png"
 
 
@@ -19,75 +19,47 @@ function NavBar({ user, setUser }) {
         }
     }
 
-    function noUser() {
-        return (
-            <>
-            {/* <NavLink
-            className="nav-buttons"
-            to="/"
-            >
-                <span>Login</span>
-            </NavLink> */}
-
-            </>
-        )
-    }
-
     const size = window.matchMedia("(max-width: 600px)")
 
     function logoMediaQuery() {
-        if(size.matches) {
+        if (size.matches) {
             return 18
         } else return 30
     }
 
-    function withUser() {
+    function renderButtons() {
         return (
-            <><Wrapper>
-                {/* <Button
-                    as={Link}
-                    to="create-new-chart"
-                >
-                    <span>New Chart</span>
-                </Button> */}
+            <>
+                <Wrapper>
+                    <NavLink
+                        to="/"
+                        className="nav-logo"
+                    >
+                        <Logo>
+                            {"chore"}
+                            <img alt="Chore Heroes Logo" style={{ height: `${logoMediaQuery()}px` }} src={logo}></img>
+                            {"heroes"}
+                        </Logo>
+                    </NavLink>
+                </Wrapper>
 
-                <NavLink         
-                    to="/"
-                    className="nav-logo"
-                >
-                    <Logo>
-                        {"chore"} 
-                        <img alt="Chore Heroes Logo" style={{height: `${logoMediaQuery()}px`}} src={logo}></img>
-                        {"heroes"}
-                    </Logo>
-                </NavLink>
-
-                
-
-            </Wrapper>
-            
-            <LogoutButton
-                  
+                <LogoutButton
                     to="/"
                     onClick={handleLogout}
                 >
                     <span>Logout</span>
                 </LogoutButton>
-                </>
+            </>
         )
     }
-    
+
     return (
         <>
-
-            {user ? withUser() : noUser()}
-
+            {renderButtons()}
         </>
     )
 }
-// const Wrapper2 = styled.div`
-// position: relative;
-// `
+
 const LogoutButton = styled(Button)`
 position: absolute;
 right: 0;
@@ -100,8 +72,6 @@ border-width: 6px;
     font-size: .65rem;
     border-width: 4px;
   }
-
-
 `
 const Wrapper = styled.header`
   display: flex;

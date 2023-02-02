@@ -25,6 +25,7 @@ function ChartPage({ user, setUser }) {
 
     const wheelColors = ["rgb(242, 98, 255)", "dimgray", "chartreuse", "rgb(250, 194, 255)"]
 
+    // fake data for the noAuth spinning pie chart
     const datas = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((mt, index) => {
         return {
             value: 1,
@@ -41,7 +42,6 @@ function ChartPage({ user, setUser }) {
                     res.json().then((err) => setErrors(err))
                 }
             })
-
     }, [params.chartId])
 
     useEffect(() => {
@@ -55,8 +55,25 @@ function ChartPage({ user, setUser }) {
             })
     }, [params.chartId])
 
-    function newCommentSubmit(e) {
+    function noAuth() {
+        return (
+            <>
+                <Header>Woops!</Header>
+                <Header2>404 Unauthorized!!</Header2>
+                <div className='circle-div'>
+                    <div id='top-circle'>
+                        <PieChart className="spin-unauth" style={{ height: '370px', pointerEvents: "none" }} data={datas}>
+                        </PieChart>
+                    </div>
+                </div>
+            </>
+        )
+    }
 
+    
+
+    // bulltinboard / comments area
+    function newCommentSubmit(e) {
         e.preventDefault()
 
         const newCommentObj = {
@@ -82,29 +99,6 @@ function ChartPage({ user, setUser }) {
                 )
             }
         })
-    }
-    function handleMenuClick(e) {
-        setActiveButton(e.target.innerText)
-    }
-
-    function noAuth() {
-        return (
-            <>
-                <Header>Woops!</Header>
-                <Header2>404 Unauthorized!!</Header2>
-                <div className='circle-div'><div id='top-circle'>
-                    <PieChart className="spin-unauth" style={{ height: '370px', pointerEvents: "none" }} data={datas}></PieChart></div></div>
-            </>
-        )
-    }
-
-    function wheelPage() {
-        return (
-            <>
-                <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks} showModal={showModal} setShowModal={setShowModal} currentDetails={currentDetails} setCurrentDetails={setCurrentDetails}
-                />
-            </>
-        )
     }
 
     function bulletinBoard() {
@@ -150,11 +144,15 @@ function ChartPage({ user, setUser }) {
 
 
 
+    function handleMenuClick(e) {
+        setActiveButton(e.target.innerText)
+    }
+
     function renderWhichPage() {
         if (activeButton === "Wheel") {
             return (
                 <>
-                    {wheelPage()}
+                    <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks} showModal={showModal} setShowModal={setShowModal} currentDetails={currentDetails} setCurrentDetails={setCurrentDetails} />
                 </>
             )
         }
@@ -173,8 +171,6 @@ function ChartPage({ user, setUser }) {
             )
         }
     }
-
-
 
     return (
         <>

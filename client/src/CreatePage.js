@@ -14,6 +14,7 @@ function CreatePage({ user }) {
     const [chartName, setChartName] = useState("")
     const [rotateBool, setRotateBool] = useState(null)
 
+    // starting here for the dynamic member(hero) and task(chore) form inputs
     const memberInputArr = [
         {
             nameValue: "",
@@ -32,9 +33,9 @@ function CreatePage({ user }) {
     const [tasksArr, setTasksArr] = useState(taskInputArr)
 
     function addMembersInput(e) {
-        setMembersArr(s => {
+        setMembersArr(memberObjs => {
             return [
-                ...s,
+                ...memberObjs,
                 {
                     nameValue: "",
                     emailValue: ""
@@ -43,9 +44,9 @@ function CreatePage({ user }) {
         })
     }
     function addTasksInput(e) {
-        setTasksArr(s => {
+        setTasksArr(taskObjs => {
             return [
-                ...s,
+                ...taskObjs,
                 {
                     nameValue: "",
                     detailsValue: ""
@@ -53,15 +54,15 @@ function CreatePage({ user }) {
             ]
         })
     }
-    function removeMemberInput(i) {
+    function removeMemberInput(idx) {
         const updated =
-            membersArr.filter((task, index) => index !== i)
+            membersArr.filter((memberObj, index) => index !== idx)
         setMembersArr(updated)
     }
 
-    function removeTaskInput(i) {
+    function removeTaskInput(idx) {
         const updated =
-            tasksArr.filter((task, index) => index !== i)
+            tasksArr.filter((taskObj, index) => index !== idx)
         setTasksArr(updated)
     }
 
@@ -69,6 +70,7 @@ function CreatePage({ user }) {
         e.preventDefault()
 
         const index = e.target.id
+
         setMembersArr(s => {
             const newArr = s.slice()
             newArr[index].nameValue = e.target.value
@@ -81,6 +83,7 @@ function CreatePage({ user }) {
         e.preventDefault()
 
         const index = e.target.id
+
         setMembersArr(s => {
             const newArr = s.slice()
             newArr[index].emailValue = e.target.value
@@ -93,6 +96,7 @@ function CreatePage({ user }) {
         e.preventDefault()
 
         const index = e.target.id
+
         setTasksArr(s => {
             const newArr = s.slice()
             newArr[index].nameValue = e.target.value
@@ -104,6 +108,7 @@ function CreatePage({ user }) {
         e.preventDefault()
 
         const index = e.target.id
+
         setTasksArr(s => {
             const newArr = s.slice()
             newArr[index].detailsValue = e.target.value
@@ -111,6 +116,9 @@ function CreatePage({ user }) {
             return newArr
         })
     }
+    // end dynanmic form input functions 
+
+    // submit newly made chore wheel
     async function handleSubmit(e) {
         e.preventDefault()
         setIsLoading(true)
@@ -214,54 +222,44 @@ function CreatePage({ user }) {
                         return task.json()
                     })
                 )
-            // if (!taskResps.ok) {
-            //     newTasks.map((err) => {
-            //         throw err.errors
-            //     })
-            // }
-            // console.log(newTasks)
 
             //create membertask for every member
-            // const mtResps =
-                await Promise.all(
-                    newMembers.map((member, index) => {
-                        function assignTasks() {
-                            if (!newTasks[index]) {
-                                return "none"
-                            }
-                            else return newTasks[index].id
+            await Promise.all(
+                newMembers.map((member, index) => {
+                    // if there we are still mapping the new members, but there are no new tasks to distribute, assign "none"
+                            // this will happen when a wheel is created with more members than tasks
+                    function assignTasks() {
+                        if (!newTasks[index]) {
+                            return "none"
                         }
+                        else return newTasks[index].id
+                    }
 
-                        return fetch("/member_tasks", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                member_id: member.id,
-                                task_id: assignTasks(),
-                                chore_wheel_id: newChart.id
-                            })
+                    return fetch("/member_tasks", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            member_id: member.id,
+                            task_id: assignTasks(),
+                            chore_wheel_id: newChart.id
                         })
                     })
-                )
-            // const newMTs =
-            //     await Promise.all(
-            //         mtResps.map((mt) => {
-            //             return mt.json()
-            //         })
-            //     )
-            // console.log(newMTs)
+                })
+            )
 
+            // if there are more tasks than members, fetch to the empty tasks route, where we will assign those extra tasks to nobody
             if (newTasks.length > newMembers.length) {
                 await fetch(`/empty_tasks/${newChart.id}`)
             }
+
+            // rotate the wheel once
             await fetch(`/rotate/${newChart.id}`)
-
-
 
             navigate(`/${newChart.id}`)
             user.chore_wheels.push(newChart)
+            
         } catch (error) {
             setErrors(error)
         }

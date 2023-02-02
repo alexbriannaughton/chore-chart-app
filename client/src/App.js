@@ -39,10 +39,7 @@ function App() {
 
         <Route
           path="/"
-          element={<Homepage
-            user={user}
-            setUser={setUser}
-          />}
+          element={<Homepage user={user} setUser={setUser}/>}
         />
 
         <Route
