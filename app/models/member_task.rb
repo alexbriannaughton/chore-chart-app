@@ -6,6 +6,7 @@ class MemberTask < ApplicationRecord
   after_create :send_new_task_email
 
   def send_new_task_email
+    # if we don't have their email, don't try to send it. also, we rotate the wheel one time upon instatiation, don't send the email immediately upon instatiation. 
     if self.member.email == "" || self.member.email == nil || self.chore_wheel.member_tasks.length <= self.chore_wheel.members.length
       return nil
     else
@@ -13,6 +14,8 @@ class MemberTask < ApplicationRecord
     end
   end
 
+
+  # this is for the rake task in lib/tasks/auto_rotate.rake. when the rake task is run, this rotate will apply to all wheels that are set to auto rotate. 
   def self.rotate_all
     all_cw = ChoreWheel.where(auto_rotate: true)
     all_cw.each do |cw|

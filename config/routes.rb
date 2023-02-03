@@ -5,11 +5,10 @@ Rails.application.routes.draw do
   resources :member_tasks
   resources :tasks
   resources :members
-  resources :people
   resources :users
   resources :chore_wheels
 
-  get "/rotate/:id", to: "member_tasks#rotate"
+  get "/rotate/:id", to: "chore_wheels#rotate"
   get "/empty_tasks/:id", to: "chore_wheels#create_empty_tasks"
 
   post "/new_task", to: "tasks#new_task"

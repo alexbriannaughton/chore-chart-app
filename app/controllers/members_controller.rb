@@ -21,48 +21,47 @@ class MembersController < ApplicationController
         cw = deleted_member.chore_wheel
         num = cw.members.length
 
+
+        # if the deleted member was on a free space, delete the member and the task
         if ex_members_last_task.name == "Free space!"
             deleted_member.destroy
             ex_members_last_task.destroy
-            # cw.rotate
         else
+            # check if there are free spaces
             free_space_mt = cw.member_tasks.last(num).find {|i| i.task.name == "Free space!"}
 
+            # if there are free spaces, find the member who was on the free space and assign them the deleted member's task
             if free_space_mt
                 MemberTask.create!(chore_wheel: cw, member: free_space_mt.member, task: ex_members_last_task)
                 deleted_member.destroy
-                # free_space_mt.task.destroy
+
+            # if there aren't free spaces, assign the deleted person's task to nobody
             else
                 nobody = Member.create!(chore_wheel: cw, name: "nobody")
                 MemberTask.create!(chore_wheel: cw, member: nobody, task: ex_members_last_task)
                 deleted_member.destroy
             end
         end
-        ## if there's a free space, destroy the free space and assign the ex member's task to the person who was on the free space. if the ex member was on the free space, delete both the task and the member. 
-
-            
-  
-
-
-        # if cw.tasks.length > cw.members.length
-        #     # nobody = Member.create!(chore_wheel: cw, name: "nobody", email: "")
-        #     MemberTask.create!(chore_wheel: cw, member: Member.first, task: task)
-        # end
 
         head :no_content
+
     end
 
+    #add a new a member who was not originally on the chore wheel upon its instantiation
     def new_member
-        # if there's a task assigned to "nobody", assign that task to new_member and remove nobody. otherwise, assign new_member to free space
         member = Member.create!(member_params)
         cw = member.chore_wheel
         num = cw.members.length
 
+        ##check if there are any tasks assigned to nobody
         empty_member_task = cw.member_tasks.last(num-1).find {|i| i.member.name == "nobody"}
 
+        # if there are tasks assigned to "nobody", assign the new member to that task and delete this wheels "nobody"
         if empty_member_task
             MemberTask.create!(chore_wheel: cw, task: empty_member_task.task, member: member)
             empty_member_task.member.destroy
+
+        ## else, we'll need to create a new free space task to assign to our new member
         else
             free_space = Task.create!(chore_wheel: cw, name: "Free space!", details: "Be creative! Help out!")
             MemberTask.create!(chore_wheel: cw, member: member, task: free_space)

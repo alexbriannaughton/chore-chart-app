@@ -9,6 +9,8 @@ class ChoreWheelsController < ApplicationController
 
         if cw.chore_wheel_users.exists?(user_id: session[:user_id])
             num = cw.members.length
+
+            ## the current state of  the chore wheel = the last num of member_tasks
             render json: cw.member_tasks.last(num)
         else
             render json: { errors: ["Not authorized"] }, status: :unauthorized
@@ -34,18 +36,20 @@ class ChoreWheelsController < ApplicationController
     def create_empty_tasks
         cw = ChoreWheel.find(params[:id])
 
-        # if cw.tasks.length > cw.members.length
-
+        ## grab all of the tasks that do not have member_tasks yet
         empty_tasks = cw.tasks.where.missing(:member_tasks)
 
-
-            # num = cw.tasks.length - cw.members.length
+            ## and create one where "nobody" is assigned
             empty_tasks.each do |i|
                 nobody = Member.create!(email: "nil", chore_wheel: cw, name: "nobody")
                 MemberTask.create!(chore_wheel: cw, member: nobody, task: i)
             end
-        # else return null
-        # end
+            
+    end
+
+    def rotate
+        cw = ChoreWheel.find(params[:id])
+        cw.rotate
     end
 
     private

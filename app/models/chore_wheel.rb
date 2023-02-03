@@ -22,8 +22,6 @@ class ChoreWheel < ApplicationRecord
             MemberTask.create!(chore_wheel: self, member_id: i.id, task_id: arr.rotate(-1)[index])
         end
 
-
     end
 
-    
 end
