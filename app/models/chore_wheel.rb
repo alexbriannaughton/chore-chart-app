@@ -14,14 +14,18 @@ class ChoreWheel < ApplicationRecord
 
         arr = []
 
-        self.member_tasks.last(num).each do |i|
-            arr << i.task.id
+        self.member_tasks.last(num).each do |mt|
+            arr << mt.task.id
         end
 
         self.members.each_with_index do |i, index|
             MemberTask.create!(chore_wheel: self, member_id: i.id, task_id: arr.rotate(-1)[index])
         end
 
+        self.member_tasks.last(num).each do |mt|
+            i.send_new_task_email
+        end
+        
     end
 
 end
