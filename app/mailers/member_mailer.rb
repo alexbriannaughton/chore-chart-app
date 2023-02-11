@@ -8,13 +8,13 @@ class MemberMailer < ApplicationMailer
   def new_chore(member:, member_task:)
     @member_task = member_task
     @member = member
-    mail(to: member.email)
+    mail(to: member.email, subject: 'Chore Heroes: your chore this week')
   end
 
   def new_chore_with_nobody(member:, member_task:, nobody:)
     @member_task = member_task
     @member = member
     @nobody = nobody
-    mail(to: member.email)
+    mail(to: member.email, subject: 'Chore Heroes: your chore this week')
   end
 end
