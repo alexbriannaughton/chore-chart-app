@@ -10,4 +10,11 @@ class MemberMailer < ApplicationMailer
     @member = member
     mail(to: member.email)
   end
+
+  def new_chore_with_nobody(member:, member_task:, nobody:)
+    @member_task = member_task
+    @member = member
+    @nobody = nobody
+    mail(to: member.email)
+  end
 end

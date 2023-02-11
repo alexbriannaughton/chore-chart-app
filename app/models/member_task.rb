@@ -10,7 +10,17 @@ class MemberTask < ApplicationRecord
     if self.member.email == "" || self.member.email == nil || self.chore_wheel.member_tasks.length <= self.chore_wheel.members.length
       return nil
     else
-      MemberMailer.new_chore(member: self.member, member_task: self).deliver_now
+      # check if the chart has a "nobody" on it
+      with_nobody = self.chore_wheel.members.find {|i| i.name == "nobody"}
+
+      # if there is a "nobody", send the email template with a nobody
+      if with_nobody
+        MemberMailer.new_chore_with_nobody(member: self.member, member_task: self, nobody: with_nobody)
+
+      # else send the email template without the "nobody"
+      else
+        MemberMailer.new_chore(member: self.member, member_task: self).deliver_now
+      end
     end
   end
 
