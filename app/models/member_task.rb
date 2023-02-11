@@ -15,7 +15,7 @@ class MemberTask < ApplicationRecord
 
       # if there is a "nobody", send the email template with a nobody
       if with_nobody
-        MemberMailer.new_chore_with_nobody(member: self.member, member_task: self, nobody: with_nobody)
+        MemberMailer.new_chore_with_nobody(member: self.member, member_task: self, nobody: with_nobody).deliver_now
 
       # else send the email template without the "nobody"
       else
