@@ -41,7 +41,7 @@ class MemberTask < ApplicationRecord
       end
 
       cw.member_tasks.last(num).each do |mt|
-        i.send_new_task_email
+        mt.send_new_task_email
       end
 
     end

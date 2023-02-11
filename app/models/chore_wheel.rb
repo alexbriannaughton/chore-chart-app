@@ -23,7 +23,7 @@ class ChoreWheel < ApplicationRecord
         end
 
         self.member_tasks.last(num).each do |mt|
-            i.send_new_task_email
+            mt.send_new_task_email
         end
         
     end
