@@ -48,4 +48,5 @@ class MemberTask < ApplicationRecord
 
   end
 
+  
 end
