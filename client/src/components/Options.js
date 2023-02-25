@@ -532,6 +532,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
                 return (
                     memberTasks.map((mt) => {
                         if (mt.task.name === "Free space!") {
+                            // eslint-disable-next-line
                             return
                         }
                         function longName() {
@@ -565,6 +566,7 @@ function Options({ memberTasks, setMemberTasks, setActiveButton, user, setUser }
                 return (
                     memberTasks.map((mt) => {
                         if (mt.member.name === "nobody") {
+                            // eslint-disable-next-line
                             return
                         }
                         function longName() {

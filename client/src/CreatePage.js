@@ -125,16 +125,21 @@ function CreatePage({ user }) {
 
         try {
             //no blank fields catcher
+            // eslint-disable-next-line
             membersArr.map((member) => {
                 if (member.nameValue === "") {
+                    // eslint-disable-next-line
                     throw ['All heroes must have a name']
                 }
             })
+            // eslint-disable-next-line
             tasksArr.map((task) => {
                 if (task.nameValue === "") {
+                    // eslint-disable-next-line
                     throw ['All chores must have a name']
                 }
                 if (task.detailsValue === "") {
+                    // eslint-disable-next-line
                     throw ['Chore details cannot be blank']
                 }
             })
