@@ -150,6 +150,8 @@ function ChartPage({ user, setUser }) {
 
     function renderWhichPage() {
         if (activeButton === "Wheel") {
+            const wB = document.getElementById('wheelBtn')
+            if (wB) wB.focus()
             return (
                 <>
                     <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks} showModal={showModal} setShowModal={setShowModal} currentDetails={currentDetails} setCurrentDetails={setCurrentDetails} />
@@ -177,6 +179,7 @@ function ChartPage({ user, setUser }) {
             <Header3>{memberTasks[0] && memberTasks[0].chore_wheel.name}</Header3>
             <Parent>
                 <OutsideButtons
+                    id="wheelBtn"
                     color="secondary"
                     onClick={(e) => handleMenuClick(e)}
                 // style={{ borderStyle: "ridge" }}
@@ -251,6 +254,7 @@ const Button1 = styled(Button)`
 
     &:focus {
   border-style: ridge;
+  outline: none;
      span {
   top: 2px;
   left: 1px;
