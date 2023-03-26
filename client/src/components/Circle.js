@@ -4,6 +4,7 @@ import { useState } from "react"
 import Button from "./Button"
 import styled from "styled-components"
 import DetailsModal from "./DetailsModal"
+import Checkboxes from "./Checkboxes"
 
 
 
@@ -258,6 +259,7 @@ function Circle({ memberTasks, setMemberTasks, showModal, setShowModal, currentD
         <>
             {renderWheel()}
             <DetailsModal currentDetails={currentDetails} showModal={showModal} setShowModal={setShowModal} />
+            <Checkboxes memberTasks={memberTasks}></Checkboxes>
         </>
     )
 }
