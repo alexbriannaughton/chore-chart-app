@@ -58,8 +58,8 @@ function ChartPage({ user, setUser }) {
     function noAuth() {
         return (
             <>
-                <Header>Woops!</Header>
-                <Header2>404 Unauthorized!!</Header2>
+                <Header>404!!</Header>
+                <Header2>ya might need to login.</Header2>
                 <div className='circle-div'>
                     <div id='top-circle'>
                         <PieChart className="spin-unauth" style={{ height: '370px', pointerEvents: "none" }} data={datas}>
@@ -312,8 +312,8 @@ right: 0;
 top: 359px;
 z-index: 10;
 background-color: white;
-width: 200px;
-height: 80px;
+width: 240px;
+/* height: 140px; */
 border-radius: 50%;
 `
 
