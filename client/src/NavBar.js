@@ -13,7 +13,6 @@ function NavBar({ user, setUser }) {
             fetch("/logout", { method: "DELETE" }).then((r) => {
                 if (r.ok) {
                     setUser(null)
-                    navigate("/")
                 }
             })
         }
@@ -43,12 +42,17 @@ function NavBar({ user, setUser }) {
                     </NavLink>
                 </Wrapper>
 
-                <LogoutButton
-                    to="/"
-                    onClick={handleLogout}
-                >
-                    <span>Logout</span>
-                </LogoutButton>
+                <NavLink to="/">
+                    {user ?
+                        <LogButton onClick={handleLogout}>
+                            <span>Logout</span>
+                        </LogButton>
+                        :
+                        <LogButton>
+                            <span>Login</span>
+                        </LogButton>
+                    }
+                </NavLink>
             </>
         )
     }
@@ -60,7 +64,7 @@ function NavBar({ user, setUser }) {
     )
 }
 
-const LogoutButton = styled(Button)`
+const LogButton = styled(Button)`
 position: absolute;
 right: 0;
 top: 0;
