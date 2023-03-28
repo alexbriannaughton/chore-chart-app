@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import Circle from './components/Circle'
 import styled from "styled-components"
@@ -8,6 +8,10 @@ import Options from './components/Options'
 
 
 function ChartPage({ user, setUser }) {
+
+    const wheelBtnRef = useRef(null);
+    const bbBtnRef = useRef(null);
+    const setBtnRef = useRef(null);
 
     const [showModal, setShowModal] = useState(true)
     const [currentDetails, setCurrentDetails] = useState({ details2: "Click a segment for chore details" })
@@ -55,6 +59,16 @@ function ChartPage({ user, setUser }) {
             })
     }, [params.chartId])
 
+    useEffect(() => {
+        if (activeButton === "Wheel") {
+            wheelBtnRef.current.focus();
+        } else if (activeButton === "Bulletin Board") {
+            bbBtnRef.current.focus();
+        } else if (activeButton === "Settings") {
+            setBtnRef.current.focus();
+        }
+    }, [activeButton]);
+
     function noAuth() {
         return (
             <>
@@ -69,8 +83,6 @@ function ChartPage({ user, setUser }) {
             </>
         )
     }
-
-    
 
     // bulltinboard / comments area
     function newCommentSubmit(e) {
@@ -150,15 +162,22 @@ function ChartPage({ user, setUser }) {
 
     function renderWhichPage() {
         if (activeButton === "Wheel") {
-            const wB = document.getElementById('wheelBtn')
-            if (wB) wB.focus()
+
             return (
                 <>
-                    <Circle memberTasks={memberTasks} setMemberTasks={setMemberTasks} showModal={showModal} setShowModal={setShowModal} currentDetails={currentDetails} setCurrentDetails={setCurrentDetails} />
+                    <Circle
+                        memberTasks={memberTasks}
+                        setMemberTasks={setMemberTasks}
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        currentDetails={currentDetails}
+                        setCurrentDetails={setCurrentDetails}
+                    />
                 </>
             )
         }
         else if (activeButton === "Bulletin Board") {
+
             return (
                 <>
                     {bulletinBoard()}
@@ -166,6 +185,7 @@ function ChartPage({ user, setUser }) {
             )
         }
         else if (activeButton === "Settings") {
+
             return (
                 <>
                     <Options setActiveButton={setActiveButton} setMemberTasks={setMemberTasks} memberTasks={memberTasks} user={user} setUser={setUser} />
@@ -182,18 +202,22 @@ function ChartPage({ user, setUser }) {
                     id="wheelBtn"
                     color="secondary"
                     onClick={(e) => handleMenuClick(e)}
-                // style={{ borderStyle: "ridge" }}
                 >
                     <span>Wheel</span>
                 </OutsideButtons>
                 <Button1
+                    id="bbBtn"
+                    ref={bbBtnRef}
                     onClick={(e) => handleMenuClick(e)}
                 >
                     <span>Bulletin Board</span>
                 </Button1>
                 <OutsideButtons
+                    id="setBtn"
                     onClick={(e) => handleMenuClick(e)}
-                    color="secondary"><span>Settings</span>
+                    color="secondary"
+                    ref={setBtnRef}>
+                    <span>Settings</span>
                 </OutsideButtons>
             </Parent>
             {errors ? noAuth() : renderWhichPage()}
@@ -212,7 +236,6 @@ font-size: 2.5rem;
 const SubButton = styled(Button)`
 margin: auto;
 display: block;
-/* width: 149px; */
 `
 const TextArea = styled.textarea`
   border-radius: 5px;
